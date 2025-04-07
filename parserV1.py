@@ -10,7 +10,9 @@ tokens = (
     'STAR',#*
     'FORWARDDASH',#/
     'EQUAL',#=
+    'LESSOREQUAL',#<=
     'LESSTHAN',#<
+    'GREATEROREQUAL',#>=
     'GREATERTHAN',#>
     'OPENBRACKET',#[ 
     'CLOSEBRACKET',#]
@@ -28,6 +30,7 @@ tokens = (
     'CARDINAL',##
     'SINGLEQUOTATION',#'
     'DOUBLEQUOTATION',#"
+    'DIFFERENT',
 
     'STRING',
     'ONELINECOMMENTS',
@@ -38,6 +41,9 @@ tokens = (
     'DATATYPE',
 )
 
+def t_DIFFERENT(t):
+    r'\<\>'
+    return t
 
 def t_STRING(t):
     r'(?P<quote>[\'\"])[^\'\"]*?(?P=quote)'
@@ -49,6 +55,7 @@ def t_DATATYPE(t):
 
 def t_BOOLEAN(t):
     r'\b(true|false)\b'
+    return t
 
 def t_KEYWORD(t):
     r'\b(and|array|begin|case|const|div|do|downto|else|end|file|for|function|goto|if|in|label|mod|nil|not|of|or|packed|procedure|program|record|repeat|set|then|to|type|until|var|while|with)\b'
@@ -66,16 +73,32 @@ def t_ID(t):
     r'\b[A-Za-z](?:\w+?)?\b'
     return t
 
+def t_LESSOREQUAL(t):
+    r'\<\='
+    return t
+
+def t_LESSTHAN(t):
+    r'\<'
+    return t
+
+def t_GREATEROREQUAL(t):
+    r'\>\='
+    return t
+
+def t_GREATERTHAN(t):
+    r'\>'
+    return t
+
+
 t_ASSIGN = r'\:\='
 t_INTEGER =r'\b\d+\b'
-t_REAL =r'\b\d+?\.\d+?\b'
+t_REAL =r'\b\d+\.\d+([eE][+-]?\d+)?\b'
 t_PLUS =r'\+'
 t_MINUS =r'\-'
 t_STAR =r'\*'
 t_FORWARDDASH =r'\/'
 t_EQUAL =r'\='
-t_LESSTHAN =r'\<'
-t_GREATERTHAN =r'\>'
+
 t_OPENBRACKET =r'\['
 t_CLOSEBRACKET =r'\]'
 t_DOT =r'\.'
@@ -92,6 +115,7 @@ t_DOLLAR =r'\$'
 t_CARDINAL =r'\#'
 t_SINGLEQUOTATION =r'\''
 t_DOUBLEQUOTATION =r'\"'
+
 
 
 t_ignore = '\t\n '
