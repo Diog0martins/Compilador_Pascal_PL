@@ -1,0 +1,17 @@
+C -> PROGRAM Programname SEMICOLON
+
+Programname -> ID
+
+DECLARACAO -> VAR Listasvariaveis
+            | epslon
+
+Listavariaveis -> Listasvariaveis Variaveis COLON Datastructure DELIMITER
+                | epslon
+
+Variaveis -> Variaveis COMMA ID 
+           | ID
+
+DataStructure -> Datatype
+              | LBRACKET Array RBRACKET OFF Datatype
+              | ID
+
