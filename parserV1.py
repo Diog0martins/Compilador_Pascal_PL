@@ -57,11 +57,154 @@ def t_BOOLEAN(t):
     r'\b(true|false)\b'
     return t
 
-def t_KEYWORD(t):
-    r'\b(and|array|begin|case|const|div|do|downto|else|end|file|for|function|goto|if|in|label|mod|nil|not|of|or|packed|procedure|program|record|repeat|set|then|to|type|until|var|while|with)\b'
+# def t_KEYWORD(t):
+#     r'\b(and|array|begin|case|const|div|do|downto|else|end|file|for|function|goto|if|in|label|mod|nil|not|of|or|packed|procedure|program|record|repeat|set|then|to|type|until|var|while|with)\b'
+#     return t
+
+# Reserved keyword tokens
+
+def t_AND(t):
+    r'\band\b'
     return t
 
-def t_ONELINECOMMENTS(t):
+def t_ARRAY(t):
+    r'\barray\b'
+    return t
+
+def t_BEGIN(t):
+    r'\bbegin\b'
+    return t
+
+def t_CASE(t):
+    r'\bcase\b'
+    return t
+
+def t_CONST(t):
+    r'\bconst\b'
+    return t
+
+def t_DIV(t):
+    r'\bdiv\b'
+    return t
+
+def t_DO(t):
+    r'\bdo\b'
+    return t
+
+def t_DOWNTO(t):
+    r'\bdownto\b'
+    return t
+
+def t_ELSE(t):
+    r'\belse\b'
+    return t
+
+def t_END(t):
+    r'\bend\b'
+    return t
+
+def t_FILE(t):
+    r'\bfile\b'
+    return t
+
+def t_FOR(t):
+    r'\bfor\b'
+    return t
+
+def t_FUNCTION(t):
+    r'\bfunction\b'
+    return t
+
+def t_GOTO(t):
+    r'\bgoto\b'
+    return t
+
+def t_IF(t):
+    r'\bif\b'
+    return t
+
+def t_IN(t):
+    r'\bin\b'
+    return t
+
+def t_LABEL(t):
+    r'\blabel\b'
+    return t
+
+def t_MOD(t):
+    r'\bmod\b'
+    return t
+
+def t_NIL(t):
+    r'\bnil\b'
+    return t
+
+def t_NOT(t):
+    r'\bnot\b'
+    return t
+
+def t_OF(t):
+    r'\bof\b'
+    return t
+
+def t_OR(t):
+    r'\bor\b'
+    return t
+
+def t_PACKED(t):
+    r'\bpacked\b'
+    return t
+
+def t_PROCEDURE(t):
+    r'\bprocedure\b'
+    return t
+
+def t_PROGRAM(t):
+    r'\bprogram\b'
+    return t
+
+def t_RECORD(t):
+    r'\brecord\b'
+    return t
+
+def t_REPEAT(t):
+    r'\brepeat\b'
+    return t
+
+def t_SET(t):
+    r'\bset\b'
+    return t
+
+def t_THEN(t):
+    r'\bthen\b'
+    return t
+
+def t_TO(t):
+    r'\bto\b'
+    return t
+
+def t_TYPE(t):
+    r'\btype\b'
+    return t
+
+def t_UNTIL(t):
+    r'\buntil\b'
+    return t
+
+def t_VAR(t):
+    r'\bvar\b'
+    return t
+
+def t_WHILE(t):
+    r'\bwhile\b'
+    return t
+
+def t_WITH(t):
+    r'\bwith\b'
+    return t
+# -------------------------------------------
+
+def t_ONELINECOMMENTS(t):   
     r'(\{[^\}]+?\})|\/\/.*'
     return t
     
