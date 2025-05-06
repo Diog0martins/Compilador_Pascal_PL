@@ -1,0 +1,454 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AND
+    ASSIGN
+    AT
+    BOOLEAN
+    CARDINAL
+    CASE
+    CLOSECURLBRACKET
+    CLOSEPARENTHESIS
+    CONST
+    DIFFERENT
+    DIV
+    DO
+    DOLLAR
+    DOUBLEQUOTATION
+    DOWNTO
+    ELSE
+    EQUAL
+    FILE
+    FOR
+    FORWARDDASH
+    FUNCTION
+    GOTO
+    GREATEROREQUAL
+    GREATERTHAN
+    IF
+    IN
+    KEYWORD
+    LABEL
+    LESSOREQUAL
+    LESSTHAN
+    MINUS
+    MOD
+    MULTILINECOMMENTS
+    NIL
+    NOT
+    ONELINECOMMENTS
+    OPENCURLBRACKET
+    OPENPARENTHESIS
+    OR
+    PACKED
+    PLUS
+    POWERTO
+    PROCEDURE
+    REAL
+    RECORD
+    REPEAT
+    SET
+    SINGLEQUOTATION
+    STAR
+    STRING
+    THEN
+    TO
+    TYPE
+    UNTIL
+    WHILE
+    WITH
+
+Grammar
+
+Rule 0     S' -> Programa
+Rule 1     Dvariaveis -> VAR Listavariaveis
+Rule 2     Corpo -> BEGIN conteudo END
+Rule 3     Programa -> Cabecalho Dvariaveis Corpo DOT
+Rule 4     Programa -> Cabecalho Corpo
+Rule 5     Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON
+Rule 6     Listavariaveis -> <empty>
+Rule 7     conteudo -> <empty>
+Rule 8     Cabecalho -> PROGRAM Programname SEMICOLON
+Rule 9     Variaveis -> Variaveis COMMA ID
+Rule 10    Variaveis -> ID
+Rule 11    Programname -> ID
+Rule 12    Tipo -> DATATYPE
+Rule 13    Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE
+Rule 14    Tipo -> ID
+Rule 15    Intervalo -> INTEGER DOT DOT INTEGER
+
+Terminals, with rules where they appear
+
+AND                  : 
+ARRAY                : 13
+ASSIGN               : 
+AT                   : 
+BEGIN                : 2
+BOOLEAN              : 
+CARDINAL             : 
+CASE                 : 
+CLOSEBRACKET         : 13
+CLOSECURLBRACKET     : 
+CLOSEPARENTHESIS     : 
+COLON                : 5
+COMMA                : 9
+CONST                : 
+DATATYPE             : 12 13
+DIFFERENT            : 
+DIV                  : 
+DO                   : 
+DOLLAR               : 
+DOT                  : 3 15 15
+DOUBLEQUOTATION      : 
+DOWNTO               : 
+ELSE                 : 
+END                  : 2
+EQUAL                : 
+FILE                 : 
+FOR                  : 
+FORWARDDASH          : 
+FUNCTION             : 
+GOTO                 : 
+GREATEROREQUAL       : 
+GREATERTHAN          : 
+ID                   : 9 10 11 14
+IF                   : 
+IN                   : 
+INTEGER              : 15 15
+KEYWORD              : 
+LABEL                : 
+LESSOREQUAL          : 
+LESSTHAN             : 
+MINUS                : 
+MOD                  : 
+MULTILINECOMMENTS    : 
+NIL                  : 
+NOT                  : 
+OF                   : 13
+ONELINECOMMENTS      : 
+OPENBRACKET          : 13
+OPENCURLBRACKET      : 
+OPENPARENTHESIS      : 
+OR                   : 
+PACKED               : 
+PLUS                 : 
+POWERTO              : 
+PROCEDURE            : 
+PROGRAM              : 8
+REAL                 : 
+RECORD               : 
+REPEAT               : 
+SEMICOLON            : 5 8
+SET                  : 
+SINGLEQUOTATION      : 
+STAR                 : 
+STRING               : 
+THEN                 : 
+TO                   : 
+TYPE                 : 
+UNTIL                : 
+VAR                  : 1
+WHILE                : 
+WITH                 : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+Cabecalho            : 3 4
+Corpo                : 3 4
+Dvariaveis           : 3
+Intervalo            : 13
+Listavariaveis       : 1 5
+Programa             : 0
+Programname          : 8
+Tipo                 : 5
+Variaveis            : 5 9
+conteudo             : 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . Programa
+    (3) Programa -> . Cabecalho Dvariaveis Corpo DOT
+    (4) Programa -> . Cabecalho Corpo
+    (8) Cabecalho -> . PROGRAM Programname SEMICOLON
+
+    PROGRAM         shift and go to state 3
+
+    Programa                       shift and go to state 1
+    Cabecalho                      shift and go to state 2
+
+state 1
+
+    (0) S' -> Programa .
+
+
+
+state 2
+
+    (3) Programa -> Cabecalho . Dvariaveis Corpo DOT
+    (4) Programa -> Cabecalho . Corpo
+    (1) Dvariaveis -> . VAR Listavariaveis
+    (2) Corpo -> . BEGIN conteudo END
+
+    VAR             shift and go to state 6
+    BEGIN           shift and go to state 7
+
+    Dvariaveis                     shift and go to state 4
+    Corpo                          shift and go to state 5
+
+state 3
+
+    (8) Cabecalho -> PROGRAM . Programname SEMICOLON
+    (11) Programname -> . ID
+
+    ID              shift and go to state 9
+
+    Programname                    shift and go to state 8
+
+state 4
+
+    (3) Programa -> Cabecalho Dvariaveis . Corpo DOT
+    (2) Corpo -> . BEGIN conteudo END
+
+    BEGIN           shift and go to state 7
+
+    Corpo                          shift and go to state 10
+
+state 5
+
+    (4) Programa -> Cabecalho Corpo .
+
+    $end            reduce using rule 4 (Programa -> Cabecalho Corpo .)
+
+
+state 6
+
+    (1) Dvariaveis -> VAR . Listavariaveis
+    (5) Listavariaveis -> . Listavariaveis Variaveis COLON Tipo SEMICOLON
+    (6) Listavariaveis -> .
+
+    ID              reduce using rule 6 (Listavariaveis -> .)
+    BEGIN           reduce using rule 6 (Listavariaveis -> .)
+
+    Listavariaveis                 shift and go to state 11
+
+state 7
+
+    (2) Corpo -> BEGIN . conteudo END
+    (7) conteudo -> .
+
+    END             reduce using rule 7 (conteudo -> .)
+
+    conteudo                       shift and go to state 12
+
+state 8
+
+    (8) Cabecalho -> PROGRAM Programname . SEMICOLON
+
+    SEMICOLON       shift and go to state 13
+
+
+state 9
+
+    (11) Programname -> ID .
+
+    SEMICOLON       reduce using rule 11 (Programname -> ID .)
+
+
+state 10
+
+    (3) Programa -> Cabecalho Dvariaveis Corpo . DOT
+
+    DOT             shift and go to state 14
+
+
+state 11
+
+    (1) Dvariaveis -> VAR Listavariaveis .
+    (5) Listavariaveis -> Listavariaveis . Variaveis COLON Tipo SEMICOLON
+    (9) Variaveis -> . Variaveis COMMA ID
+    (10) Variaveis -> . ID
+
+    BEGIN           reduce using rule 1 (Dvariaveis -> VAR Listavariaveis .)
+    ID              shift and go to state 16
+
+    Variaveis                      shift and go to state 15
+
+state 12
+
+    (2) Corpo -> BEGIN conteudo . END
+
+    END             shift and go to state 17
+
+
+state 13
+
+    (8) Cabecalho -> PROGRAM Programname SEMICOLON .
+
+    VAR             reduce using rule 8 (Cabecalho -> PROGRAM Programname SEMICOLON .)
+    BEGIN           reduce using rule 8 (Cabecalho -> PROGRAM Programname SEMICOLON .)
+
+
+state 14
+
+    (3) Programa -> Cabecalho Dvariaveis Corpo DOT .
+
+    $end            reduce using rule 3 (Programa -> Cabecalho Dvariaveis Corpo DOT .)
+
+
+state 15
+
+    (5) Listavariaveis -> Listavariaveis Variaveis . COLON Tipo SEMICOLON
+    (9) Variaveis -> Variaveis . COMMA ID
+
+    COLON           shift and go to state 18
+    COMMA           shift and go to state 19
+
+
+state 16
+
+    (10) Variaveis -> ID .
+
+    COLON           reduce using rule 10 (Variaveis -> ID .)
+    COMMA           reduce using rule 10 (Variaveis -> ID .)
+
+
+state 17
+
+    (2) Corpo -> BEGIN conteudo END .
+
+    $end            reduce using rule 2 (Corpo -> BEGIN conteudo END .)
+    DOT             reduce using rule 2 (Corpo -> BEGIN conteudo END .)
+
+
+state 18
+
+    (5) Listavariaveis -> Listavariaveis Variaveis COLON . Tipo SEMICOLON
+    (12) Tipo -> . DATATYPE
+    (13) Tipo -> . ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE
+    (14) Tipo -> . ID
+
+    DATATYPE        shift and go to state 21
+    ARRAY           shift and go to state 22
+    ID              shift and go to state 23
+
+    Tipo                           shift and go to state 20
+
+state 19
+
+    (9) Variaveis -> Variaveis COMMA . ID
+
+    ID              shift and go to state 24
+
+
+state 20
+
+    (5) Listavariaveis -> Listavariaveis Variaveis COLON Tipo . SEMICOLON
+
+    SEMICOLON       shift and go to state 25
+
+
+state 21
+
+    (12) Tipo -> DATATYPE .
+
+    SEMICOLON       reduce using rule 12 (Tipo -> DATATYPE .)
+
+
+state 22
+
+    (13) Tipo -> ARRAY . OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE
+
+    OPENBRACKET     shift and go to state 26
+
+
+state 23
+
+    (14) Tipo -> ID .
+
+    SEMICOLON       reduce using rule 14 (Tipo -> ID .)
+
+
+state 24
+
+    (9) Variaveis -> Variaveis COMMA ID .
+
+    COLON           reduce using rule 9 (Variaveis -> Variaveis COMMA ID .)
+    COMMA           reduce using rule 9 (Variaveis -> Variaveis COMMA ID .)
+
+
+state 25
+
+    (5) Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON .
+
+    ID              reduce using rule 5 (Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON .)
+    BEGIN           reduce using rule 5 (Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON .)
+
+
+state 26
+
+    (13) Tipo -> ARRAY OPENBRACKET . Intervalo CLOSEBRACKET OF DATATYPE
+    (15) Intervalo -> . INTEGER DOT DOT INTEGER
+
+    INTEGER         shift and go to state 28
+
+    Intervalo                      shift and go to state 27
+
+state 27
+
+    (13) Tipo -> ARRAY OPENBRACKET Intervalo . CLOSEBRACKET OF DATATYPE
+
+    CLOSEBRACKET    shift and go to state 29
+
+
+state 28
+
+    (15) Intervalo -> INTEGER . DOT DOT INTEGER
+
+    DOT             shift and go to state 30
+
+
+state 29
+
+    (13) Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET . OF DATATYPE
+
+    OF              shift and go to state 31
+
+
+state 30
+
+    (15) Intervalo -> INTEGER DOT . DOT INTEGER
+
+    DOT             shift and go to state 32
+
+
+state 31
+
+    (13) Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF . DATATYPE
+
+    DATATYPE        shift and go to state 33
+
+
+state 32
+
+    (15) Intervalo -> INTEGER DOT DOT . INTEGER
+
+    INTEGER         shift and go to state 34
+
+
+state 33
+
+    (13) Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE .
+
+    SEMICOLON       reduce using rule 13 (Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE .)
+
+
+state 34
+
+    (15) Intervalo -> INTEGER DOT DOT INTEGER .
+
+    CLOSEBRACKET    reduce using rule 15 (Intervalo -> INTEGER DOT DOT INTEGER .)
+
