@@ -1,7 +1,3 @@
-C -> PROGRAM Programname SEMICOLON
-
-Programname -> ID
-
 DECLARACAO -> VAR Listasvariaveis
             | epslon
 
