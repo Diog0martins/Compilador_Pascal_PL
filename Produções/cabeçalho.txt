@@ -1,0 +1,5 @@
+C -> PROGRAM Programname SEMICOLON
+
+Programname -> ID
+
+
