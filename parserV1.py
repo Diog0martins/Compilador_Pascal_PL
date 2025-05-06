@@ -39,6 +39,41 @@ tokens = (
     'KEYWORD',
     'BOOLEAN',
     'DATATYPE',
+    'AND',
+    'ARRAY',
+    'BEGIN',
+    'CASE',
+    'CONST',
+    'DIV',
+    'DO',
+    'DOWNTO',
+    'ELSE',
+    'END',
+    'FILE',
+    'FOR',
+    'FUNCTION',
+    'GOTO',
+    'IF',
+    'IN',
+    'LABEL',
+    'MOD',
+    'NIL',
+    'NOT',
+    'OF',
+    'OR',
+    'PACKED',
+    'PROCEDURE',
+    'PROGRAM',
+    'RECORD',
+    'REPEAT',
+    'SET',
+    'THEN',
+    'TO',
+    'TYPE',
+    'UNTIL',
+    'VAR',
+    'WHILE',
+    'WITH',
 )
 
 def t_DIFFERENT(t):
@@ -199,10 +234,6 @@ def t_WHILE(t):
     r'\bwhile\b'
     return t
 
-def t_WITH(t):
-    r'\bwith\b'
-    return t
-# -------------------------------------------
 
 def t_ONELINECOMMENTS(t):   
     r'(\{[^\}]+?\})|\/\/.*'
