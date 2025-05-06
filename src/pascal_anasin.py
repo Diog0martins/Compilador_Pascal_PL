@@ -1,30 +1,92 @@
-import ply.yacc as yaac
-from pascal_analex import lexer
+import ply.yacc as yacc
+from pascal_analex import tokens 
 
-prox_simb = ('Erro', '', 0, 0)
+# === Grammar ===
 
-def parserError(simb):
-    print("Erro sintático, token inesperado: ", simb)
-
-def rec_term(simb):
-    global prox_simb
-    if prox_simb.type == simb:
-        prox_simb = lexer.token()
+def p_programa(p):
+    '''
+    Programa : Cabecalho Dvariaveis Corpo
+             | Cabecalho Corpo
+    '''
+    if len(p) == 4:
+        print("Found: Header, Declarations, and Body")
     else:
-        parserError(prox_simb)
-
-# REGRAS
-
-def rec_Programa():
-    global prox_simb
-    #print("Derivando por P1: REGRA")
-    #rec_term('TOKEN')
-    #print("Reconheci P1: REGRA")
+        print("Found: Header and Body")
 
 
-def rec_Parser(data):
-    global prox_simb
-    lexer.input(data)
-    #prox_simb = lexer.token()
-    rec_Programa()
-    print("Sintax Analysis finished!")
+def p_cabecalho(p):
+    'Cabecalho : PROGRAM Programname SEMICOLON'
+    print(f"Program name: {p[2]}")
+
+
+def p_programname(p):
+    'Programname : ID'
+    p[0] = p[1]
+
+
+def p_dvariaveis(p):
+    'Dvariaveis : VAR Listavariaveis'
+    print("Found variable declarations")
+
+
+def p_listavariaveis(p):
+    '''
+    Listavariaveis : Listavariaveis Variaveis COLON DataStructure DELIMITER
+                   | 
+    '''
+    pass  
+
+
+def p_variaveis(p):
+    '''
+    Variaveis : Variaveis COMMA ID 
+              | ID
+    '''
+    pass
+
+
+def p_datastructure(p):
+    '''
+    DataStructure : Datatype
+                  | LBRACKET Array RBRACKET OF Datatype
+                  | ID
+    '''
+    pass
+
+
+def p_datatype(p):
+    'Datatype : ID'
+    pass
+
+
+def p_array(p):
+    'Array : NUMBER RANGE NUMBER'
+    pass
+
+
+def p_corpo(p):
+    'Corpo : BEGIN conteudo END'
+    print("Found program body (skipped content)")
+
+
+def p_conteudo(p):
+    '''
+    conteudo : 
+             | conteudo ID
+             | conteudo SEMICOLON
+             | conteudo OTHER
+    '''
+    pass
+
+
+def p_error(p):
+    if p:
+        print(f"Syntax error at token {p.type}, value {p.value}")
+    else:
+        print("Syntax error at EOF")
+
+
+parser = yacc.yacc()
+
+def rec_Parser(input_string):
+    return parser.parse(input_string)

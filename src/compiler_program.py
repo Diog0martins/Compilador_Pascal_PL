@@ -1,9 +1,19 @@
 from pascal_anasin import rec_Parser
 
+filename = "../programas_teste/teste1.pas"
 
-linha = input("Introduza uma lista: ")
-rec_Parser(linha)
-print("\n----------------------\n")
+def main():
+    try:
+        with open(filename, 'r') as file:
+            content = file.read()
+        
+        return rec_Parser(content)
+    
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
-
+if __name__ == "__main__":
+    main()
 
