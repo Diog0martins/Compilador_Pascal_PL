@@ -1,0 +1,21 @@
+type -> TYPE_REAL
+      | TYPE_INTEGER
+      | TYPE_STRING amount_string
+      | TYPE_BOOLEAN
+      | TYPE_CHAR
+      | array_type
+      | SET OF type
+      | POWERTO type
+      | special_types #opcional
+
+amount_string -> OPENBRACKET expr CLOSEBRACKET
+               |
+
+array_type -> ARRAY type_array_recursive OF type
+type_array_recursive -> type_array_recursive OPENBRACKET expr DOT DOT expr CLOSEBRACKET
+                      |
+
+#opcional
+special_types -> TYPE ID_TYPES ASSIGN RECORD special_types_list END SEMICOLON
+special_types_list -> special_types_list ID COLON type SEMICOLON
+                    |

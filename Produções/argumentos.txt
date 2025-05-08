@@ -1,0 +1,16 @@
+arguments_getter -> OPENPARENTHESIS arguments_getter_buffer CLOSEPARENTHESIS
+
+arguments_getter_buffer -> arguments_getter_buffer COMMA
+                         | expr
+                         |
+
+
+arguments_setter -> OPENPARENTHESIS arguments_setter_buffer CLOSEPARENTHESIS
+
+arguments_setter_buffer -> arguments_setter_buffer COMMA
+                         | arguments_setter_mut ID COLON type
+                         |
+
+arguments_setter_mut -> VAR
+                      | CONST
+                      |

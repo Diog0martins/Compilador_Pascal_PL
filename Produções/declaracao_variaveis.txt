@@ -1,13 +1,14 @@
-DECLARACAO -> VAR Listasvariaveis
-            | epslon
+vars -> var_linha2 var_linha1
 
-Listavariaveis -> Listasvariaveis Variaveis COLON Datastructure DELIMITER
-                | epslon
+var_linha2 -> var_linha1
+            |
 
-Variaveis -> Variaveis COMMA ID 
-           | ID
+var_linha1 -> VAR var_recursive COLON type SEMICOLON
+var_linha1 -> var_recursive COLON type SEMICOLON
+var_linha1 -> CONST const_recursive SEMICOLON
 
-DataStructure -> Datatype
-              | LBRACKET Array RBRACKET OFF Datatype
-              | ID
+const_recursive -> const_recursive SEMICOLON
+                 | ID EQUAL expr
 
+var_recursive -> var_recursive COLON
+               | ID

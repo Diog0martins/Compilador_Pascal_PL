@@ -1,0 +1,4 @@
+atribution -> atributions_alvo COLON EQUAL expr
+
+atributions_alvo -> id
+                  | array_getter

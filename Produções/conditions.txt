@@ -1,0 +1,15 @@
+condition -> condition AND condition_statement
+           | condition OR condition_statement
+           | condition_statement
+           | OPENPARENTHESIS condition CLOSEPARENTHESIS
+
+condition_statement -> expr condition_statement_symbol expr
+                     | NOT condition
+                     | BOOLEAN
+
+condition_statement_symbol -> EQUAL
+                            | DIFFERENT
+                            | LESSOREQUAL
+                            | LESSTHAN
+                            | GREATEROREQUAL
+                            | GREATERTHAN

@@ -1,0 +1,7 @@
+forloop -> FOR atributions atribution forloop_apply expr DO BEGIN list_instrucoes_locais end SEMICOLON
+
+forloop_apply -> DOWNTO
+               | TO
+
+
+whileloop -> WHILE condition DO BEGIN list_instrucoes_locais END SEMICOLON
