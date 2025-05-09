@@ -3,7 +3,7 @@
 
 def p_programa(p):
     '''
-    Programa : Cabecalho Dvariaveis Corpo DOT
+    Programa : Cabecalho Dvariaveis Corpo '.'
              | Cabecalho Corpo
     '''
     if len(p) == 5:
@@ -13,7 +13,9 @@ def p_programa(p):
 
 
 def p_cabecalho(p):
-    'Cabecalho : PROGRAM Programname SEMICOLON'
+    '''
+    Cabecalho : PROGRAM Programname ';'
+    '''
     print(f"Program name: {p[2]}")
 
 

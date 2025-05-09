@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ProgramaAND ARRAY ASSIGN AT BEGIN BOOLEAN CARDINAL CASE CLOSEBRACKET CLOSECURLBRACKET CLOSEPARENTHESIS COLON COMMA CONST DATATYPE DIFFERENT DIV DO DOLLAR DOT DOUBLEQUOTATION DOWNTO ELSE END EQUAL FILE FOR FORWARDDASH FUNCTION GOTO GREATEROREQUAL GREATERTHAN ID IF IN INTEGER KEYWORD LABEL LESSOREQUAL LESSTHAN MINUS MOD MULTILINECOMMENTS NIL NOT OF ONELINECOMMENTS OPENBRACKET OPENCURLBRACKET OPENPARENTHESIS OR PACKED PLUS POWERTO PROCEDURE PROGRAM REAL RECORD REPEAT SEMICOLON SET SINGLEQUOTATION STAR STRING THEN TO TYPE UNTIL VAR WHILE WITHDvariaveis : VAR ListavariaveisCorpo : BEGIN conteudo END\n    Programa : Cabecalho Dvariaveis Corpo DOT\n             | Cabecalho Corpo\n    \n    Listavariaveis : Listavariaveis Variaveis COLON Tipo SEMICOLON\n                   | \n    \n    conteudo :\n    Cabecalho : PROGRAM Programname SEMICOLON\n    Variaveis : Variaveis COMMA ID\n              | ID\n    Programname : ID\n    Tipo : DATATYPE\n         | ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE\n         | ID\n    \n    Intervalo : INTEGER DOT DOT INTEGER\n    '
+_lr_signature = "ProgramaAND ARRAY ASSIGN BEGIN BOOLEAN_TYPE CASE CHAR_TYPE CONST DIFFERENT DIV DO DOWNTO ELSE END FALSE FILE FOR FUNCTION GOTO GREATEROREQUAL ID IF IN INTEGER INTEGER_TYPE KEYWORD LABEL LESSOREQUAL MOD MULTILINECOMMENTS NIL NOT OF ONELINECOMMENTS OR PACKED PROCEDURE PROGRAM REAL REAL_TYPE RECORD REPEAT SET STRING STRING_TYPE THEN TO TRUE TYPE UNTIL VAR WHILE WITHDvariaveis : VAR ListavariaveisCorpo : BEGIN conteudo END\n    Programa : Cabecalho Dvariaveis Corpo '.'\n             | Cabecalho Corpo\n    \n    Listavariaveis : Listavariaveis Variaveis ':' Tipo ';'\n                   | \n    \n    conteudo :\n    \n    Cabecalho : PROGRAM Programname ';'\n    \n    Variaveis : Variaveis ',' ID\n              | ID\n    Programname : ID\n    Tipo : Datatype\n         | ARRAY '[' Intervalo ']' OF Datatype\n         | ID\n    \n    Intervalo : INTEGER '.' '.' INTEGER\n    \n    Datatype : REAL_TYPE\n             | INTEGER_TYPE\n             | STRING_TYPE\n             | BOOLEAN_TYPE\n             | CHAR_TYPE\n    "
     
-_lr_action_items = {'PROGRAM':([0,],[3,]),'$end':([1,5,14,17,],[0,-4,-3,-2,]),'VAR':([2,13,],[6,-8,]),'BEGIN':([2,4,6,11,13,25,],[7,7,-6,-1,-8,-5,]),'ID':([3,6,11,18,19,25,],[9,-6,16,23,24,-5,]),'END':([7,12,],[-7,17,]),'SEMICOLON':([8,9,20,21,23,33,],[13,-11,25,-12,-14,-13,]),'DOT':([10,17,28,30,],[14,-2,30,32,]),'COLON':([15,16,24,],[18,-10,-9,]),'COMMA':([15,16,24,],[19,-10,-9,]),'DATATYPE':([18,31,],[21,33,]),'ARRAY':([18,],[22,]),'OPENBRACKET':([22,],[26,]),'INTEGER':([26,32,],[28,34,]),'CLOSEBRACKET':([27,34,],[29,-15,]),'OF':([29,],[31,]),}
+_lr_action_items = {'PROGRAM':([0,],[3,]),'$end':([1,5,14,17,],[0,-4,-3,-2,]),'VAR':([2,13,],[6,-8,]),'BEGIN':([2,4,6,11,13,30,],[7,7,-6,-1,-8,-5,]),'ID':([3,6,11,18,19,30,],[9,-6,16,23,29,-5,]),'END':([7,12,],[-7,17,]),';':([8,9,20,21,23,24,25,26,27,28,38,],[13,-11,30,-12,-14,-16,-17,-18,-19,-20,-13,]),'.':([10,17,33,35,],[14,-2,35,37,]),':':([15,16,29,],[18,-10,-9,]),',':([15,16,29,],[19,-10,-9,]),'ARRAY':([18,],[22,]),'REAL_TYPE':([18,36,],[24,24,]),'INTEGER_TYPE':([18,36,],[25,25,]),'STRING_TYPE':([18,36,],[26,26,]),'BOOLEAN_TYPE':([18,36,],[27,27,]),'CHAR_TYPE':([18,36,],[28,28,]),'[':([22,],[31,]),'INTEGER':([31,37,],[33,39,]),']':([32,39,],[34,-15,]),'OF':([34,],[36,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'Programa':([0,],[1,]),'Cabecalho':([0,],[2,]),'Dvariaveis':([2,],[4,]),'Corpo':([2,4,],[5,10,]),'Programname':([3,],[8,]),'Listavariaveis':([6,],[11,]),'conteudo':([7,],[12,]),'Variaveis':([11,],[15,]),'Tipo':([18,],[20,]),'Intervalo':([26,],[27,]),}
+_lr_goto_items = {'Programa':([0,],[1,]),'Cabecalho':([0,],[2,]),'Dvariaveis':([2,],[4,]),'Corpo':([2,4,],[5,10,]),'Programname':([3,],[8,]),'Listavariaveis':([6,],[11,]),'conteudo':([7,],[12,]),'Variaveis':([11,],[15,]),'Tipo':([18,],[20,]),'Datatype':([18,36,],[21,38,]),'Intervalo':([31,],[32,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -29,17 +29,22 @@ _lr_productions = [
   ("S' -> Programa","S'",1,None,None,None),
   ('Dvariaveis -> VAR Listavariaveis','Dvariaveis',2,'p_dvariaveis','declarations.py',2),
   ('Corpo -> BEGIN conteudo END','Corpo',3,'p_corpo','body.py',5),
-  ('Programa -> Cabecalho Dvariaveis Corpo DOT','Programa',4,'p_programa','main_rules.py',6),
+  ('Programa -> Cabecalho Dvariaveis Corpo .','Programa',4,'p_programa','main_rules.py',6),
   ('Programa -> Cabecalho Corpo','Programa',2,'p_programa','main_rules.py',7),
-  ('Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON','Listavariaveis',5,'p_listavariaveis','declarations.py',8),
+  ('Listavariaveis -> Listavariaveis Variaveis : Tipo ;','Listavariaveis',5,'p_listavariaveis','declarations.py',8),
   ('Listavariaveis -> <empty>','Listavariaveis',0,'p_listavariaveis','declarations.py',9),
   ('conteudo -> <empty>','conteudo',0,'p_conteudo','body.py',11),
-  ('Cabecalho -> PROGRAM Programname SEMICOLON','Cabecalho',3,'p_cabecalho','main_rules.py',16),
-  ('Variaveis -> Variaveis COMMA ID','Variaveis',3,'p_variaveis','declarations.py',19),
+  ('Cabecalho -> PROGRAM Programname ;','Cabecalho',3,'p_cabecalho','main_rules.py',17),
+  ('Variaveis -> Variaveis , ID','Variaveis',3,'p_variaveis','declarations.py',19),
   ('Variaveis -> ID','Variaveis',1,'p_variaveis','declarations.py',20),
-  ('Programname -> ID','Programname',1,'p_programname','main_rules.py',21),
-  ('Tipo -> DATATYPE','Tipo',1,'p_tipo','declarations.py',30),
-  ('Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE','Tipo',6,'p_tipo','declarations.py',31),
+  ('Programname -> ID','Programname',1,'p_programname','main_rules.py',23),
+  ('Tipo -> Datatype','Tipo',1,'p_tipo','declarations.py',30),
+  ('Tipo -> ARRAY [ Intervalo ] OF Datatype','Tipo',6,'p_tipo','declarations.py',31),
   ('Tipo -> ID','Tipo',1,'p_tipo','declarations.py',32),
-  ('Intervalo -> INTEGER DOT DOT INTEGER','Intervalo',4,'p_intervalo','declarations.py',46),
+  ('Intervalo -> INTEGER . . INTEGER','Intervalo',4,'p_intervalo','declarations.py',46),
+  ('Datatype -> REAL_TYPE','Datatype',1,'p_datatype','declarations.py',52),
+  ('Datatype -> INTEGER_TYPE','Datatype',1,'p_datatype','declarations.py',53),
+  ('Datatype -> STRING_TYPE','Datatype',1,'p_datatype','declarations.py',54),
+  ('Datatype -> BOOLEAN_TYPE','Datatype',1,'p_datatype','declarations.py',55),
+  ('Datatype -> CHAR_TYPE','Datatype',1,'p_datatype','declarations.py',56),
 ]
