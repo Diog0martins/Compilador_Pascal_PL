@@ -70,6 +70,7 @@ tokens = (
     'TO',
     'TYPE',
     'UNTIL',
+    'USES',
     'VAR',
     'WHILE',
     'WITH',
@@ -223,6 +224,10 @@ def t_TYPE(t):
 
 def t_UNTIL(t):
     r'\buntil\b'
+    return t
+
+def t_USES(t):
+    r'\buses\b'
     return t
 
 def t_VAR(t):

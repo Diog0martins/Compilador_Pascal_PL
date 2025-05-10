@@ -2,22 +2,17 @@
 
 
 def p_programa(p):
+    'Programa : PROGRAM ID SEMICOLON Duses GlobalInsts BEGIN LocalInstsList END DOT'
+
+
+def p_globalinsts(p):
     '''
-    Programa : Cabecalho Dvariaveis Corpo DOT
-             | Cabecalho Corpo
+    GlobalInsts : GlobalInsts GlobalInst
+                | 
     '''
-    if len(p) == 5:
-        print("Cabeçalho, Declaração de Variáveis e Corpo encontrado")
-    else:
-        print("Cabeçalho e Corpo encontrado")
 
 
-def p_cabecalho(p):
-    'Cabecalho : PROGRAM Programname SEMICOLON'
-    print(f"Program name: {p[2]}")
-
-
-def p_programname(p):
-    'Programname : ID'
-    p[0] = p[1]
-
+def p_globalinst(p):
+    'GlobalInst : Dvariaveis'
+#              | Dfuncoes
+#              | Dprocedures

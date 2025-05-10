@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ProgramaAND ARRAY ASSIGN AT BEGIN BOOLEAN CARDINAL CASE CLOSEBRACKET CLOSECURLBRACKET CLOSEPARENTHESIS COLON COMMA CONST DATATYPE DIFFERENT DIV DO DOLLAR DOT DOUBLEQUOTATION DOWNTO ELSE END EQUAL FILE FOR FORWARDDASH FUNCTION GOTO GREATEROREQUAL GREATERTHAN ID IF IN INTEGER KEYWORD LABEL LESSOREQUAL LESSTHAN MINUS MOD MULTILINECOMMENTS NIL NOT OF ONELINECOMMENTS OPENBRACKET OPENCURLBRACKET OPENPARENTHESIS OR PACKED PLUS POWERTO PROCEDURE PROGRAM REAL RECORD REPEAT SEMICOLON SET SINGLEQUOTATION STAR STRING THEN TO TYPE UNTIL VAR WHILE WITHDvariaveis : VAR ListavariaveisCorpo : BEGIN conteudo END\n    Programa : Cabecalho Dvariaveis Corpo DOT\n             | Cabecalho Corpo\n    \n    Listavariaveis : Listavariaveis Variaveis COLON Tipo SEMICOLON\n                   | \n    \n    conteudo :\n    Cabecalho : PROGRAM Programname SEMICOLON\n    Variaveis : Variaveis COMMA ID\n              | ID\n    Programname : ID\n    Tipo : DATATYPE\n         | ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE\n         | ID\n    \n    Intervalo : INTEGER DOT DOT INTEGER\n    '
+_lr_signature = 'ProgramaAND ARRAY ASSIGN AT BEGIN BOOLEAN CARDINAL CASE CLOSEBRACKET CLOSECURLBRACKET CLOSEPARENTHESIS COLON COMMA CONST DATATYPE DIFFERENT DIV DO DOLLAR DOT DOUBLEQUOTATION DOWNTO ELSE END EQUAL FILE FOR FORWARDDASH FUNCTION GOTO GREATEROREQUAL GREATERTHAN ID IF IN INTEGER KEYWORD LABEL LESSOREQUAL LESSTHAN MINUS MOD MULTILINECOMMENTS NIL NOT OF ONELINECOMMENTS OPENBRACKET OPENCURLBRACKET OPENPARENTHESIS OR PACKED PLUS POWERTO PROCEDURE PROGRAM REAL RECORD REPEAT SEMICOLON SET SINGLEQUOTATION STAR STRING THEN TO TYPE UNTIL USES VAR WHILE WITHDvariaveis : VAR ListavariaveisAtribuicao : Atribuido ASSIGN Expressao\n    LocalInstsList : LocalInstsList Atribuicao SEMICOLON\n                   | \n    \n    Duses : USES UseList SEMICOLON\n          | \n    Programa : PROGRAM ID SEMICOLON Duses GlobalInsts BEGIN LocalInstsList END DOT\n    Listavariaveis : Listavariaveis Variaveis COLON Tipo SEMICOLON\n                   | \n    \n    Atribuido : ID\n              | Acesso_array\n    \n    GlobalInsts : GlobalInsts GlobalInst\n                | \n    \n    UseList : UseList COMMA ID\n            | ID \n    GlobalInst : DvariaveisAcesso_array : Variavel_array OPENBRACKET Expressao CLOSEBRACKET\n    Variaveis : Variaveis COMMA ID\n              | ID\n    \n    Variavel_array : ID\n                   | Acesso_array\n    \n    Tipo : DATATYPE\n         | ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE\n         | ID\n    \n    Expressao : Expressao PLUS Termo\n              | Expressao MINUS Termo\n              | Termo\n    \n    Termo : Termo STAR Fator\n          | Termo FORWARDDASH Fator\n          | Fator\n    \n    Intervalo : INTEGER DOT DOT INTEGER\n    \n    Fator : ID\n          | REAL\n          | INTEGER\n          | STRING\n          | BOOLEAN \n          | OPENPARENTHESIS Expressao CLOSEPARENTHESIS\n          | Acesso_array\n    '
     
-_lr_action_items = {'PROGRAM':([0,],[3,]),'$end':([1,5,14,17,],[0,-4,-3,-2,]),'VAR':([2,13,],[6,-8,]),'BEGIN':([2,4,6,11,13,25,],[7,7,-6,-1,-8,-5,]),'ID':([3,6,11,18,19,25,],[9,-6,16,23,24,-5,]),'END':([7,12,],[-7,17,]),'SEMICOLON':([8,9,20,21,23,33,],[13,-11,25,-12,-14,-13,]),'DOT':([10,17,28,30,],[14,-2,30,32,]),'COLON':([15,16,24,],[18,-10,-9,]),'COMMA':([15,16,24,],[19,-10,-9,]),'DATATYPE':([18,31,],[21,33,]),'ARRAY':([18,],[22,]),'OPENBRACKET':([22,],[26,]),'INTEGER':([26,32,],[28,34,]),'CLOSEBRACKET':([27,34,],[29,-15,]),'OF':([29,],[31,]),}
+_lr_action_items = {'PROGRAM':([0,],[2,]),'$end':([1,27,],[0,-7,]),'ID':([2,6,10,13,15,16,17,28,29,30,31,32,41,49,50,51,52,55,],[3,9,-4,-9,18,19,26,-3,36,36,47,48,36,36,36,36,36,-8,]),'SEMICOLON':([3,8,9,18,21,33,34,35,36,37,38,39,40,42,44,45,47,54,57,58,59,60,61,68,],[4,14,-15,-14,28,-2,-27,-30,-32,-33,-34,-35,-36,-38,55,-22,-24,-17,-25,-26,-28,-29,-37,-23,]),'USES':([4,],[6,]),'BEGIN':([4,5,7,11,12,13,14,17,55,],[-6,-13,10,-12,-16,-9,-5,-1,-8,]),'VAR':([4,5,7,11,12,13,14,17,55,],[-6,-13,13,-12,-16,-9,-5,-1,-8,]),'COMMA':([8,9,18,25,26,48,],[15,-15,-14,32,-19,-18,]),'END':([10,16,28,],[-4,20,-3,]),'ASSIGN':([19,22,23,54,],[-10,29,-11,-17,]),'OPENBRACKET':([19,23,24,36,42,46,54,],[-20,-21,30,-20,-21,56,-17,]),'DOT':([20,63,65,],[27,65,67,]),'COLON':([25,26,48,],[31,-19,-18,]),'REAL':([29,30,41,49,50,51,52,],[37,37,37,37,37,37,37,]),'INTEGER':([29,30,41,49,50,51,52,56,67,],[38,38,38,38,38,38,38,63,69,]),'STRING':([29,30,41,49,50,51,52,],[39,39,39,39,39,39,39,]),'BOOLEAN':([29,30,41,49,50,51,52,],[40,40,40,40,40,40,40,]),'OPENPARENTHESIS':([29,30,41,49,50,51,52,],[41,41,41,41,41,41,41,]),'DATATYPE':([31,66,],[45,68,]),'ARRAY':([31,],[46,]),'PLUS':([33,34,35,36,37,38,39,40,42,43,53,54,57,58,59,60,61,],[49,-27,-30,-32,-33,-34,-35,-36,-38,49,49,-17,-25,-26,-28,-29,-37,]),'MINUS':([33,34,35,36,37,38,39,40,42,43,53,54,57,58,59,60,61,],[50,-27,-30,-32,-33,-34,-35,-36,-38,50,50,-17,-25,-26,-28,-29,-37,]),'CLOSEBRACKET':([34,35,36,37,38,39,40,42,43,54,57,58,59,60,61,62,69,],[-27,-30,-32,-33,-34,-35,-36,-38,54,-17,-25,-26,-28,-29,-37,64,-31,]),'CLOSEPARENTHESIS':([34,35,36,37,38,39,40,42,53,54,57,58,59,60,61,],[-27,-30,-32,-33,-34,-35,-36,-38,61,-17,-25,-26,-28,-29,-37,]),'STAR':([34,35,36,37,38,39,40,42,54,57,58,59,60,61,],[51,-30,-32,-33,-34,-35,-36,-38,-17,51,51,-28,-29,-37,]),'FORWARDDASH':([34,35,36,37,38,39,40,42,54,57,58,59,60,61,],[52,-30,-32,-33,-34,-35,-36,-38,-17,52,52,-28,-29,-37,]),'OF':([64,],[66,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'Programa':([0,],[1,]),'Cabecalho':([0,],[2,]),'Dvariaveis':([2,],[4,]),'Corpo':([2,4,],[5,10,]),'Programname':([3,],[8,]),'Listavariaveis':([6,],[11,]),'conteudo':([7,],[12,]),'Variaveis':([11,],[15,]),'Tipo':([18,],[20,]),'Intervalo':([26,],[27,]),}
+_lr_goto_items = {'Programa':([0,],[1,]),'Duses':([4,],[5,]),'GlobalInsts':([5,],[7,]),'UseList':([6,],[8,]),'GlobalInst':([7,],[11,]),'Dvariaveis':([7,],[12,]),'LocalInstsList':([10,],[16,]),'Listavariaveis':([13,],[17,]),'Atribuicao':([16,],[21,]),'Atribuido':([16,],[22,]),'Acesso_array':([16,29,30,41,49,50,51,52,],[23,42,42,42,42,42,42,42,]),'Variavel_array':([16,29,30,41,49,50,51,52,],[24,24,24,24,24,24,24,24,]),'Variaveis':([17,],[25,]),'Expressao':([29,30,41,],[33,43,53,]),'Termo':([29,30,41,49,50,],[34,34,34,57,58,]),'Fator':([29,30,41,49,50,51,52,],[35,35,35,35,35,59,60,]),'Tipo':([31,],[44,]),'Intervalo':([56,],[62,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -28,18 +28,41 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> Programa","S'",1,None,None,None),
   ('Dvariaveis -> VAR Listavariaveis','Dvariaveis',2,'p_dvariaveis','declarations.py',2),
-  ('Corpo -> BEGIN conteudo END','Corpo',3,'p_corpo','body.py',5),
-  ('Programa -> Cabecalho Dvariaveis Corpo DOT','Programa',4,'p_programa','main_rules.py',6),
-  ('Programa -> Cabecalho Corpo','Programa',2,'p_programa','main_rules.py',7),
+  ('Atribuicao -> Atribuido ASSIGN Expressao','Atribuicao',3,'p_atribuicao','atribuicoes_rules.py',4),
+  ('LocalInstsList -> LocalInstsList Atribuicao SEMICOLON','LocalInstsList',3,'p_localinstslist','body.py',6),
+  ('LocalInstsList -> <empty>','LocalInstsList',0,'p_localinstslist','body.py',7),
+  ('Duses -> USES UseList SEMICOLON','Duses',3,'p_duses','declaracao_uses_rules.py',6),
+  ('Duses -> <empty>','Duses',0,'p_duses','declaracao_uses_rules.py',7),
+  ('Programa -> PROGRAM ID SEMICOLON Duses GlobalInsts BEGIN LocalInstsList END DOT','Programa',9,'p_programa','main_rules.py',5),
   ('Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON','Listavariaveis',5,'p_listavariaveis','declarations.py',8),
   ('Listavariaveis -> <empty>','Listavariaveis',0,'p_listavariaveis','declarations.py',9),
-  ('conteudo -> <empty>','conteudo',0,'p_conteudo','body.py',11),
-  ('Cabecalho -> PROGRAM Programname SEMICOLON','Cabecalho',3,'p_cabecalho','main_rules.py',16),
+  ('Atribuido -> ID','Atribuido',1,'p_atribuido','atribuicoes_rules.py',9),
+  ('Atribuido -> Acesso_array','Atribuido',1,'p_atribuido','atribuicoes_rules.py',10),
+  ('GlobalInsts -> GlobalInsts GlobalInst','GlobalInsts',2,'p_globalinsts','main_rules.py',10),
+  ('GlobalInsts -> <empty>','GlobalInsts',0,'p_globalinsts','main_rules.py',11),
+  ('UseList -> UseList COMMA ID','UseList',3,'p_uselist','declaracao_uses_rules.py',12),
+  ('UseList -> ID','UseList',1,'p_uselist','declaracao_uses_rules.py',13),
+  ('GlobalInst -> Dvariaveis','GlobalInst',1,'p_globalinst','main_rules.py',16),
+  ('Acesso_array -> Variavel_array OPENBRACKET Expressao CLOSEBRACKET','Acesso_array',4,'p_acesso_array','atribuicoes_rules.py',18),
   ('Variaveis -> Variaveis COMMA ID','Variaveis',3,'p_variaveis','declarations.py',19),
   ('Variaveis -> ID','Variaveis',1,'p_variaveis','declarations.py',20),
-  ('Programname -> ID','Programname',1,'p_programname','main_rules.py',21),
+  ('Variavel_array -> ID','Variavel_array',1,'p_variavel_array','atribuicoes_rules.py',24),
+  ('Variavel_array -> Acesso_array','Variavel_array',1,'p_variavel_array','atribuicoes_rules.py',25),
   ('Tipo -> DATATYPE','Tipo',1,'p_tipo','declarations.py',30),
   ('Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE','Tipo',6,'p_tipo','declarations.py',31),
   ('Tipo -> ID','Tipo',1,'p_tipo','declarations.py',32),
+  ('Expressao -> Expressao PLUS Termo','Expressao',3,'p_expressao','atribuicoes_rules.py',34),
+  ('Expressao -> Expressao MINUS Termo','Expressao',3,'p_expressao','atribuicoes_rules.py',35),
+  ('Expressao -> Termo','Expressao',1,'p_expressao','atribuicoes_rules.py',36),
+  ('Termo -> Termo STAR Fator','Termo',3,'p_termo','atribuicoes_rules.py',46),
+  ('Termo -> Termo FORWARDDASH Fator','Termo',3,'p_termo','atribuicoes_rules.py',47),
+  ('Termo -> Fator','Termo',1,'p_termo','atribuicoes_rules.py',48),
   ('Intervalo -> INTEGER DOT DOT INTEGER','Intervalo',4,'p_intervalo','declarations.py',46),
+  ('Fator -> ID','Fator',1,'p_fator','atribuicoes_rules.py',59),
+  ('Fator -> REAL','Fator',1,'p_fator','atribuicoes_rules.py',60),
+  ('Fator -> INTEGER','Fator',1,'p_fator','atribuicoes_rules.py',61),
+  ('Fator -> STRING','Fator',1,'p_fator','atribuicoes_rules.py',62),
+  ('Fator -> BOOLEAN','Fator',1,'p_fator','atribuicoes_rules.py',63),
+  ('Fator -> OPENPARENTHESIS Expressao CLOSEPARENTHESIS','Fator',3,'p_fator','atribuicoes_rules.py',64),
+  ('Fator -> Acesso_array','Fator',1,'p_fator','atribuicoes_rules.py',65),
 ]

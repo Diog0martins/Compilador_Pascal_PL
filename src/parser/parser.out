@@ -3,13 +3,10 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     AND
-    ASSIGN
     AT
-    BOOLEAN
     CARDINAL
     CASE
     CLOSECURLBRACKET
-    CLOSEPARENTHESIS
     CONST
     DIFFERENT
     DIV
@@ -21,7 +18,6 @@ Unused terminals:
     EQUAL
     FILE
     FOR
-    FORWARDDASH
     FUNCTION
     GOTO
     GREATEROREQUAL
@@ -32,26 +28,20 @@ Unused terminals:
     LABEL
     LESSOREQUAL
     LESSTHAN
-    MINUS
     MOD
     MULTILINECOMMENTS
     NIL
     NOT
     ONELINECOMMENTS
     OPENCURLBRACKET
-    OPENPARENTHESIS
     OR
     PACKED
-    PLUS
     POWERTO
     PROCEDURE
-    REAL
     RECORD
     REPEAT
     SET
     SINGLEQUOTATION
-    STAR
-    STRING
     THEN
     TO
     TYPE
@@ -63,91 +53,115 @@ Grammar
 
 Rule 0     S' -> Programa
 Rule 1     Dvariaveis -> VAR Listavariaveis
-Rule 2     Corpo -> BEGIN conteudo END
-Rule 3     Programa -> Cabecalho Dvariaveis Corpo DOT
-Rule 4     Programa -> Cabecalho Corpo
-Rule 5     Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON
-Rule 6     Listavariaveis -> <empty>
-Rule 7     conteudo -> <empty>
-Rule 8     Cabecalho -> PROGRAM Programname SEMICOLON
-Rule 9     Variaveis -> Variaveis COMMA ID
-Rule 10    Variaveis -> ID
-Rule 11    Programname -> ID
-Rule 12    Tipo -> DATATYPE
-Rule 13    Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE
-Rule 14    Tipo -> ID
-Rule 15    Intervalo -> INTEGER DOT DOT INTEGER
+Rule 2     Atribuicao -> Atribuido ASSIGN Expressao
+Rule 3     LocalInstsList -> LocalInstsList Atribuicao SEMICOLON
+Rule 4     LocalInstsList -> <empty>
+Rule 5     Duses -> USES UseList SEMICOLON
+Rule 6     Duses -> <empty>
+Rule 7     Programa -> PROGRAM ID SEMICOLON Duses GlobalInsts BEGIN LocalInstsList END DOT
+Rule 8     Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON
+Rule 9     Listavariaveis -> <empty>
+Rule 10    Atribuido -> ID
+Rule 11    Atribuido -> Acesso_array
+Rule 12    GlobalInsts -> GlobalInsts GlobalInst
+Rule 13    GlobalInsts -> <empty>
+Rule 14    UseList -> UseList COMMA ID
+Rule 15    UseList -> ID
+Rule 16    GlobalInst -> Dvariaveis
+Rule 17    Acesso_array -> Variavel_array OPENBRACKET Expressao CLOSEBRACKET
+Rule 18    Variaveis -> Variaveis COMMA ID
+Rule 19    Variaveis -> ID
+Rule 20    Variavel_array -> ID
+Rule 21    Variavel_array -> Acesso_array
+Rule 22    Tipo -> DATATYPE
+Rule 23    Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE
+Rule 24    Tipo -> ID
+Rule 25    Expressao -> Expressao PLUS Termo
+Rule 26    Expressao -> Expressao MINUS Termo
+Rule 27    Expressao -> Termo
+Rule 28    Termo -> Termo STAR Fator
+Rule 29    Termo -> Termo FORWARDDASH Fator
+Rule 30    Termo -> Fator
+Rule 31    Intervalo -> INTEGER DOT DOT INTEGER
+Rule 32    Fator -> ID
+Rule 33    Fator -> REAL
+Rule 34    Fator -> INTEGER
+Rule 35    Fator -> STRING
+Rule 36    Fator -> BOOLEAN
+Rule 37    Fator -> OPENPARENTHESIS Expressao CLOSEPARENTHESIS
+Rule 38    Fator -> Acesso_array
 
 Terminals, with rules where they appear
 
 AND                  : 
-ARRAY                : 13
-ASSIGN               : 
+ARRAY                : 23
+ASSIGN               : 2
 AT                   : 
-BEGIN                : 2
-BOOLEAN              : 
+BEGIN                : 7
+BOOLEAN              : 36
 CARDINAL             : 
 CASE                 : 
-CLOSEBRACKET         : 13
+CLOSEBRACKET         : 17 23
 CLOSECURLBRACKET     : 
-CLOSEPARENTHESIS     : 
-COLON                : 5
-COMMA                : 9
+CLOSEPARENTHESIS     : 37
+COLON                : 8
+COMMA                : 14 18
 CONST                : 
-DATATYPE             : 12 13
+DATATYPE             : 22 23
 DIFFERENT            : 
 DIV                  : 
 DO                   : 
 DOLLAR               : 
-DOT                  : 3 15 15
+DOT                  : 7 31 31
 DOUBLEQUOTATION      : 
 DOWNTO               : 
 ELSE                 : 
-END                  : 2
+END                  : 7
 EQUAL                : 
 FILE                 : 
 FOR                  : 
-FORWARDDASH          : 
+FORWARDDASH          : 29
 FUNCTION             : 
 GOTO                 : 
 GREATEROREQUAL       : 
 GREATERTHAN          : 
-ID                   : 9 10 11 14
+ID                   : 7 10 14 15 18 19 20 24 32
 IF                   : 
 IN                   : 
-INTEGER              : 15 15
+INTEGER              : 31 31 34
 KEYWORD              : 
 LABEL                : 
 LESSOREQUAL          : 
 LESSTHAN             : 
-MINUS                : 
+MINUS                : 26
 MOD                  : 
 MULTILINECOMMENTS    : 
 NIL                  : 
 NOT                  : 
-OF                   : 13
+OF                   : 23
 ONELINECOMMENTS      : 
-OPENBRACKET          : 13
+OPENBRACKET          : 17 23
 OPENCURLBRACKET      : 
-OPENPARENTHESIS      : 
+OPENPARENTHESIS      : 37
 OR                   : 
 PACKED               : 
-PLUS                 : 
+PLUS                 : 25
 POWERTO              : 
 PROCEDURE            : 
-PROGRAM              : 8
-REAL                 : 
+PROGRAM              : 7
+REAL                 : 33
 RECORD               : 
 REPEAT               : 
-SEMICOLON            : 5 8
+SEMICOLON            : 3 5 7 8
 SET                  : 
 SINGLEQUOTATION      : 
-STAR                 : 
-STRING               : 
+STAR                 : 28
+STRING               : 35
 THEN                 : 
 TO                   : 
 TYPE                 : 
 UNTIL                : 
+USES                 : 5
 VAR                  : 1
 WHILE                : 
 WITH                 : 
@@ -155,30 +169,35 @@ error                :
 
 Nonterminals, with rules where they appear
 
-Cabecalho            : 3 4
-Corpo                : 3 4
-Dvariaveis           : 3
-Intervalo            : 13
-Listavariaveis       : 1 5
+Acesso_array         : 11 21 38
+Atribuicao           : 3
+Atribuido            : 2
+Duses                : 7
+Dvariaveis           : 16
+Expressao            : 2 17 25 26 37
+Fator                : 28 29 30
+GlobalInst           : 12
+GlobalInsts          : 7 12
+Intervalo            : 23
+Listavariaveis       : 1 8
+LocalInstsList       : 3 7
 Programa             : 0
-Programname          : 8
-Tipo                 : 5
-Variaveis            : 5 9
-conteudo             : 2
+Termo                : 25 26 27 28 29
+Tipo                 : 8
+UseList              : 5 14
+Variaveis            : 8 18
+Variavel_array       : 17
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . Programa
-    (3) Programa -> . Cabecalho Dvariaveis Corpo DOT
-    (4) Programa -> . Cabecalho Corpo
-    (8) Cabecalho -> . PROGRAM Programname SEMICOLON
+    (7) Programa -> . PROGRAM ID SEMICOLON Duses GlobalInsts BEGIN LocalInstsList END DOT
 
-    PROGRAM         shift and go to state 3
+    PROGRAM         shift and go to state 2
 
     Programa                       shift and go to state 1
-    Cabecalho                      shift and go to state 2
 
 state 1
 
@@ -188,267 +207,813 @@ state 1
 
 state 2
 
-    (3) Programa -> Cabecalho . Dvariaveis Corpo DOT
-    (4) Programa -> Cabecalho . Corpo
-    (1) Dvariaveis -> . VAR Listavariaveis
-    (2) Corpo -> . BEGIN conteudo END
+    (7) Programa -> PROGRAM . ID SEMICOLON Duses GlobalInsts BEGIN LocalInstsList END DOT
 
-    VAR             shift and go to state 6
-    BEGIN           shift and go to state 7
+    ID              shift and go to state 3
 
-    Dvariaveis                     shift and go to state 4
-    Corpo                          shift and go to state 5
 
 state 3
 
-    (8) Cabecalho -> PROGRAM . Programname SEMICOLON
-    (11) Programname -> . ID
+    (7) Programa -> PROGRAM ID . SEMICOLON Duses GlobalInsts BEGIN LocalInstsList END DOT
 
-    ID              shift and go to state 9
+    SEMICOLON       shift and go to state 4
 
-    Programname                    shift and go to state 8
 
 state 4
 
-    (3) Programa -> Cabecalho Dvariaveis . Corpo DOT
-    (2) Corpo -> . BEGIN conteudo END
+    (7) Programa -> PROGRAM ID SEMICOLON . Duses GlobalInsts BEGIN LocalInstsList END DOT
+    (5) Duses -> . USES UseList SEMICOLON
+    (6) Duses -> .
 
-    BEGIN           shift and go to state 7
+    USES            shift and go to state 6
+    BEGIN           reduce using rule 6 (Duses -> .)
+    VAR             reduce using rule 6 (Duses -> .)
 
-    Corpo                          shift and go to state 10
+    Duses                          shift and go to state 5
 
 state 5
 
-    (4) Programa -> Cabecalho Corpo .
+    (7) Programa -> PROGRAM ID SEMICOLON Duses . GlobalInsts BEGIN LocalInstsList END DOT
+    (12) GlobalInsts -> . GlobalInsts GlobalInst
+    (13) GlobalInsts -> .
 
-    $end            reduce using rule 4 (Programa -> Cabecalho Corpo .)
+    BEGIN           reduce using rule 13 (GlobalInsts -> .)
+    VAR             reduce using rule 13 (GlobalInsts -> .)
 
+    GlobalInsts                    shift and go to state 7
 
 state 6
 
-    (1) Dvariaveis -> VAR . Listavariaveis
-    (5) Listavariaveis -> . Listavariaveis Variaveis COLON Tipo SEMICOLON
-    (6) Listavariaveis -> .
+    (5) Duses -> USES . UseList SEMICOLON
+    (14) UseList -> . UseList COMMA ID
+    (15) UseList -> . ID
 
-    ID              reduce using rule 6 (Listavariaveis -> .)
-    BEGIN           reduce using rule 6 (Listavariaveis -> .)
+    ID              shift and go to state 9
 
-    Listavariaveis                 shift and go to state 11
+    UseList                        shift and go to state 8
 
 state 7
 
-    (2) Corpo -> BEGIN . conteudo END
-    (7) conteudo -> .
+    (7) Programa -> PROGRAM ID SEMICOLON Duses GlobalInsts . BEGIN LocalInstsList END DOT
+    (12) GlobalInsts -> GlobalInsts . GlobalInst
+    (16) GlobalInst -> . Dvariaveis
+    (1) Dvariaveis -> . VAR Listavariaveis
 
-    END             reduce using rule 7 (conteudo -> .)
+    BEGIN           shift and go to state 10
+    VAR             shift and go to state 13
 
-    conteudo                       shift and go to state 12
+    GlobalInst                     shift and go to state 11
+    Dvariaveis                     shift and go to state 12
 
 state 8
 
-    (8) Cabecalho -> PROGRAM Programname . SEMICOLON
+    (5) Duses -> USES UseList . SEMICOLON
+    (14) UseList -> UseList . COMMA ID
 
-    SEMICOLON       shift and go to state 13
+    SEMICOLON       shift and go to state 14
+    COMMA           shift and go to state 15
 
 
 state 9
 
-    (11) Programname -> ID .
+    (15) UseList -> ID .
 
-    SEMICOLON       reduce using rule 11 (Programname -> ID .)
+    SEMICOLON       reduce using rule 15 (UseList -> ID .)
+    COMMA           reduce using rule 15 (UseList -> ID .)
 
 
 state 10
 
-    (3) Programa -> Cabecalho Dvariaveis Corpo . DOT
+    (7) Programa -> PROGRAM ID SEMICOLON Duses GlobalInsts BEGIN . LocalInstsList END DOT
+    (3) LocalInstsList -> . LocalInstsList Atribuicao SEMICOLON
+    (4) LocalInstsList -> .
 
-    DOT             shift and go to state 14
+    END             reduce using rule 4 (LocalInstsList -> .)
+    ID              reduce using rule 4 (LocalInstsList -> .)
 
+    LocalInstsList                 shift and go to state 16
 
 state 11
 
-    (1) Dvariaveis -> VAR Listavariaveis .
-    (5) Listavariaveis -> Listavariaveis . Variaveis COLON Tipo SEMICOLON
-    (9) Variaveis -> . Variaveis COMMA ID
-    (10) Variaveis -> . ID
+    (12) GlobalInsts -> GlobalInsts GlobalInst .
 
-    BEGIN           reduce using rule 1 (Dvariaveis -> VAR Listavariaveis .)
-    ID              shift and go to state 16
+    BEGIN           reduce using rule 12 (GlobalInsts -> GlobalInsts GlobalInst .)
+    VAR             reduce using rule 12 (GlobalInsts -> GlobalInsts GlobalInst .)
 
-    Variaveis                      shift and go to state 15
 
 state 12
 
-    (2) Corpo -> BEGIN conteudo . END
+    (16) GlobalInst -> Dvariaveis .
 
-    END             shift and go to state 17
+    BEGIN           reduce using rule 16 (GlobalInst -> Dvariaveis .)
+    VAR             reduce using rule 16 (GlobalInst -> Dvariaveis .)
 
 
 state 13
 
-    (8) Cabecalho -> PROGRAM Programname SEMICOLON .
+    (1) Dvariaveis -> VAR . Listavariaveis
+    (8) Listavariaveis -> . Listavariaveis Variaveis COLON Tipo SEMICOLON
+    (9) Listavariaveis -> .
 
-    VAR             reduce using rule 8 (Cabecalho -> PROGRAM Programname SEMICOLON .)
-    BEGIN           reduce using rule 8 (Cabecalho -> PROGRAM Programname SEMICOLON .)
+    ID              reduce using rule 9 (Listavariaveis -> .)
+    BEGIN           reduce using rule 9 (Listavariaveis -> .)
+    VAR             reduce using rule 9 (Listavariaveis -> .)
 
+    Listavariaveis                 shift and go to state 17
 
 state 14
 
-    (3) Programa -> Cabecalho Dvariaveis Corpo DOT .
+    (5) Duses -> USES UseList SEMICOLON .
 
-    $end            reduce using rule 3 (Programa -> Cabecalho Dvariaveis Corpo DOT .)
+    BEGIN           reduce using rule 5 (Duses -> USES UseList SEMICOLON .)
+    VAR             reduce using rule 5 (Duses -> USES UseList SEMICOLON .)
 
 
 state 15
 
-    (5) Listavariaveis -> Listavariaveis Variaveis . COLON Tipo SEMICOLON
-    (9) Variaveis -> Variaveis . COMMA ID
+    (14) UseList -> UseList COMMA . ID
 
-    COLON           shift and go to state 18
-    COMMA           shift and go to state 19
+    ID              shift and go to state 18
 
 
 state 16
 
-    (10) Variaveis -> ID .
+    (7) Programa -> PROGRAM ID SEMICOLON Duses GlobalInsts BEGIN LocalInstsList . END DOT
+    (3) LocalInstsList -> LocalInstsList . Atribuicao SEMICOLON
+    (2) Atribuicao -> . Atribuido ASSIGN Expressao
+    (10) Atribuido -> . ID
+    (11) Atribuido -> . Acesso_array
+    (17) Acesso_array -> . Variavel_array OPENBRACKET Expressao CLOSEBRACKET
+    (20) Variavel_array -> . ID
+    (21) Variavel_array -> . Acesso_array
 
-    COLON           reduce using rule 10 (Variaveis -> ID .)
-    COMMA           reduce using rule 10 (Variaveis -> ID .)
+    END             shift and go to state 20
+    ID              shift and go to state 19
 
+    Atribuicao                     shift and go to state 21
+    Atribuido                      shift and go to state 22
+    Acesso_array                   shift and go to state 23
+    Variavel_array                 shift and go to state 24
 
 state 17
 
-    (2) Corpo -> BEGIN conteudo END .
+    (1) Dvariaveis -> VAR Listavariaveis .
+    (8) Listavariaveis -> Listavariaveis . Variaveis COLON Tipo SEMICOLON
+    (18) Variaveis -> . Variaveis COMMA ID
+    (19) Variaveis -> . ID
 
-    $end            reduce using rule 2 (Corpo -> BEGIN conteudo END .)
-    DOT             reduce using rule 2 (Corpo -> BEGIN conteudo END .)
+    BEGIN           reduce using rule 1 (Dvariaveis -> VAR Listavariaveis .)
+    VAR             reduce using rule 1 (Dvariaveis -> VAR Listavariaveis .)
+    ID              shift and go to state 26
 
+    Variaveis                      shift and go to state 25
 
 state 18
 
-    (5) Listavariaveis -> Listavariaveis Variaveis COLON . Tipo SEMICOLON
-    (12) Tipo -> . DATATYPE
-    (13) Tipo -> . ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE
-    (14) Tipo -> . ID
+    (14) UseList -> UseList COMMA ID .
 
-    DATATYPE        shift and go to state 21
-    ARRAY           shift and go to state 22
-    ID              shift and go to state 23
+    SEMICOLON       reduce using rule 14 (UseList -> UseList COMMA ID .)
+    COMMA           reduce using rule 14 (UseList -> UseList COMMA ID .)
 
-    Tipo                           shift and go to state 20
 
 state 19
 
-    (9) Variaveis -> Variaveis COMMA . ID
+    (10) Atribuido -> ID .
+    (20) Variavel_array -> ID .
 
-    ID              shift and go to state 24
+    ASSIGN          reduce using rule 10 (Atribuido -> ID .)
+    OPENBRACKET     reduce using rule 20 (Variavel_array -> ID .)
 
 
 state 20
 
-    (5) Listavariaveis -> Listavariaveis Variaveis COLON Tipo . SEMICOLON
+    (7) Programa -> PROGRAM ID SEMICOLON Duses GlobalInsts BEGIN LocalInstsList END . DOT
 
-    SEMICOLON       shift and go to state 25
+    DOT             shift and go to state 27
 
 
 state 21
 
-    (12) Tipo -> DATATYPE .
+    (3) LocalInstsList -> LocalInstsList Atribuicao . SEMICOLON
 
-    SEMICOLON       reduce using rule 12 (Tipo -> DATATYPE .)
+    SEMICOLON       shift and go to state 28
 
 
 state 22
 
-    (13) Tipo -> ARRAY . OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE
+    (2) Atribuicao -> Atribuido . ASSIGN Expressao
 
-    OPENBRACKET     shift and go to state 26
+    ASSIGN          shift and go to state 29
 
 
 state 23
 
-    (14) Tipo -> ID .
+    (11) Atribuido -> Acesso_array .
+    (21) Variavel_array -> Acesso_array .
 
-    SEMICOLON       reduce using rule 14 (Tipo -> ID .)
+    ASSIGN          reduce using rule 11 (Atribuido -> Acesso_array .)
+    OPENBRACKET     reduce using rule 21 (Variavel_array -> Acesso_array .)
 
 
 state 24
 
-    (9) Variaveis -> Variaveis COMMA ID .
+    (17) Acesso_array -> Variavel_array . OPENBRACKET Expressao CLOSEBRACKET
 
-    COLON           reduce using rule 9 (Variaveis -> Variaveis COMMA ID .)
-    COMMA           reduce using rule 9 (Variaveis -> Variaveis COMMA ID .)
+    OPENBRACKET     shift and go to state 30
 
 
 state 25
 
-    (5) Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON .
+    (8) Listavariaveis -> Listavariaveis Variaveis . COLON Tipo SEMICOLON
+    (18) Variaveis -> Variaveis . COMMA ID
 
-    ID              reduce using rule 5 (Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON .)
-    BEGIN           reduce using rule 5 (Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON .)
+    COLON           shift and go to state 31
+    COMMA           shift and go to state 32
 
 
 state 26
 
-    (13) Tipo -> ARRAY OPENBRACKET . Intervalo CLOSEBRACKET OF DATATYPE
-    (15) Intervalo -> . INTEGER DOT DOT INTEGER
+    (19) Variaveis -> ID .
 
-    INTEGER         shift and go to state 28
+    COLON           reduce using rule 19 (Variaveis -> ID .)
+    COMMA           reduce using rule 19 (Variaveis -> ID .)
 
-    Intervalo                      shift and go to state 27
 
 state 27
 
-    (13) Tipo -> ARRAY OPENBRACKET Intervalo . CLOSEBRACKET OF DATATYPE
+    (7) Programa -> PROGRAM ID SEMICOLON Duses GlobalInsts BEGIN LocalInstsList END DOT .
 
-    CLOSEBRACKET    shift and go to state 29
+    $end            reduce using rule 7 (Programa -> PROGRAM ID SEMICOLON Duses GlobalInsts BEGIN LocalInstsList END DOT .)
 
 
 state 28
 
-    (15) Intervalo -> INTEGER . DOT DOT INTEGER
+    (3) LocalInstsList -> LocalInstsList Atribuicao SEMICOLON .
 
-    DOT             shift and go to state 30
+    END             reduce using rule 3 (LocalInstsList -> LocalInstsList Atribuicao SEMICOLON .)
+    ID              reduce using rule 3 (LocalInstsList -> LocalInstsList Atribuicao SEMICOLON .)
 
 
 state 29
 
-    (13) Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET . OF DATATYPE
+    (2) Atribuicao -> Atribuido ASSIGN . Expressao
+    (25) Expressao -> . Expressao PLUS Termo
+    (26) Expressao -> . Expressao MINUS Termo
+    (27) Expressao -> . Termo
+    (28) Termo -> . Termo STAR Fator
+    (29) Termo -> . Termo FORWARDDASH Fator
+    (30) Termo -> . Fator
+    (32) Fator -> . ID
+    (33) Fator -> . REAL
+    (34) Fator -> . INTEGER
+    (35) Fator -> . STRING
+    (36) Fator -> . BOOLEAN
+    (37) Fator -> . OPENPARENTHESIS Expressao CLOSEPARENTHESIS
+    (38) Fator -> . Acesso_array
+    (17) Acesso_array -> . Variavel_array OPENBRACKET Expressao CLOSEBRACKET
+    (20) Variavel_array -> . ID
+    (21) Variavel_array -> . Acesso_array
 
-    OF              shift and go to state 31
+    ID              shift and go to state 36
+    REAL            shift and go to state 37
+    INTEGER         shift and go to state 38
+    STRING          shift and go to state 39
+    BOOLEAN         shift and go to state 40
+    OPENPARENTHESIS shift and go to state 41
 
+    Expressao                      shift and go to state 33
+    Termo                          shift and go to state 34
+    Fator                          shift and go to state 35
+    Acesso_array                   shift and go to state 42
+    Variavel_array                 shift and go to state 24
 
 state 30
 
-    (15) Intervalo -> INTEGER DOT . DOT INTEGER
+    (17) Acesso_array -> Variavel_array OPENBRACKET . Expressao CLOSEBRACKET
+    (25) Expressao -> . Expressao PLUS Termo
+    (26) Expressao -> . Expressao MINUS Termo
+    (27) Expressao -> . Termo
+    (28) Termo -> . Termo STAR Fator
+    (29) Termo -> . Termo FORWARDDASH Fator
+    (30) Termo -> . Fator
+    (32) Fator -> . ID
+    (33) Fator -> . REAL
+    (34) Fator -> . INTEGER
+    (35) Fator -> . STRING
+    (36) Fator -> . BOOLEAN
+    (37) Fator -> . OPENPARENTHESIS Expressao CLOSEPARENTHESIS
+    (38) Fator -> . Acesso_array
+    (17) Acesso_array -> . Variavel_array OPENBRACKET Expressao CLOSEBRACKET
+    (20) Variavel_array -> . ID
+    (21) Variavel_array -> . Acesso_array
 
-    DOT             shift and go to state 32
+    ID              shift and go to state 36
+    REAL            shift and go to state 37
+    INTEGER         shift and go to state 38
+    STRING          shift and go to state 39
+    BOOLEAN         shift and go to state 40
+    OPENPARENTHESIS shift and go to state 41
 
+    Variavel_array                 shift and go to state 24
+    Expressao                      shift and go to state 43
+    Termo                          shift and go to state 34
+    Fator                          shift and go to state 35
+    Acesso_array                   shift and go to state 42
 
 state 31
 
-    (13) Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF . DATATYPE
+    (8) Listavariaveis -> Listavariaveis Variaveis COLON . Tipo SEMICOLON
+    (22) Tipo -> . DATATYPE
+    (23) Tipo -> . ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE
+    (24) Tipo -> . ID
 
-    DATATYPE        shift and go to state 33
+    DATATYPE        shift and go to state 45
+    ARRAY           shift and go to state 46
+    ID              shift and go to state 47
 
+    Tipo                           shift and go to state 44
 
 state 32
 
-    (15) Intervalo -> INTEGER DOT DOT . INTEGER
+    (18) Variaveis -> Variaveis COMMA . ID
 
-    INTEGER         shift and go to state 34
+    ID              shift and go to state 48
 
 
 state 33
 
-    (13) Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE .
+    (2) Atribuicao -> Atribuido ASSIGN Expressao .
+    (25) Expressao -> Expressao . PLUS Termo
+    (26) Expressao -> Expressao . MINUS Termo
 
-    SEMICOLON       reduce using rule 13 (Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE .)
+    SEMICOLON       reduce using rule 2 (Atribuicao -> Atribuido ASSIGN Expressao .)
+    PLUS            shift and go to state 49
+    MINUS           shift and go to state 50
 
 
 state 34
 
-    (15) Intervalo -> INTEGER DOT DOT INTEGER .
+    (27) Expressao -> Termo .
+    (28) Termo -> Termo . STAR Fator
+    (29) Termo -> Termo . FORWARDDASH Fator
 
-    CLOSEBRACKET    reduce using rule 15 (Intervalo -> INTEGER DOT DOT INTEGER .)
+    PLUS            reduce using rule 27 (Expressao -> Termo .)
+    MINUS           reduce using rule 27 (Expressao -> Termo .)
+    SEMICOLON       reduce using rule 27 (Expressao -> Termo .)
+    CLOSEBRACKET    reduce using rule 27 (Expressao -> Termo .)
+    CLOSEPARENTHESIS reduce using rule 27 (Expressao -> Termo .)
+    STAR            shift and go to state 51
+    FORWARDDASH     shift and go to state 52
+
+
+state 35
+
+    (30) Termo -> Fator .
+
+    STAR            reduce using rule 30 (Termo -> Fator .)
+    FORWARDDASH     reduce using rule 30 (Termo -> Fator .)
+    PLUS            reduce using rule 30 (Termo -> Fator .)
+    MINUS           reduce using rule 30 (Termo -> Fator .)
+    SEMICOLON       reduce using rule 30 (Termo -> Fator .)
+    CLOSEBRACKET    reduce using rule 30 (Termo -> Fator .)
+    CLOSEPARENTHESIS reduce using rule 30 (Termo -> Fator .)
+
+
+state 36
+
+    (32) Fator -> ID .
+    (20) Variavel_array -> ID .
+
+    STAR            reduce using rule 32 (Fator -> ID .)
+    FORWARDDASH     reduce using rule 32 (Fator -> ID .)
+    PLUS            reduce using rule 32 (Fator -> ID .)
+    MINUS           reduce using rule 32 (Fator -> ID .)
+    SEMICOLON       reduce using rule 32 (Fator -> ID .)
+    CLOSEBRACKET    reduce using rule 32 (Fator -> ID .)
+    CLOSEPARENTHESIS reduce using rule 32 (Fator -> ID .)
+    OPENBRACKET     reduce using rule 20 (Variavel_array -> ID .)
+
+
+state 37
+
+    (33) Fator -> REAL .
+
+    STAR            reduce using rule 33 (Fator -> REAL .)
+    FORWARDDASH     reduce using rule 33 (Fator -> REAL .)
+    PLUS            reduce using rule 33 (Fator -> REAL .)
+    MINUS           reduce using rule 33 (Fator -> REAL .)
+    SEMICOLON       reduce using rule 33 (Fator -> REAL .)
+    CLOSEBRACKET    reduce using rule 33 (Fator -> REAL .)
+    CLOSEPARENTHESIS reduce using rule 33 (Fator -> REAL .)
+
+
+state 38
+
+    (34) Fator -> INTEGER .
+
+    STAR            reduce using rule 34 (Fator -> INTEGER .)
+    FORWARDDASH     reduce using rule 34 (Fator -> INTEGER .)
+    PLUS            reduce using rule 34 (Fator -> INTEGER .)
+    MINUS           reduce using rule 34 (Fator -> INTEGER .)
+    SEMICOLON       reduce using rule 34 (Fator -> INTEGER .)
+    CLOSEBRACKET    reduce using rule 34 (Fator -> INTEGER .)
+    CLOSEPARENTHESIS reduce using rule 34 (Fator -> INTEGER .)
+
+
+state 39
+
+    (35) Fator -> STRING .
+
+    STAR            reduce using rule 35 (Fator -> STRING .)
+    FORWARDDASH     reduce using rule 35 (Fator -> STRING .)
+    PLUS            reduce using rule 35 (Fator -> STRING .)
+    MINUS           reduce using rule 35 (Fator -> STRING .)
+    SEMICOLON       reduce using rule 35 (Fator -> STRING .)
+    CLOSEBRACKET    reduce using rule 35 (Fator -> STRING .)
+    CLOSEPARENTHESIS reduce using rule 35 (Fator -> STRING .)
+
+
+state 40
+
+    (36) Fator -> BOOLEAN .
+
+    STAR            reduce using rule 36 (Fator -> BOOLEAN .)
+    FORWARDDASH     reduce using rule 36 (Fator -> BOOLEAN .)
+    PLUS            reduce using rule 36 (Fator -> BOOLEAN .)
+    MINUS           reduce using rule 36 (Fator -> BOOLEAN .)
+    SEMICOLON       reduce using rule 36 (Fator -> BOOLEAN .)
+    CLOSEBRACKET    reduce using rule 36 (Fator -> BOOLEAN .)
+    CLOSEPARENTHESIS reduce using rule 36 (Fator -> BOOLEAN .)
+
+
+state 41
+
+    (37) Fator -> OPENPARENTHESIS . Expressao CLOSEPARENTHESIS
+    (25) Expressao -> . Expressao PLUS Termo
+    (26) Expressao -> . Expressao MINUS Termo
+    (27) Expressao -> . Termo
+    (28) Termo -> . Termo STAR Fator
+    (29) Termo -> . Termo FORWARDDASH Fator
+    (30) Termo -> . Fator
+    (32) Fator -> . ID
+    (33) Fator -> . REAL
+    (34) Fator -> . INTEGER
+    (35) Fator -> . STRING
+    (36) Fator -> . BOOLEAN
+    (37) Fator -> . OPENPARENTHESIS Expressao CLOSEPARENTHESIS
+    (38) Fator -> . Acesso_array
+    (17) Acesso_array -> . Variavel_array OPENBRACKET Expressao CLOSEBRACKET
+    (20) Variavel_array -> . ID
+    (21) Variavel_array -> . Acesso_array
+
+    ID              shift and go to state 36
+    REAL            shift and go to state 37
+    INTEGER         shift and go to state 38
+    STRING          shift and go to state 39
+    BOOLEAN         shift and go to state 40
+    OPENPARENTHESIS shift and go to state 41
+
+    Expressao                      shift and go to state 53
+    Termo                          shift and go to state 34
+    Fator                          shift and go to state 35
+    Acesso_array                   shift and go to state 42
+    Variavel_array                 shift and go to state 24
+
+state 42
+
+    (38) Fator -> Acesso_array .
+    (21) Variavel_array -> Acesso_array .
+
+    STAR            reduce using rule 38 (Fator -> Acesso_array .)
+    FORWARDDASH     reduce using rule 38 (Fator -> Acesso_array .)
+    PLUS            reduce using rule 38 (Fator -> Acesso_array .)
+    MINUS           reduce using rule 38 (Fator -> Acesso_array .)
+    SEMICOLON       reduce using rule 38 (Fator -> Acesso_array .)
+    CLOSEBRACKET    reduce using rule 38 (Fator -> Acesso_array .)
+    CLOSEPARENTHESIS reduce using rule 38 (Fator -> Acesso_array .)
+    OPENBRACKET     reduce using rule 21 (Variavel_array -> Acesso_array .)
+
+
+state 43
+
+    (17) Acesso_array -> Variavel_array OPENBRACKET Expressao . CLOSEBRACKET
+    (25) Expressao -> Expressao . PLUS Termo
+    (26) Expressao -> Expressao . MINUS Termo
+
+    CLOSEBRACKET    shift and go to state 54
+    PLUS            shift and go to state 49
+    MINUS           shift and go to state 50
+
+
+state 44
+
+    (8) Listavariaveis -> Listavariaveis Variaveis COLON Tipo . SEMICOLON
+
+    SEMICOLON       shift and go to state 55
+
+
+state 45
+
+    (22) Tipo -> DATATYPE .
+
+    SEMICOLON       reduce using rule 22 (Tipo -> DATATYPE .)
+
+
+state 46
+
+    (23) Tipo -> ARRAY . OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE
+
+    OPENBRACKET     shift and go to state 56
+
+
+state 47
+
+    (24) Tipo -> ID .
+
+    SEMICOLON       reduce using rule 24 (Tipo -> ID .)
+
+
+state 48
+
+    (18) Variaveis -> Variaveis COMMA ID .
+
+    COLON           reduce using rule 18 (Variaveis -> Variaveis COMMA ID .)
+    COMMA           reduce using rule 18 (Variaveis -> Variaveis COMMA ID .)
+
+
+state 49
+
+    (25) Expressao -> Expressao PLUS . Termo
+    (28) Termo -> . Termo STAR Fator
+    (29) Termo -> . Termo FORWARDDASH Fator
+    (30) Termo -> . Fator
+    (32) Fator -> . ID
+    (33) Fator -> . REAL
+    (34) Fator -> . INTEGER
+    (35) Fator -> . STRING
+    (36) Fator -> . BOOLEAN
+    (37) Fator -> . OPENPARENTHESIS Expressao CLOSEPARENTHESIS
+    (38) Fator -> . Acesso_array
+    (17) Acesso_array -> . Variavel_array OPENBRACKET Expressao CLOSEBRACKET
+    (20) Variavel_array -> . ID
+    (21) Variavel_array -> . Acesso_array
+
+    ID              shift and go to state 36
+    REAL            shift and go to state 37
+    INTEGER         shift and go to state 38
+    STRING          shift and go to state 39
+    BOOLEAN         shift and go to state 40
+    OPENPARENTHESIS shift and go to state 41
+
+    Termo                          shift and go to state 57
+    Fator                          shift and go to state 35
+    Acesso_array                   shift and go to state 42
+    Variavel_array                 shift and go to state 24
+
+state 50
+
+    (26) Expressao -> Expressao MINUS . Termo
+    (28) Termo -> . Termo STAR Fator
+    (29) Termo -> . Termo FORWARDDASH Fator
+    (30) Termo -> . Fator
+    (32) Fator -> . ID
+    (33) Fator -> . REAL
+    (34) Fator -> . INTEGER
+    (35) Fator -> . STRING
+    (36) Fator -> . BOOLEAN
+    (37) Fator -> . OPENPARENTHESIS Expressao CLOSEPARENTHESIS
+    (38) Fator -> . Acesso_array
+    (17) Acesso_array -> . Variavel_array OPENBRACKET Expressao CLOSEBRACKET
+    (20) Variavel_array -> . ID
+    (21) Variavel_array -> . Acesso_array
+
+    ID              shift and go to state 36
+    REAL            shift and go to state 37
+    INTEGER         shift and go to state 38
+    STRING          shift and go to state 39
+    BOOLEAN         shift and go to state 40
+    OPENPARENTHESIS shift and go to state 41
+
+    Termo                          shift and go to state 58
+    Fator                          shift and go to state 35
+    Acesso_array                   shift and go to state 42
+    Variavel_array                 shift and go to state 24
+
+state 51
+
+    (28) Termo -> Termo STAR . Fator
+    (32) Fator -> . ID
+    (33) Fator -> . REAL
+    (34) Fator -> . INTEGER
+    (35) Fator -> . STRING
+    (36) Fator -> . BOOLEAN
+    (37) Fator -> . OPENPARENTHESIS Expressao CLOSEPARENTHESIS
+    (38) Fator -> . Acesso_array
+    (17) Acesso_array -> . Variavel_array OPENBRACKET Expressao CLOSEBRACKET
+    (20) Variavel_array -> . ID
+    (21) Variavel_array -> . Acesso_array
+
+    ID              shift and go to state 36
+    REAL            shift and go to state 37
+    INTEGER         shift and go to state 38
+    STRING          shift and go to state 39
+    BOOLEAN         shift and go to state 40
+    OPENPARENTHESIS shift and go to state 41
+
+    Fator                          shift and go to state 59
+    Acesso_array                   shift and go to state 42
+    Variavel_array                 shift and go to state 24
+
+state 52
+
+    (29) Termo -> Termo FORWARDDASH . Fator
+    (32) Fator -> . ID
+    (33) Fator -> . REAL
+    (34) Fator -> . INTEGER
+    (35) Fator -> . STRING
+    (36) Fator -> . BOOLEAN
+    (37) Fator -> . OPENPARENTHESIS Expressao CLOSEPARENTHESIS
+    (38) Fator -> . Acesso_array
+    (17) Acesso_array -> . Variavel_array OPENBRACKET Expressao CLOSEBRACKET
+    (20) Variavel_array -> . ID
+    (21) Variavel_array -> . Acesso_array
+
+    ID              shift and go to state 36
+    REAL            shift and go to state 37
+    INTEGER         shift and go to state 38
+    STRING          shift and go to state 39
+    BOOLEAN         shift and go to state 40
+    OPENPARENTHESIS shift and go to state 41
+
+    Fator                          shift and go to state 60
+    Acesso_array                   shift and go to state 42
+    Variavel_array                 shift and go to state 24
+
+state 53
+
+    (37) Fator -> OPENPARENTHESIS Expressao . CLOSEPARENTHESIS
+    (25) Expressao -> Expressao . PLUS Termo
+    (26) Expressao -> Expressao . MINUS Termo
+
+    CLOSEPARENTHESIS shift and go to state 61
+    PLUS            shift and go to state 49
+    MINUS           shift and go to state 50
+
+
+state 54
+
+    (17) Acesso_array -> Variavel_array OPENBRACKET Expressao CLOSEBRACKET .
+
+    ASSIGN          reduce using rule 17 (Acesso_array -> Variavel_array OPENBRACKET Expressao CLOSEBRACKET .)
+    OPENBRACKET     reduce using rule 17 (Acesso_array -> Variavel_array OPENBRACKET Expressao CLOSEBRACKET .)
+    STAR            reduce using rule 17 (Acesso_array -> Variavel_array OPENBRACKET Expressao CLOSEBRACKET .)
+    FORWARDDASH     reduce using rule 17 (Acesso_array -> Variavel_array OPENBRACKET Expressao CLOSEBRACKET .)
+    PLUS            reduce using rule 17 (Acesso_array -> Variavel_array OPENBRACKET Expressao CLOSEBRACKET .)
+    MINUS           reduce using rule 17 (Acesso_array -> Variavel_array OPENBRACKET Expressao CLOSEBRACKET .)
+    SEMICOLON       reduce using rule 17 (Acesso_array -> Variavel_array OPENBRACKET Expressao CLOSEBRACKET .)
+    CLOSEBRACKET    reduce using rule 17 (Acesso_array -> Variavel_array OPENBRACKET Expressao CLOSEBRACKET .)
+    CLOSEPARENTHESIS reduce using rule 17 (Acesso_array -> Variavel_array OPENBRACKET Expressao CLOSEBRACKET .)
+
+
+state 55
+
+    (8) Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON .
+
+    ID              reduce using rule 8 (Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON .)
+    BEGIN           reduce using rule 8 (Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON .)
+    VAR             reduce using rule 8 (Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON .)
+
+
+state 56
+
+    (23) Tipo -> ARRAY OPENBRACKET . Intervalo CLOSEBRACKET OF DATATYPE
+    (31) Intervalo -> . INTEGER DOT DOT INTEGER
+
+    INTEGER         shift and go to state 63
+
+    Intervalo                      shift and go to state 62
+
+state 57
+
+    (25) Expressao -> Expressao PLUS Termo .
+    (28) Termo -> Termo . STAR Fator
+    (29) Termo -> Termo . FORWARDDASH Fator
+
+    PLUS            reduce using rule 25 (Expressao -> Expressao PLUS Termo .)
+    MINUS           reduce using rule 25 (Expressao -> Expressao PLUS Termo .)
+    SEMICOLON       reduce using rule 25 (Expressao -> Expressao PLUS Termo .)
+    CLOSEBRACKET    reduce using rule 25 (Expressao -> Expressao PLUS Termo .)
+    CLOSEPARENTHESIS reduce using rule 25 (Expressao -> Expressao PLUS Termo .)
+    STAR            shift and go to state 51
+    FORWARDDASH     shift and go to state 52
+
+
+state 58
+
+    (26) Expressao -> Expressao MINUS Termo .
+    (28) Termo -> Termo . STAR Fator
+    (29) Termo -> Termo . FORWARDDASH Fator
+
+    PLUS            reduce using rule 26 (Expressao -> Expressao MINUS Termo .)
+    MINUS           reduce using rule 26 (Expressao -> Expressao MINUS Termo .)
+    SEMICOLON       reduce using rule 26 (Expressao -> Expressao MINUS Termo .)
+    CLOSEBRACKET    reduce using rule 26 (Expressao -> Expressao MINUS Termo .)
+    CLOSEPARENTHESIS reduce using rule 26 (Expressao -> Expressao MINUS Termo .)
+    STAR            shift and go to state 51
+    FORWARDDASH     shift and go to state 52
+
+
+state 59
+
+    (28) Termo -> Termo STAR Fator .
+
+    STAR            reduce using rule 28 (Termo -> Termo STAR Fator .)
+    FORWARDDASH     reduce using rule 28 (Termo -> Termo STAR Fator .)
+    PLUS            reduce using rule 28 (Termo -> Termo STAR Fator .)
+    MINUS           reduce using rule 28 (Termo -> Termo STAR Fator .)
+    SEMICOLON       reduce using rule 28 (Termo -> Termo STAR Fator .)
+    CLOSEBRACKET    reduce using rule 28 (Termo -> Termo STAR Fator .)
+    CLOSEPARENTHESIS reduce using rule 28 (Termo -> Termo STAR Fator .)
+
+
+state 60
+
+    (29) Termo -> Termo FORWARDDASH Fator .
+
+    STAR            reduce using rule 29 (Termo -> Termo FORWARDDASH Fator .)
+    FORWARDDASH     reduce using rule 29 (Termo -> Termo FORWARDDASH Fator .)
+    PLUS            reduce using rule 29 (Termo -> Termo FORWARDDASH Fator .)
+    MINUS           reduce using rule 29 (Termo -> Termo FORWARDDASH Fator .)
+    SEMICOLON       reduce using rule 29 (Termo -> Termo FORWARDDASH Fator .)
+    CLOSEBRACKET    reduce using rule 29 (Termo -> Termo FORWARDDASH Fator .)
+    CLOSEPARENTHESIS reduce using rule 29 (Termo -> Termo FORWARDDASH Fator .)
+
+
+state 61
+
+    (37) Fator -> OPENPARENTHESIS Expressao CLOSEPARENTHESIS .
+
+    STAR            reduce using rule 37 (Fator -> OPENPARENTHESIS Expressao CLOSEPARENTHESIS .)
+    FORWARDDASH     reduce using rule 37 (Fator -> OPENPARENTHESIS Expressao CLOSEPARENTHESIS .)
+    PLUS            reduce using rule 37 (Fator -> OPENPARENTHESIS Expressao CLOSEPARENTHESIS .)
+    MINUS           reduce using rule 37 (Fator -> OPENPARENTHESIS Expressao CLOSEPARENTHESIS .)
+    SEMICOLON       reduce using rule 37 (Fator -> OPENPARENTHESIS Expressao CLOSEPARENTHESIS .)
+    CLOSEBRACKET    reduce using rule 37 (Fator -> OPENPARENTHESIS Expressao CLOSEPARENTHESIS .)
+    CLOSEPARENTHESIS reduce using rule 37 (Fator -> OPENPARENTHESIS Expressao CLOSEPARENTHESIS .)
+
+
+state 62
+
+    (23) Tipo -> ARRAY OPENBRACKET Intervalo . CLOSEBRACKET OF DATATYPE
+
+    CLOSEBRACKET    shift and go to state 64
+
+
+state 63
+
+    (31) Intervalo -> INTEGER . DOT DOT INTEGER
+
+    DOT             shift and go to state 65
+
+
+state 64
+
+    (23) Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET . OF DATATYPE
+
+    OF              shift and go to state 66
+
+
+state 65
+
+    (31) Intervalo -> INTEGER DOT . DOT INTEGER
+
+    DOT             shift and go to state 67
+
+
+state 66
+
+    (23) Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF . DATATYPE
+
+    DATATYPE        shift and go to state 68
+
+
+state 67
+
+    (31) Intervalo -> INTEGER DOT DOT . INTEGER
+
+    INTEGER         shift and go to state 69
+
+
+state 68
+
+    (23) Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE .
+
+    SEMICOLON       reduce using rule 23 (Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE .)
+
+
+state 69
+
+    (31) Intervalo -> INTEGER DOT DOT INTEGER .
+
+    CLOSEBRACKET    reduce using rule 31 (Intervalo -> INTEGER DOT DOT INTEGER .)
 
