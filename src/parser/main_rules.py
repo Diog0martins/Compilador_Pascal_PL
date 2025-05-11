@@ -2,7 +2,9 @@
 
 
 def p_programa(p):
-    'Programa : PROGRAM ID SEMICOLON Duses GlobalInsts BEGIN LocalInstsList END DOT'
+    '''
+    Programa : PROGRAM ID ';' Duses GlobalInsts BEGIN LocalInstsList END '.'
+    '''
 
 
 def p_globalinsts(p):

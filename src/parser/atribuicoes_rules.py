@@ -1,8 +1,10 @@
 # ====== Produções de Atribuições ======
 
 def p_atribuicao(p):
-    'Atribuicao : Atribuido ASSIGN Expressao'
-    print(f"Atribuição reconhecida: {p[1]} := {p[3]}")
+    '''
+    Atribuicao : Atribuido ':' '=' Expressao
+    '''
+    print(f"Atribuição reconhecida: {p[1]} := {p[4]}")
 
 def p_atribuido(p):
     '''
@@ -15,7 +17,9 @@ def p_atribuido(p):
 # ====== Produções de Arrays ======
 
 def p_acesso_array(p):
-    'Acesso_array : Variavel_array OPENBRACKET Expressao CLOSEBRACKET'
+    '''
+    Acesso_array : Variavel_array '[' Expressao ']'
+    '''
     p[0] = f"{p[1]}[{p[3]}]"
     print(f"Acesso a array reconhecido: {p[0]}")
 
@@ -31,8 +35,8 @@ def p_variavel_array(p):
 
 def p_expressao(p):
     '''
-    Expressao : Expressao PLUS Termo
-              | Expressao MINUS Termo
+    Expressao : Expressao '+' Termo
+              | Expressao '-' Termo
               | Termo
     '''
     if len(p) == 4:
@@ -43,8 +47,8 @@ def p_expressao(p):
 
 def p_termo(p):
     '''
-    Termo : Termo STAR Fator
-          | Termo FORWARDDASH Fator
+    Termo : Termo '*' Fator
+          | Termo '/' Fator
           | Fator
     '''
 #          | Termo MOD Fator
@@ -60,8 +64,9 @@ def p_fator(p):
           | REAL
           | INTEGER
           | STRING
-          | BOOLEAN 
-          | OPENPARENTHESIS Expressao CLOSEPARENTHESIS
+          | TRUE
+          | FALSE 
+          | '(' Expressao ')'
           | Acesso_array
     '''
     if len(p) == 2:

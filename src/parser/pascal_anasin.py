@@ -1,5 +1,5 @@
 import ply.yacc as yacc
-from lexer.pascal_analex import tokens 
+from lexer.pascal_analex2 import tokens 
 
 
 # ====== Gramática ======
@@ -11,6 +11,8 @@ from .declarations import *
 from .declaracao_uses_rules import *
 from .body import *
 from .atribuicoes_rules import *
+from .if_condicional import *
+from .condicoes_rules import *
 
 def p_error(p):
     if p:

@@ -5,7 +5,7 @@ def p_dvariaveis(p):
 
 def p_listavariaveis(p):
     '''
-    Listavariaveis : Listavariaveis Variaveis COLON Tipo SEMICOLON
+    Listavariaveis : Listavariaveis Variaveis ':' Tipo ';'
                    | 
     '''
     if len(p) > 1:
@@ -16,7 +16,7 @@ def p_listavariaveis(p):
 
 def p_variaveis(p):
     '''
-    Variaveis : Variaveis COMMA ID
+    Variaveis : Variaveis ',' ID
               | ID
     '''
     if len(p) == 4:
@@ -27,8 +27,8 @@ def p_variaveis(p):
 
 def p_tipo(p):
     '''
-    Tipo : DATATYPE
-         | ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE
+    Tipo : Datatype
+         | ARRAY '[' Intervalo ']' OF Datatype
          | ID
     '''
     if len(p) == 2:
@@ -43,6 +43,17 @@ def p_tipo(p):
 
 def p_intervalo(p):
     '''
-    Intervalo : INTEGER DOT DOT INTEGER
+    Intervalo : INTEGER '.' '.' INTEGER
     '''
     p[0] = f"{p[1]} a {p[4]}"
+
+
+def p_datatype(p):
+    '''
+    Datatype : REAL_TYPE
+             | INTEGER_TYPE
+             | STRING_TYPE
+             | BOOLEAN_TYPE
+             | CHAR_TYPE
+    '''
+    p[0] = p[1]

@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ProgramaAND ARRAY ASSIGN AT BEGIN BOOLEAN CARDINAL CASE CLOSEBRACKET CLOSECURLBRACKET CLOSEPARENTHESIS COLON COMMA CONST DATATYPE DIFFERENT DIV DO DOLLAR DOT DOUBLEQUOTATION DOWNTO ELSE END EQUAL FILE FOR FORWARDDASH FUNCTION GOTO GREATEROREQUAL GREATERTHAN ID IF IN INTEGER KEYWORD LABEL LESSOREQUAL LESSTHAN MINUS MOD MULTILINECOMMENTS NIL NOT OF ONELINECOMMENTS OPENBRACKET OPENCURLBRACKET OPENPARENTHESIS OR PACKED PLUS POWERTO PROCEDURE PROGRAM REAL RECORD REPEAT SEMICOLON SET SINGLEQUOTATION STAR STRING THEN TO TYPE UNTIL USES VAR WHILE WITHDvariaveis : VAR ListavariaveisAtribuicao : Atribuido ASSIGN Expressao\n    LocalInstsList : LocalInstsList Atribuicao SEMICOLON\n                   | \n    \n    Duses : USES UseList SEMICOLON\n          | \n    Programa : PROGRAM ID SEMICOLON Duses GlobalInsts BEGIN LocalInstsList END DOT\n    Listavariaveis : Listavariaveis Variaveis COLON Tipo SEMICOLON\n                   | \n    \n    Atribuido : ID\n              | Acesso_array\n    \n    GlobalInsts : GlobalInsts GlobalInst\n                | \n    \n    UseList : UseList COMMA ID\n            | ID \n    GlobalInst : DvariaveisAcesso_array : Variavel_array OPENBRACKET Expressao CLOSEBRACKET\n    Variaveis : Variaveis COMMA ID\n              | ID\n    \n    Variavel_array : ID\n                   | Acesso_array\n    \n    Tipo : DATATYPE\n         | ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE\n         | ID\n    \n    Expressao : Expressao PLUS Termo\n              | Expressao MINUS Termo\n              | Termo\n    \n    Termo : Termo STAR Fator\n          | Termo FORWARDDASH Fator\n          | Fator\n    \n    Intervalo : INTEGER DOT DOT INTEGER\n    \n    Fator : ID\n          | REAL\n          | INTEGER\n          | STRING\n          | BOOLEAN \n          | OPENPARENTHESIS Expressao CLOSEPARENTHESIS\n          | Acesso_array\n    '
+_lr_signature = "ProgramaAND ARRAY BEGIN BOOLEAN_TYPE CASE CHAR_TYPE CONST DIFFERENT DIV DO DOWNTO ELSE END FALSE FILE FOR FUNCTION GOTO ID IF IN INTEGER INTEGER_TYPE KEYWORD LABEL MOD MULTILINECOMMENTS NIL NOT OF ONELINECOMMENTS OR PACKED PROCEDURE PROGRAM REAL REAL_TYPE RECORD REPEAT SET STRING STRING_TYPE THEN TO TRUE TYPE UNTIL USES VAR WHILE WITHDvariaveis : VAR Listavariaveis\n    Atribuicao : Atribuido ':' '=' Expressao\n    \n    LocalInstsList : LocalInstsList Instrucao ';'\n                   | Instrucao ';'\n    \n    Condicao : Condicao AND DeclaracaoCondicao\n             | Condicao OR DeclaracaoCondicao\n             | DeclaracaoCondicao\n             | '(' Condicao ')'\n    \n    InstrucaoCondicional : IF Condicao THEN BlocoCondicional ParteElse\n    \n    Duses : USES UseList ';'\n          | \n    \n    Programa : PROGRAM ID ';' Duses GlobalInsts BEGIN LocalInstsList END '.'\n    \n    Listavariaveis : Listavariaveis Variaveis ':' Tipo ';'\n                   | \n    \n    Atribuido : ID\n              | Acesso_array\n    \n    BlocoCondicional : Bloco\n                     | Instrucao ';'\n    \n    Instrucao : Atribuicao\n              | InstrucaoCondicional\n    \n    UseList : UseList ',' ID\n            | ID \n    \n    GlobalInsts : GlobalInsts GlobalInst\n                | \n    \n    DeclaracaoCondicao : Expressao SimboloCondicional Expressao\n                       | NOT Condicao\n                       | TRUE\n                       | FALSE\n    \n    ParteElse : ELSE Bloco\n              | ELSE Instrucao ';'\n              |\n    \n    Variaveis : Variaveis ',' ID\n              | ID\n    GlobalInst : Dvariaveis\n    Acesso_array : Variavel_array '[' Expressao ']'\n    \n    Bloco : BEGIN LocalInstsList END ';'\n    \n    Variavel_array : ID\n                   | Acesso_array\n    \n    SimboloCondicional : '='\n                       | '<' '>'\n                       | '<' '='\n                       | '<'\n                       | '>' '='\n                       | '>'\n    \n    Tipo : Datatype\n         | ARRAY '[' Intervalo ']' OF Datatype\n         | ID\n    \n    Expressao : Expressao '+' Termo\n              | Expressao '-' Termo\n              | Termo\n    \n    Intervalo : INTEGER '.' '.' INTEGER\n    \n    Termo : Termo '*' Fator\n          | Termo '/' Fator\n          | Fator\n    \n    Datatype : REAL_TYPE\n             | INTEGER_TYPE\n             | STRING_TYPE\n             | BOOLEAN_TYPE\n             | CHAR_TYPE\n    \n    Fator : ID\n          | REAL\n          | INTEGER\n          | STRING\n          | TRUE\n          | FALSE \n          | '(' Expressao ')'\n          | Acesso_array\n    "
     
-_lr_action_items = {'PROGRAM':([0,],[2,]),'$end':([1,27,],[0,-7,]),'ID':([2,6,10,13,15,16,17,28,29,30,31,32,41,49,50,51,52,55,],[3,9,-4,-9,18,19,26,-3,36,36,47,48,36,36,36,36,36,-8,]),'SEMICOLON':([3,8,9,18,21,33,34,35,36,37,38,39,40,42,44,45,47,54,57,58,59,60,61,68,],[4,14,-15,-14,28,-2,-27,-30,-32,-33,-34,-35,-36,-38,55,-22,-24,-17,-25,-26,-28,-29,-37,-23,]),'USES':([4,],[6,]),'BEGIN':([4,5,7,11,12,13,14,17,55,],[-6,-13,10,-12,-16,-9,-5,-1,-8,]),'VAR':([4,5,7,11,12,13,14,17,55,],[-6,-13,13,-12,-16,-9,-5,-1,-8,]),'COMMA':([8,9,18,25,26,48,],[15,-15,-14,32,-19,-18,]),'END':([10,16,28,],[-4,20,-3,]),'ASSIGN':([19,22,23,54,],[-10,29,-11,-17,]),'OPENBRACKET':([19,23,24,36,42,46,54,],[-20,-21,30,-20,-21,56,-17,]),'DOT':([20,63,65,],[27,65,67,]),'COLON':([25,26,48,],[31,-19,-18,]),'REAL':([29,30,41,49,50,51,52,],[37,37,37,37,37,37,37,]),'INTEGER':([29,30,41,49,50,51,52,56,67,],[38,38,38,38,38,38,38,63,69,]),'STRING':([29,30,41,49,50,51,52,],[39,39,39,39,39,39,39,]),'BOOLEAN':([29,30,41,49,50,51,52,],[40,40,40,40,40,40,40,]),'OPENPARENTHESIS':([29,30,41,49,50,51,52,],[41,41,41,41,41,41,41,]),'DATATYPE':([31,66,],[45,68,]),'ARRAY':([31,],[46,]),'PLUS':([33,34,35,36,37,38,39,40,42,43,53,54,57,58,59,60,61,],[49,-27,-30,-32,-33,-34,-35,-36,-38,49,49,-17,-25,-26,-28,-29,-37,]),'MINUS':([33,34,35,36,37,38,39,40,42,43,53,54,57,58,59,60,61,],[50,-27,-30,-32,-33,-34,-35,-36,-38,50,50,-17,-25,-26,-28,-29,-37,]),'CLOSEBRACKET':([34,35,36,37,38,39,40,42,43,54,57,58,59,60,61,62,69,],[-27,-30,-32,-33,-34,-35,-36,-38,54,-17,-25,-26,-28,-29,-37,64,-31,]),'CLOSEPARENTHESIS':([34,35,36,37,38,39,40,42,53,54,57,58,59,60,61,],[-27,-30,-32,-33,-34,-35,-36,-38,61,-17,-25,-26,-28,-29,-37,]),'STAR':([34,35,36,37,38,39,40,42,54,57,58,59,60,61,],[51,-30,-32,-33,-34,-35,-36,-38,-17,51,51,-28,-29,-37,]),'FORWARDDASH':([34,35,36,37,38,39,40,42,54,57,58,59,60,61,],[52,-30,-32,-33,-34,-35,-36,-38,-17,52,52,-28,-29,-37,]),'OF':([64,],[66,]),}
+_lr_action_items = {'PROGRAM':([0,],[2,]),'$end':([1,48,],[0,-12,]),'ID':([2,6,10,13,15,17,22,25,29,33,35,45,49,50,51,52,53,56,57,58,59,60,61,63,64,68,69,70,75,83,84,85,101,103,104,],[3,9,16,-14,26,16,40,47,-4,40,40,40,-3,40,16,40,40,40,40,40,-39,-42,-44,40,40,40,93,99,16,-40,-41,-43,16,16,-13,]),';':([3,8,9,18,19,20,26,28,38,39,40,41,42,43,44,66,67,71,72,73,74,79,81,82,86,87,88,90,91,93,94,95,96,97,98,100,102,106,107,108,111,112,117,],[4,14,-22,29,-19,-20,-21,49,-50,-54,-60,-61,-62,-63,-67,-64,-65,-2,-31,-17,102,-66,-48,-49,-52,-53,-35,104,-45,-47,-55,-56,-57,-58,-59,-9,-18,-29,111,112,-30,-36,-46,]),'USES':([4,],[6,]),'BEGIN':([4,5,7,11,12,13,14,25,51,101,104,],[-11,-24,10,-23,-34,-14,-10,-1,75,75,-13,]),'VAR':([4,5,7,11,12,13,14,25,104,],[-11,-24,13,-23,-34,-14,-10,-1,-13,]),',':([8,9,26,46,47,99,],[15,-22,-21,70,-33,-32,]),'IF':([10,17,29,49,51,75,101,103,],[22,22,-4,-3,22,22,22,22,]),':':([16,21,23,46,47,88,99,],[-15,30,-16,69,-33,-35,-32,]),'[':([16,23,24,40,44,88,92,],[-37,-38,45,-37,-38,-35,105,]),'END':([17,29,49,103,],[27,-4,-3,108,]),'(':([22,33,35,45,50,52,53,56,57,58,59,60,61,63,64,68,83,84,85,],[33,33,33,68,68,68,68,68,68,68,-39,-42,-44,68,68,68,-40,-41,-43,]),'NOT':([22,33,35,52,53,],[35,35,35,35,35,]),'TRUE':([22,33,35,45,50,52,53,56,57,58,59,60,61,63,64,68,83,84,85,],[36,36,36,66,66,36,36,66,66,66,-39,-42,-44,66,66,66,-40,-41,-43,]),'FALSE':([22,33,35,45,50,52,53,56,57,58,59,60,61,63,64,68,83,84,85,],[37,37,37,67,67,37,37,67,67,67,-39,-42,-44,67,67,67,-40,-41,-43,]),'REAL':([22,33,35,45,50,52,53,56,57,58,59,60,61,63,64,68,83,84,85,],[41,41,41,41,41,41,41,41,41,41,-39,-42,-44,41,41,41,-40,-41,-43,]),'INTEGER':([22,33,35,45,50,52,53,56,57,58,59,60,61,63,64,68,83,84,85,105,116,],[42,42,42,42,42,42,42,42,42,42,-39,-42,-44,42,42,42,-40,-41,-43,110,118,]),'STRING':([22,33,35,45,50,52,53,56,57,58,59,60,61,63,64,68,83,84,85,],[43,43,43,43,43,43,43,43,43,43,-39,-42,-44,43,43,43,-40,-41,-43,]),'.':([27,110,114,],[48,114,116,]),'=':([30,34,36,37,38,39,40,41,42,43,44,55,60,61,66,67,79,81,82,86,87,88,],[50,59,-64,-65,-50,-54,-60,-61,-62,-63,-67,59,84,85,-64,-65,-66,-48,-49,-52,-53,-35,]),'THEN':([31,32,36,37,38,39,40,41,42,43,44,62,66,67,76,77,78,79,80,81,82,86,87,88,],[51,-7,-27,-28,-50,-54,-60,-61,-62,-63,-67,-26,-64,-65,-5,-6,-8,-66,-25,-48,-49,-52,-53,-35,]),'AND':([31,32,36,37,38,39,40,41,42,43,44,54,62,66,67,76,77,78,79,80,81,82,86,87,88,],[52,-7,-27,-28,-50,-54,-60,-61,-62,-63,-67,52,52,-64,-65,-5,-6,-8,-66,-25,-48,-49,-52,-53,-35,]),'OR':([31,32,36,37,38,39,40,41,42,43,44,54,62,66,67,76,77,78,79,80,81,82,86,87,88,],[53,-7,-27,-28,-50,-54,-60,-61,-62,-63,-67,53,53,-64,-65,-5,-6,-8,-66,-25,-48,-49,-52,-53,-35,]),')':([32,36,37,38,39,40,41,42,43,44,54,55,62,66,67,76,77,78,79,80,81,82,86,87,88,89,],[-7,-27,-28,-50,-54,-60,-61,-62,-63,-67,78,79,-26,-64,-65,-5,-6,-8,-66,-25,-48,-49,-52,-53,-35,79,]),'+':([34,36,37,38,39,40,41,42,43,44,55,65,66,67,71,79,80,81,82,86,87,88,89,],[57,-64,-65,-50,-54,-60,-61,-62,-63,-67,57,57,-64,-65,57,-66,57,-48,-49,-52,-53,-35,57,]),'-':([34,36,37,38,39,40,41,42,43,44,55,65,66,67,71,79,80,81,82,86,87,88,89,],[58,-64,-65,-50,-54,-60,-61,-62,-63,-67,58,58,-64,-65,58,-66,58,-48,-49,-52,-53,-35,58,]),'<':([34,36,37,38,39,40,41,42,43,44,55,66,67,79,81,82,86,87,88,],[60,-64,-65,-50,-54,-60,-61,-62,-63,-67,60,-64,-65,-66,-48,-49,-52,-53,-35,]),'>':([34,36,37,38,39,40,41,42,43,44,55,60,66,67,79,81,82,86,87,88,],[61,-64,-65,-50,-54,-60,-61,-62,-63,-67,61,83,-64,-65,-66,-48,-49,-52,-53,-35,]),'*':([36,37,38,39,40,41,42,43,44,66,67,79,81,82,86,87,88,],[-64,-65,63,-54,-60,-61,-62,-63,-67,-64,-65,-66,63,63,-52,-53,-35,]),'/':([36,37,38,39,40,41,42,43,44,66,67,79,81,82,86,87,88,],[-64,-65,64,-54,-60,-61,-62,-63,-67,-64,-65,-66,64,64,-52,-53,-35,]),']':([38,39,40,41,42,43,44,65,66,67,79,81,82,86,87,88,109,118,],[-50,-54,-60,-61,-62,-63,-67,88,-64,-65,-66,-48,-49,-52,-53,-35,113,-51,]),'ARRAY':([69,],[92,]),'REAL_TYPE':([69,115,],[94,94,]),'INTEGER_TYPE':([69,115,],[95,95,]),'STRING_TYPE':([69,115,],[96,96,]),'BOOLEAN_TYPE':([69,115,],[97,97,]),'CHAR_TYPE':([69,115,],[98,98,]),'ELSE':([72,73,102,112,],[101,-17,-18,-36,]),'OF':([113,],[115,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'Programa':([0,],[1,]),'Duses':([4,],[5,]),'GlobalInsts':([5,],[7,]),'UseList':([6,],[8,]),'GlobalInst':([7,],[11,]),'Dvariaveis':([7,],[12,]),'LocalInstsList':([10,],[16,]),'Listavariaveis':([13,],[17,]),'Atribuicao':([16,],[21,]),'Atribuido':([16,],[22,]),'Acesso_array':([16,29,30,41,49,50,51,52,],[23,42,42,42,42,42,42,42,]),'Variavel_array':([16,29,30,41,49,50,51,52,],[24,24,24,24,24,24,24,24,]),'Variaveis':([17,],[25,]),'Expressao':([29,30,41,],[33,43,53,]),'Termo':([29,30,41,49,50,],[34,34,34,57,58,]),'Fator':([29,30,41,49,50,51,52,],[35,35,35,35,35,59,60,]),'Tipo':([31,],[44,]),'Intervalo':([56,],[62,]),}
+_lr_goto_items = {'Programa':([0,],[1,]),'Duses':([4,],[5,]),'GlobalInsts':([5,],[7,]),'UseList':([6,],[8,]),'GlobalInst':([7,],[11,]),'Dvariaveis':([7,],[12,]),'LocalInstsList':([10,75,],[17,103,]),'Instrucao':([10,17,51,75,101,103,],[18,28,74,18,107,28,]),'Atribuicao':([10,17,51,75,101,103,],[19,19,19,19,19,19,]),'InstrucaoCondicional':([10,17,51,75,101,103,],[20,20,20,20,20,20,]),'Atribuido':([10,17,51,75,101,103,],[21,21,21,21,21,21,]),'Acesso_array':([10,17,22,33,35,45,50,51,52,53,56,57,58,63,64,68,75,101,103,],[23,23,44,44,44,44,44,23,44,44,44,44,44,44,44,44,23,23,23,]),'Variavel_array':([10,17,22,33,35,45,50,51,52,53,56,57,58,63,64,68,75,101,103,],[24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,]),'Listavariaveis':([13,],[25,]),'Condicao':([22,33,35,],[31,54,62,]),'DeclaracaoCondicao':([22,33,35,52,53,],[32,32,32,76,77,]),'Expressao':([22,33,35,45,50,52,53,56,68,],[34,55,34,65,71,34,34,80,89,]),'Termo':([22,33,35,45,50,52,53,56,57,58,68,],[38,38,38,38,38,38,38,38,81,82,38,]),'Fator':([22,33,35,45,50,52,53,56,57,58,63,64,68,],[39,39,39,39,39,39,39,39,39,39,86,87,39,]),'Variaveis':([25,],[46,]),'SimboloCondicional':([34,55,],[56,56,]),'BlocoCondicional':([51,],[72,]),'Bloco':([51,101,],[73,106,]),'Tipo':([69,],[90,]),'Datatype':([69,115,],[91,117,]),'ParteElse':([72,],[100,]),'Intervalo':([105,],[109,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -28,41 +28,70 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> Programa","S'",1,None,None,None),
   ('Dvariaveis -> VAR Listavariaveis','Dvariaveis',2,'p_dvariaveis','declarations.py',2),
-  ('Atribuicao -> Atribuido ASSIGN Expressao','Atribuicao',3,'p_atribuicao','atribuicoes_rules.py',4),
-  ('LocalInstsList -> LocalInstsList Atribuicao SEMICOLON','LocalInstsList',3,'p_localinstslist','body.py',6),
-  ('LocalInstsList -> <empty>','LocalInstsList',0,'p_localinstslist','body.py',7),
-  ('Duses -> USES UseList SEMICOLON','Duses',3,'p_duses','declaracao_uses_rules.py',6),
+  ('Atribuicao -> Atribuido : = Expressao','Atribuicao',4,'p_atribuicao','atribuicoes_rules.py',5),
+  ('LocalInstsList -> LocalInstsList Instrucao ;','LocalInstsList',3,'p_localinstslist_multiple','body.py',5),
+  ('LocalInstsList -> Instrucao ;','LocalInstsList',2,'p_localinstslist_multiple','body.py',6),
+  ('Condicao -> Condicao AND DeclaracaoCondicao','Condicao',3,'p_Condicao','condicoes_rules.py',5),
+  ('Condicao -> Condicao OR DeclaracaoCondicao','Condicao',3,'p_Condicao','condicoes_rules.py',6),
+  ('Condicao -> DeclaracaoCondicao','Condicao',1,'p_Condicao','condicoes_rules.py',7),
+  ('Condicao -> ( Condicao )','Condicao',3,'p_Condicao','condicoes_rules.py',8),
+  ('InstrucaoCondicional -> IF Condicao THEN BlocoCondicional ParteElse','InstrucaoCondicional',5,'p_instrucao_condicional','if_condicional.py',5),
+  ('Duses -> USES UseList ;','Duses',3,'p_duses','declaracao_uses_rules.py',6),
   ('Duses -> <empty>','Duses',0,'p_duses','declaracao_uses_rules.py',7),
-  ('Programa -> PROGRAM ID SEMICOLON Duses GlobalInsts BEGIN LocalInstsList END DOT','Programa',9,'p_programa','main_rules.py',5),
-  ('Listavariaveis -> Listavariaveis Variaveis COLON Tipo SEMICOLON','Listavariaveis',5,'p_listavariaveis','declarations.py',8),
+  ('Programa -> PROGRAM ID ; Duses GlobalInsts BEGIN LocalInstsList END .','Programa',9,'p_programa','main_rules.py',6),
+  ('Listavariaveis -> Listavariaveis Variaveis : Tipo ;','Listavariaveis',5,'p_listavariaveis','declarations.py',8),
   ('Listavariaveis -> <empty>','Listavariaveis',0,'p_listavariaveis','declarations.py',9),
-  ('Atribuido -> ID','Atribuido',1,'p_atribuido','atribuicoes_rules.py',9),
-  ('Atribuido -> Acesso_array','Atribuido',1,'p_atribuido','atribuicoes_rules.py',10),
-  ('GlobalInsts -> GlobalInsts GlobalInst','GlobalInsts',2,'p_globalinsts','main_rules.py',10),
-  ('GlobalInsts -> <empty>','GlobalInsts',0,'p_globalinsts','main_rules.py',11),
-  ('UseList -> UseList COMMA ID','UseList',3,'p_uselist','declaracao_uses_rules.py',12),
+  ('Atribuido -> ID','Atribuido',1,'p_atribuido','atribuicoes_rules.py',11),
+  ('Atribuido -> Acesso_array','Atribuido',1,'p_atribuido','atribuicoes_rules.py',12),
+  ('BlocoCondicional -> Bloco','BlocoCondicional',1,'p_bloco_condicional','if_condicional.py',11),
+  ('BlocoCondicional -> Instrucao ;','BlocoCondicional',2,'p_bloco_condicional','if_condicional.py',12),
+  ('Instrucao -> Atribuicao','Instrucao',1,'p_instrucao','body.py',12),
+  ('Instrucao -> InstrucaoCondicional','Instrucao',1,'p_instrucao','body.py',13),
+  ('UseList -> UseList , ID','UseList',3,'p_uselist','declaracao_uses_rules.py',12),
   ('UseList -> ID','UseList',1,'p_uselist','declaracao_uses_rules.py',13),
-  ('GlobalInst -> Dvariaveis','GlobalInst',1,'p_globalinst','main_rules.py',16),
-  ('Acesso_array -> Variavel_array OPENBRACKET Expressao CLOSEBRACKET','Acesso_array',4,'p_acesso_array','atribuicoes_rules.py',18),
-  ('Variaveis -> Variaveis COMMA ID','Variaveis',3,'p_variaveis','declarations.py',19),
+  ('GlobalInsts -> GlobalInsts GlobalInst','GlobalInsts',2,'p_globalinsts','main_rules.py',12),
+  ('GlobalInsts -> <empty>','GlobalInsts',0,'p_globalinsts','main_rules.py',13),
+  ('DeclaracaoCondicao -> Expressao SimboloCondicional Expressao','DeclaracaoCondicao',3,'p_DeclaracaoCondicao','condicoes_rules.py',14),
+  ('DeclaracaoCondicao -> NOT Condicao','DeclaracaoCondicao',2,'p_DeclaracaoCondicao','condicoes_rules.py',15),
+  ('DeclaracaoCondicao -> TRUE','DeclaracaoCondicao',1,'p_DeclaracaoCondicao','condicoes_rules.py',16),
+  ('DeclaracaoCondicao -> FALSE','DeclaracaoCondicao',1,'p_DeclaracaoCondicao','condicoes_rules.py',17),
+  ('ParteElse -> ELSE Bloco','ParteElse',2,'p_parte_else','if_condicional.py',18),
+  ('ParteElse -> ELSE Instrucao ;','ParteElse',3,'p_parte_else','if_condicional.py',19),
+  ('ParteElse -> <empty>','ParteElse',0,'p_parte_else','if_condicional.py',20),
+  ('Variaveis -> Variaveis , ID','Variaveis',3,'p_variaveis','declarations.py',19),
   ('Variaveis -> ID','Variaveis',1,'p_variaveis','declarations.py',20),
-  ('Variavel_array -> ID','Variavel_array',1,'p_variavel_array','atribuicoes_rules.py',24),
-  ('Variavel_array -> Acesso_array','Variavel_array',1,'p_variavel_array','atribuicoes_rules.py',25),
-  ('Tipo -> DATATYPE','Tipo',1,'p_tipo','declarations.py',30),
-  ('Tipo -> ARRAY OPENBRACKET Intervalo CLOSEBRACKET OF DATATYPE','Tipo',6,'p_tipo','declarations.py',31),
+  ('GlobalInst -> Dvariaveis','GlobalInst',1,'p_globalinst','main_rules.py',18),
+  ('Acesso_array -> Variavel_array [ Expressao ]','Acesso_array',4,'p_acesso_array','atribuicoes_rules.py',21),
+  ('Bloco -> BEGIN LocalInstsList END ;','Bloco',4,'p_bloco','if_condicional.py',27),
+  ('Variavel_array -> ID','Variavel_array',1,'p_variavel_array','atribuicoes_rules.py',28),
+  ('Variavel_array -> Acesso_array','Variavel_array',1,'p_variavel_array','atribuicoes_rules.py',29),
+  ('SimboloCondicional -> =','SimboloCondicional',1,'p_SimboloCondicional','condicoes_rules.py',28),
+  ('SimboloCondicional -> < >','SimboloCondicional',2,'p_SimboloCondicional','condicoes_rules.py',29),
+  ('SimboloCondicional -> < =','SimboloCondicional',2,'p_SimboloCondicional','condicoes_rules.py',30),
+  ('SimboloCondicional -> <','SimboloCondicional',1,'p_SimboloCondicional','condicoes_rules.py',31),
+  ('SimboloCondicional -> > =','SimboloCondicional',2,'p_SimboloCondicional','condicoes_rules.py',32),
+  ('SimboloCondicional -> >','SimboloCondicional',1,'p_SimboloCondicional','condicoes_rules.py',33),
+  ('Tipo -> Datatype','Tipo',1,'p_tipo','declarations.py',30),
+  ('Tipo -> ARRAY [ Intervalo ] OF Datatype','Tipo',6,'p_tipo','declarations.py',31),
   ('Tipo -> ID','Tipo',1,'p_tipo','declarations.py',32),
-  ('Expressao -> Expressao PLUS Termo','Expressao',3,'p_expressao','atribuicoes_rules.py',34),
-  ('Expressao -> Expressao MINUS Termo','Expressao',3,'p_expressao','atribuicoes_rules.py',35),
-  ('Expressao -> Termo','Expressao',1,'p_expressao','atribuicoes_rules.py',36),
-  ('Termo -> Termo STAR Fator','Termo',3,'p_termo','atribuicoes_rules.py',46),
-  ('Termo -> Termo FORWARDDASH Fator','Termo',3,'p_termo','atribuicoes_rules.py',47),
-  ('Termo -> Fator','Termo',1,'p_termo','atribuicoes_rules.py',48),
-  ('Intervalo -> INTEGER DOT DOT INTEGER','Intervalo',4,'p_intervalo','declarations.py',46),
-  ('Fator -> ID','Fator',1,'p_fator','atribuicoes_rules.py',59),
-  ('Fator -> REAL','Fator',1,'p_fator','atribuicoes_rules.py',60),
-  ('Fator -> INTEGER','Fator',1,'p_fator','atribuicoes_rules.py',61),
-  ('Fator -> STRING','Fator',1,'p_fator','atribuicoes_rules.py',62),
-  ('Fator -> BOOLEAN','Fator',1,'p_fator','atribuicoes_rules.py',63),
-  ('Fator -> OPENPARENTHESIS Expressao CLOSEPARENTHESIS','Fator',3,'p_fator','atribuicoes_rules.py',64),
-  ('Fator -> Acesso_array','Fator',1,'p_fator','atribuicoes_rules.py',65),
+  ('Expressao -> Expressao + Termo','Expressao',3,'p_expressao','atribuicoes_rules.py',38),
+  ('Expressao -> Expressao - Termo','Expressao',3,'p_expressao','atribuicoes_rules.py',39),
+  ('Expressao -> Termo','Expressao',1,'p_expressao','atribuicoes_rules.py',40),
+  ('Intervalo -> INTEGER . . INTEGER','Intervalo',4,'p_intervalo','declarations.py',46),
+  ('Termo -> Termo * Fator','Termo',3,'p_termo','atribuicoes_rules.py',50),
+  ('Termo -> Termo / Fator','Termo',3,'p_termo','atribuicoes_rules.py',51),
+  ('Termo -> Fator','Termo',1,'p_termo','atribuicoes_rules.py',52),
+  ('Datatype -> REAL_TYPE','Datatype',1,'p_datatype','declarations.py',53),
+  ('Datatype -> INTEGER_TYPE','Datatype',1,'p_datatype','declarations.py',54),
+  ('Datatype -> STRING_TYPE','Datatype',1,'p_datatype','declarations.py',55),
+  ('Datatype -> BOOLEAN_TYPE','Datatype',1,'p_datatype','declarations.py',56),
+  ('Datatype -> CHAR_TYPE','Datatype',1,'p_datatype','declarations.py',57),
+  ('Fator -> ID','Fator',1,'p_fator','atribuicoes_rules.py',63),
+  ('Fator -> REAL','Fator',1,'p_fator','atribuicoes_rules.py',64),
+  ('Fator -> INTEGER','Fator',1,'p_fator','atribuicoes_rules.py',65),
+  ('Fator -> STRING','Fator',1,'p_fator','atribuicoes_rules.py',66),
+  ('Fator -> TRUE','Fator',1,'p_fator','atribuicoes_rules.py',67),
+  ('Fator -> FALSE','Fator',1,'p_fator','atribuicoes_rules.py',68),
+  ('Fator -> ( Expressao )','Fator',3,'p_fator','atribuicoes_rules.py',69),
+  ('Fator -> Acesso_array','Fator',1,'p_fator','atribuicoes_rules.py',70),
 ]

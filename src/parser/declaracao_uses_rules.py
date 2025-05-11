@@ -3,12 +3,12 @@
 
 def p_duses(p):
     '''
-    Duses : USES UseList SEMICOLON
+    Duses : USES UseList ';'
           | 
     '''
 
 def p_uselist(p):
     '''
-    UseList : UseList COMMA ID
+    UseList : UseList ',' ID
             | ID 
     '''
