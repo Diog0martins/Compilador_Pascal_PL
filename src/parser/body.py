@@ -4,22 +4,31 @@ def p_localinstslist_multiple(p):
     '''
     LocalInstsList : LocalInstsList ';' Instrucao
     '''
-    print("Lista de instruções lida")
+    print("Instruções acumuladas")
+
+
+def p_localinstslist_terminada(p):
+    '''
+    LocalInstsList : LocalInstsList ';'
+    '''
+    print("Final com ponto e vírgula opcional")
 
 
 def p_localinstslist_single(p):
     '''
-    LocalInstsList : Instrucao PontoVirgOpc
+    LocalInstsList : Instrucao
     '''
+    print("Instrução única")
 
 
 def p_instrucao(p):
     '''
-    Instrucao : Atribuicao
+    Instrucao : While
               | InstrucaoCondicional
               | Bloco
-              | While
+              | Atribuicao 
     '''
+    print("Acabei de ler um instrucao")
 
 
 def p_bloco(p):
@@ -28,11 +37,4 @@ def p_bloco(p):
     '''
     pass
 
-
-def p_pontoVirgOpc(p):
-    '''
-    PontoVirgOpc : ';'
-                 |  
-
-    '''
 

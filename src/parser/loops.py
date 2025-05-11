@@ -1,10 +1,11 @@
-
 """
 VERIFICAR SE É POSSÍVEL TROCAR POR BLOCO DO MAIN
 """
+
+
 def p_While(p):
     '''
-    While : WHILE ';'
+    While : WHILE
     '''
     print('reconheceu o while')
     # print (
