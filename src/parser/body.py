@@ -24,17 +24,23 @@ def p_localinstslist_single(p):
 def p_instrucao(p):
     '''
     Instrucao : While
+              | CicloFor
               | InstrucaoCondicional
-              | Bloco
               | Atribuicao 
     '''
     print("Acabei de ler um instrucao")
+
+
+def p_instrucao_bloco(p):
+     '''
+     Instrucao : Bloco
+     '''
+     print(p[1])
 
 
 def p_bloco(p):
     '''
     Bloco : BEGIN LocalInstsList END
     '''
-    pass
-
+    p[0] = (p[1],p[3])
 
