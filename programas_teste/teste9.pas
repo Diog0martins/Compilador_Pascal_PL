@@ -7,7 +7,13 @@ var
 
 begin 
 
-    primo := true / false;
-    i := 2 * 5 + 7;
+  if count > 0 then
+  begin
+    average := sum / count;
+    {writeln('The average of the entered numbers is: ', average:0:2);*}
+  end;
+  else
+    average := sum / count;
+    {writeln('No numbers were entered.');}
 
 end.
