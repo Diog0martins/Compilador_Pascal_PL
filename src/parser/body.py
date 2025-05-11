@@ -2,17 +2,36 @@
 
 def p_localinstslist_multiple(p):
     '''
-    LocalInstsList : LocalInstsList Instrucao ';'
-                   | Instrucao ';'
+    LocalInstsList : LocalInstsList ';' Instrucao
     '''
-    pass
+    print("Lista de instruções lida")
+
+
+def p_localinstslist_single(p):
+    '''
+    LocalInstsList : Instrucao PontoVirgOpc
+    '''
+
 
 def p_instrucao(p):
     '''
     Instrucao : Atribuicao
               | InstrucaoCondicional
+              | Bloco
+    '''
+
+
+def p_bloco(p):
+    '''
+    Bloco : BEGIN LocalInstsList END
     '''
     pass
 
 
-# BEGIN LocalInstsList END SEMICOLON
+def p_pontoVirgOpc(p):
+    '''
+    PontoVirgOpc : ';'
+                 |  
+
+    '''
+

@@ -3,7 +3,7 @@
 
 def p_programa(p):
     '''
-    Programa : PROGRAM ID ';' Duses GlobalInsts BEGIN LocalInstsList END '.'
+    Programa : PROGRAM ID ';' Duses GlobalInsts BlocoPrincipal '.'
     '''
 
 
@@ -13,8 +13,12 @@ def p_globalinsts(p):
                 | 
     '''
 
-
 def p_globalinst(p):
     'GlobalInst : Dvariaveis'
 #              | Dfuncoes
 #              | Dprocedures
+
+def p_blocofinal(p):
+    '''
+    BlocoPrincipal : BEGIN LocalInstsList END
+    '''
