@@ -8,6 +8,7 @@ start = 'Programa'
 
 from .main_rules import * 
 from .declarations import *
+from .funcoes_rules import *
 from .declaracao_uses_rules import *
 from .body import *
 from .loops import *

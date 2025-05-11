@@ -27,6 +27,7 @@ def p_instrucao(p):
               | InstrucaoCondicional
               | Bloco
               | Atribuicao 
+              | Expressao
     '''
     print("Acabei de ler um instrucao")
 

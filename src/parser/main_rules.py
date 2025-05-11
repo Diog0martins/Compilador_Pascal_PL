@@ -14,9 +14,11 @@ def p_globalinsts(p):
     '''
 
 def p_globalinst(p):
-    'GlobalInst : Dvariaveis'
-#              | Dfuncoes
-#              | Dprocedures
+    '''
+    GlobalInst : Dvariaveis
+            | Dfuncao
+            | Dprocedimento
+    '''
 
 def p_blocofinal(p):
     '''

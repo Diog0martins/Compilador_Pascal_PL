@@ -67,6 +67,7 @@ def p_fator(p):
           | TRUE
           | FALSE 
           | '(' Expressao ')'
+          | Condicao
           | Acesso_array
     '''
     if len(p) == 2:
@@ -74,6 +75,13 @@ def p_fator(p):
     else:
         p[0] = p[2]
 
+# ====== Produção para Chamadas de Função ======
+
+def p_chamada_funcao(p):
+    '''
+    Fator : ID ArgumentosGetter
+    '''
+    print(f"Chamada de função reconhecida: {p[1]}(...)")
 
 #P.S.: RETIRAR BOOLEAN E VOLTAR A POR COND, NÃO ESQUECER 
 
