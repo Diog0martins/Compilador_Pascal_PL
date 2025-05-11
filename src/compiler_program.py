@@ -1,6 +1,6 @@
 from parser.pascal_anasin import rec_Parser
 
-filename = "../programas_teste/teste9.pas"
+filename = "../programas_teste/teste7.pas"
 
 def main():
     try:
