@@ -10,10 +10,11 @@ begin
   if count > 0 then
   begin
     average := sum / count;
-    {writeln('The average of the entered numbers is: ', average:0:2);*}
+    average2 := sum2 / count2;
+    writeln('The average of the entered numbers is: ', average);
   end;
   else
     average := sum / count;
-    {writeln('No numbers were entered.');}
+    writeln('No numbers were entered.');
 
 end.

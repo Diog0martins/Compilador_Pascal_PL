@@ -8,6 +8,6 @@ var
     num: integer;
 
 begin
-    num := 5; 
     while;
+    num := 5;
 end.
