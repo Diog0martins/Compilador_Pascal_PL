@@ -18,6 +18,7 @@ def p_instrucao(p):
     Instrucao : Atribuicao
               | InstrucaoCondicional
               | Bloco
+              | While
     '''
 
 

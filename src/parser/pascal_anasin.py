@@ -9,6 +9,7 @@ start = 'Programa'
 from .main_rules import * 
 from .declarations import *
 from .declaracao_uses_rules import *
+from .loops import *
 from .body import *
 from .atribuicoes_rules import *
 from .if_condicional import *
@@ -22,7 +23,7 @@ def p_error(p):
 
 # ====== ======
 
-parser = yacc.yacc()
+parser = yacc.yacc(debug=True)
 
 def rec_Parser(input_string):
     return parser.parse(input_string)

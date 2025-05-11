@@ -36,8 +36,8 @@ tokens = (
     'ID',
     'INTEGER',
     'REAL',
-    #'LESSOREQUAL',#<=
-    #'GREATEROREQUAL',#>=
+    'LESSOREQUAL',#<=
+    'GREATEROREQUAL',#>=
     'DIFFERENT',
     'STRING',
     'ONELINECOMMENTS',
@@ -298,7 +298,6 @@ def t_ID(t):
     r'\b[A-Za-z](?:\w+?)?\b'
     return t
 
-""" 
 def t_LESSOREQUAL(t):
     r'\<\='
     return t
@@ -306,7 +305,6 @@ def t_LESSOREQUAL(t):
 def t_GREATEROREQUAL(t):
     r'\>\='
     return t
- """
 
 
 #t_ASSIGN = r'\:\='
@@ -344,3 +342,27 @@ def t_error(t):
     return "error found"
 
 lexer = lex.lex(reflags=re.IGNORECASE)
+
+
+# if __name__ == '__main__':
+#     data = """
+#     program homem;
+
+#     var
+#         num: integer;
+
+#     begin
+#         num := 5; 
+#         while num < 5 do 
+#         begin
+#             num := num + 1;
+#             writeln('slb'); 
+#         end; 
+#     end.
+#     """
+#     lexer.input(data)
+#     while True:
+#         tok = lexer.token()
+#         if not tok:
+#             break
+#         print(tok)
