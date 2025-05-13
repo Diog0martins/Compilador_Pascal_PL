@@ -6,13 +6,13 @@ from lexer.pascal_analex2 import tokens
 
 start = 'Programa'
 
+from .atribuicoes_rules import *
 from .main_rules import * 
 from .declarations import *
 from .funcoes_rules import *
 from .declaracao_uses_rules import *
 from .body import *
 from .loops import *
-from .atribuicoes_rules import *
 from .if_condicional import *
 from .condicoes_rules import *
 

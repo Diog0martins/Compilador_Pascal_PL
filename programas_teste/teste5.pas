@@ -15,13 +15,13 @@ begin
   sum := num1 + num2;
   difference := num1 - num2;
   product := num1 * num2;
-  quotient := num1 / num2;
+  quotient := num1 div num2;
 
   { Displaying the results }
-  WriteLn('First number: ', num1:0:2);
-  WriteLn('Second number: ', num2:0:2);
-  WriteLn('Sum: ', sum:0:2);
-  WriteLn('Difference: ', difference:0:2);
-  WriteLn('Product: ', product:0:2);
-  WriteLn('Quotient: ', quotient:0:2);
+  WriteLn('First number: ', num1);
+  WriteLn('Second number: ', num2);
+  WriteLn('Sum: ', sum);
+  WriteLn('Difference: ', difference);
+  WriteLn('Product: ', product);
+  WriteLn('Quotient: ', quotient);
 end.

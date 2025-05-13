@@ -1,8 +1,10 @@
 from parser.pascal_anasin import rec_Parser
+import sys
 
-filename = "../programas_teste/teste7.pas"
+#filename = "../programas_teste/teste7.pas"
 
 def main():
+    filename = sys.argv[1]
     try:
         with open(filename, 'r') as file:
             content = file.read()
