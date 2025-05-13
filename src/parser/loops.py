@@ -10,8 +10,11 @@ def p_While(p):
     print (
         p[1], # Type of cycle
         p[2], # Condition
+        p[3], # Condition
         p[4], # Block of instructions
     )
+
+    p[0] = f"{p[1]} {p[2]} {p[3]} {p[4]}"
 
 
 

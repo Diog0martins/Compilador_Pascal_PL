@@ -59,9 +59,9 @@ Rule 33    Variaveis -> ID
 Rule 34    ArgumentosProcedimentoOpc -> ArgumentosSetter
 Rule 35    ArgumentosProcedimentoOpc -> <empty>
 Rule 36    Acesso_array -> Variavel_array [ Expressao ]
-Rule 37    CicloFor -> FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
-Rule 38    DeclaracaoCondicao -> Expressao SimboloCondicional Expressao
-Rule 39    DeclaracaoCondicao -> Fator
+Rule 37    DeclaracaoCondicao -> Expressao SimboloCondicional Expressao
+Rule 38    DeclaracaoCondicao -> Fator
+Rule 39    CicloFor -> FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
 Rule 40    BlocoPrincipal -> BEGIN LocalInstsList END
 Rule 41    Instrucao -> While
 Rule 42    Instrucao -> CicloFor
@@ -70,11 +70,11 @@ Rule 44    Instrucao -> Atribuicao
 Rule 45    Instrucao -> Expressao
 Rule 46    Variavel_array -> ID
 Rule 47    Variavel_array -> Acesso_array
-Rule 48    DirecaoFor -> TO
-Rule 49    DirecaoFor -> DOWNTO
-Rule 50    Tipo -> Datatype
-Rule 51    Tipo -> ARRAY [ Intervalo ] OF Datatype
-Rule 52    Tipo -> ID
+Rule 48    Tipo -> Datatype
+Rule 49    Tipo -> ARRAY [ Intervalo ] OF Datatype
+Rule 50    Tipo -> ID
+Rule 51    DirecaoFor -> TO
+Rule 52    DirecaoFor -> DOWNTO
 Rule 53    ArgumentosGetter -> ( ArgumentosGetterBuffer )
 Rule 54    SimboloCondicional -> =
 Rule 55    SimboloCondicional -> < >
@@ -138,7 +138,7 @@ Terminals, with rules where they appear
 =                    : 2 54 56 58
 >                    : 55 58 59
 AND                  : 4
-ARRAY                : 51
+ARRAY                : 49
 BEGIN                : 9 23 40 67
 BOOLEAN_TYPE         : 77
 CASE                 : 
@@ -146,16 +146,16 @@ CHAR_TYPE            : 78
 CONST                : 93
 DIFFERENT            : 
 DIV                  : 71
-DO                   : 16 37
-DOWNTO               : 49
+DO                   : 16 39
+DOWNTO               : 52
 ELSE                 : 26
 END                  : 9 23 40 67
 FALSE                : 87
 FILE                 : 
-FOR                  : 37
+FOR                  : 39
 FUNCTION             : 9
 GOTO                 : 
-ID                   : 9 13 17 21 22 23 32 33 46 52 82 91 95
+ID                   : 9 13 17 21 22 23 32 33 46 50 82 91 95
 IF                   : 10
 IN                   : 
 INTEGER              : 68 68 84
@@ -166,7 +166,7 @@ MOD                  : 70
 MULTILINECOMMENTS    : 
 NIL                  : 
 NOT                  : 6
-OF                   : 51
+OF                   : 49
 ONELINECOMMENTS      : 
 OR                   : 5
 PACKED               : 
@@ -180,7 +180,7 @@ SET                  :
 STRING               : 85
 STRING_TYPE          : 76
 THEN                 : 10
-TO                   : 48
+TO                   : 51
 TRUE                 : 86
 TYPE                 : 
 UNTIL                : 
@@ -188,8 +188,8 @@ USES                 : 11
 VAR                  : 1 92
 WHILE                : 16
 WITH                 : 
-[                    : 36 51
-]                    : 36 51
+[                    : 36 49
+]                    : 36 49
 error                : 
 
 Nonterminals, with rules where they appear
@@ -201,7 +201,7 @@ ArgumentosGetterBuffer : 53 64
 ArgumentosProcedimentoOpc : 23
 ArgumentosSetter     : 9 34
 ArgumentosSetterBuffer : 73 79
-Atribuicao           : 37 44
+Atribuicao           : 39 44
 Atribuido            : 2
 Bloco                : 60
 BlocoCondicional     : 10
@@ -209,27 +209,27 @@ BlocoPrincipal       : 13
 ChamadaFuncao        : 90
 CicloFor             : 42
 Condicao             : 4 5 6 8 10 16
-Datatype             : 50 51
+Datatype             : 48 49
 DeclaracaoCondicao   : 4 5 7
 Dfuncao              : 29
-DirecaoFor           : 37
+DirecaoFor           : 39
 Dprocedimento        : 30
 Duses                : 13
 Dvariaveis           : 28
-Expressao            : 2 36 37 38 38 45 61 62 64 65 88 98 99
-Fator                : 39 69 70 71 72
+Expressao            : 2 36 37 37 39 45 61 62 64 65 88 98 99
+Fator                : 38 69 70 71 72
 GlobalInst           : 24
 GlobalInsts          : 9 13 23 24
 Instrucao            : 3 31
 InstrucaoCondicional : 43
-Intervalo            : 51
+Intervalo            : 49
 ListaArgumentos      : 96 99
 Listavariaveis       : 1 14
-LocalInstsList       : 3 9 16 19 20 23 26 37 40 67
+LocalInstsList       : 3 9 16 19 20 23 26 39 40 67
 ModificadorArgumento : 91
 ParteElse            : 10
 Programa             : 0
-SimboloCondicional   : 38
+SimboloCondicional   : 37
 Termo                : 61 62 63 69 70 71
 Tipo                 : 9 14 91
 UseList              : 11 21
@@ -375,7 +375,7 @@ state 12
     (45) Instrucao -> . Expressao
     (60) Instrucao -> . Bloco
     (16) While -> . WHILE Condicao DO LocalInstsList
-    (37) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
+    (39) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (10) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (2) Atribuicao -> . Atribuido : = Expressao
     (61) Expressao -> . Expressao + Termo
@@ -524,7 +524,7 @@ state 22
     (45) Instrucao -> . Expressao
     (60) Instrucao -> . Bloco
     (16) While -> . WHILE Condicao DO LocalInstsList
-    (37) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
+    (39) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (10) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (2) Atribuicao -> . Atribuido : = Expressao
     (61) Expressao -> . Expressao + Termo
@@ -663,8 +663,8 @@ state 31
     (6) Condicao -> . NOT Condicao
     (7) Condicao -> . DeclaracaoCondicao
     (8) Condicao -> . ( Condicao )
-    (38) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
-    (39) DeclaracaoCondicao -> . Fator
+    (37) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
+    (38) DeclaracaoCondicao -> . Fator
     (61) Expressao -> . Expressao + Termo
     (62) Expressao -> . Expressao - Termo
     (63) Expressao -> . Termo
@@ -706,7 +706,7 @@ state 31
 
 state 32
 
-    (37) CicloFor -> FOR . Atribuicao DirecaoFor Expressao DO LocalInstsList
+    (39) CicloFor -> FOR . Atribuicao DirecaoFor Expressao DO LocalInstsList
     (2) Atribuicao -> . Atribuido : = Expressao
     (17) Atribuido -> . ID
     (18) Atribuido -> . Acesso_array
@@ -729,8 +729,8 @@ state 33
     (6) Condicao -> . NOT Condicao
     (7) Condicao -> . DeclaracaoCondicao
     (8) Condicao -> . ( Condicao )
-    (38) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
-    (39) DeclaracaoCondicao -> . Fator
+    (37) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
+    (38) DeclaracaoCondicao -> . Fator
     (61) Expressao -> . Expressao + Termo
     (62) Expressao -> . Expressao - Termo
     (63) Expressao -> . Termo
@@ -1149,7 +1149,7 @@ state 53
     (45) Instrucao -> . Expressao
     (60) Instrucao -> . Bloco
     (16) While -> . WHILE Condicao DO LocalInstsList
-    (37) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
+    (39) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (10) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (2) Atribuicao -> . Atribuido : = Expressao
     (61) Expressao -> . Expressao + Termo
@@ -1305,8 +1305,8 @@ state 58
     (6) Condicao -> . NOT Condicao
     (7) Condicao -> . DeclaracaoCondicao
     (8) Condicao -> . ( Condicao )
-    (38) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
-    (39) DeclaracaoCondicao -> . Fator
+    (37) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
+    (38) DeclaracaoCondicao -> . Fator
     (61) Expressao -> . Expressao + Termo
     (62) Expressao -> . Expressao - Termo
     (63) Expressao -> . Termo
@@ -1358,8 +1358,8 @@ state 59
     (61) Expressao -> . Expressao + Termo
     (62) Expressao -> . Expressao - Termo
     (63) Expressao -> . Termo
-    (38) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
-    (39) DeclaracaoCondicao -> . Fator
+    (37) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
+    (38) DeclaracaoCondicao -> . Fator
     (69) Termo -> . Termo * Fator
     (70) Termo -> . Termo MOD Fator
     (71) Termo -> . Termo DIV Fator
@@ -1398,7 +1398,7 @@ state 59
 
 state 60
 
-    (38) DeclaracaoCondicao -> Expressao . SimboloCondicional Expressao
+    (37) DeclaracaoCondicao -> Expressao . SimboloCondicional Expressao
     (61) Expressao -> Expressao . + Termo
     (62) Expressao -> Expressao . - Termo
     (54) SimboloCondicional -> . =
@@ -1418,15 +1418,15 @@ state 60
 
 state 61
 
-    (39) DeclaracaoCondicao -> Fator .
+    (38) DeclaracaoCondicao -> Fator .
     (72) Termo -> Fator .
 
-  ! reduce/reduce conflict for ) resolved using rule 39 (DeclaracaoCondicao -> Fator .)
-    DO              reduce using rule 39 (DeclaracaoCondicao -> Fator .)
-    AND             reduce using rule 39 (DeclaracaoCondicao -> Fator .)
-    OR              reduce using rule 39 (DeclaracaoCondicao -> Fator .)
-    THEN            reduce using rule 39 (DeclaracaoCondicao -> Fator .)
-    )               reduce using rule 39 (DeclaracaoCondicao -> Fator .)
+  ! reduce/reduce conflict for ) resolved using rule 38 (DeclaracaoCondicao -> Fator .)
+    DO              reduce using rule 38 (DeclaracaoCondicao -> Fator .)
+    AND             reduce using rule 38 (DeclaracaoCondicao -> Fator .)
+    OR              reduce using rule 38 (DeclaracaoCondicao -> Fator .)
+    THEN            reduce using rule 38 (DeclaracaoCondicao -> Fator .)
+    )               reduce using rule 38 (DeclaracaoCondicao -> Fator .)
     *               reduce using rule 72 (Termo -> Fator .)
     MOD             reduce using rule 72 (Termo -> Fator .)
     DIV             reduce using rule 72 (Termo -> Fator .)
@@ -1503,9 +1503,9 @@ state 63
 
 state 64
 
-    (37) CicloFor -> FOR Atribuicao . DirecaoFor Expressao DO LocalInstsList
-    (48) DirecaoFor -> . TO
-    (49) DirecaoFor -> . DOWNTO
+    (39) CicloFor -> FOR Atribuicao . DirecaoFor Expressao DO LocalInstsList
+    (51) DirecaoFor -> . TO
+    (52) DirecaoFor -> . DOWNTO
 
     TO              shift and go to state 97
     DOWNTO          shift and go to state 98
@@ -1915,7 +1915,7 @@ state 86
     (45) Instrucao -> . Expressao
     (60) Instrucao -> . Bloco
     (16) While -> . WHILE Condicao DO LocalInstsList
-    (37) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
+    (39) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (10) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (2) Atribuicao -> . Atribuido : = Expressao
     (61) Expressao -> . Expressao + Termo
@@ -1972,8 +1972,8 @@ state 86
 state 87
 
     (4) Condicao -> Condicao AND . DeclaracaoCondicao
-    (38) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
-    (39) DeclaracaoCondicao -> . Fator
+    (37) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
+    (38) DeclaracaoCondicao -> . Fator
     (61) Expressao -> . Expressao + Termo
     (62) Expressao -> . Expressao - Termo
     (63) Expressao -> . Termo
@@ -2014,8 +2014,8 @@ state 87
 state 88
 
     (5) Condicao -> Condicao OR . DeclaracaoCondicao
-    (38) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
-    (39) DeclaracaoCondicao -> . Fator
+    (37) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
+    (38) DeclaracaoCondicao -> . Fator
     (61) Expressao -> . Expressao + Termo
     (62) Expressao -> . Expressao - Termo
     (63) Expressao -> . Termo
@@ -2087,7 +2087,7 @@ state 91
     (88) Fator -> ( Expressao . )
     (61) Expressao -> Expressao . + Termo
     (62) Expressao -> Expressao . - Termo
-    (38) DeclaracaoCondicao -> Expressao . SimboloCondicional Expressao
+    (37) DeclaracaoCondicao -> Expressao . SimboloCondicional Expressao
     (54) SimboloCondicional -> . =
     (55) SimboloCondicional -> . < >
     (56) SimboloCondicional -> . < =
@@ -2106,7 +2106,7 @@ state 91
 
 state 92
 
-    (38) DeclaracaoCondicao -> Expressao SimboloCondicional . Expressao
+    (37) DeclaracaoCondicao -> Expressao SimboloCondicional . Expressao
     (61) Expressao -> . Expressao + Termo
     (62) Expressao -> . Expressao - Termo
     (63) Expressao -> . Termo
@@ -2190,7 +2190,7 @@ state 95
 
 state 96
 
-    (37) CicloFor -> FOR Atribuicao DirecaoFor . Expressao DO LocalInstsList
+    (39) CicloFor -> FOR Atribuicao DirecaoFor . Expressao DO LocalInstsList
     (61) Expressao -> . Expressao + Termo
     (62) Expressao -> . Expressao - Termo
     (63) Expressao -> . Termo
@@ -2229,28 +2229,28 @@ state 96
 
 state 97
 
-    (48) DirecaoFor -> TO .
+    (51) DirecaoFor -> TO .
 
-    ID              reduce using rule 48 (DirecaoFor -> TO .)
-    REAL            reduce using rule 48 (DirecaoFor -> TO .)
-    INTEGER         reduce using rule 48 (DirecaoFor -> TO .)
-    STRING          reduce using rule 48 (DirecaoFor -> TO .)
-    TRUE            reduce using rule 48 (DirecaoFor -> TO .)
-    FALSE           reduce using rule 48 (DirecaoFor -> TO .)
-    (               reduce using rule 48 (DirecaoFor -> TO .)
+    ID              reduce using rule 51 (DirecaoFor -> TO .)
+    REAL            reduce using rule 51 (DirecaoFor -> TO .)
+    INTEGER         reduce using rule 51 (DirecaoFor -> TO .)
+    STRING          reduce using rule 51 (DirecaoFor -> TO .)
+    TRUE            reduce using rule 51 (DirecaoFor -> TO .)
+    FALSE           reduce using rule 51 (DirecaoFor -> TO .)
+    (               reduce using rule 51 (DirecaoFor -> TO .)
 
 
 state 98
 
-    (49) DirecaoFor -> DOWNTO .
+    (52) DirecaoFor -> DOWNTO .
 
-    ID              reduce using rule 49 (DirecaoFor -> DOWNTO .)
-    REAL            reduce using rule 49 (DirecaoFor -> DOWNTO .)
-    INTEGER         reduce using rule 49 (DirecaoFor -> DOWNTO .)
-    STRING          reduce using rule 49 (DirecaoFor -> DOWNTO .)
-    TRUE            reduce using rule 49 (DirecaoFor -> DOWNTO .)
-    FALSE           reduce using rule 49 (DirecaoFor -> DOWNTO .)
-    (               reduce using rule 49 (DirecaoFor -> DOWNTO .)
+    ID              reduce using rule 52 (DirecaoFor -> DOWNTO .)
+    REAL            reduce using rule 52 (DirecaoFor -> DOWNTO .)
+    INTEGER         reduce using rule 52 (DirecaoFor -> DOWNTO .)
+    STRING          reduce using rule 52 (DirecaoFor -> DOWNTO .)
+    TRUE            reduce using rule 52 (DirecaoFor -> DOWNTO .)
+    FALSE           reduce using rule 52 (DirecaoFor -> DOWNTO .)
+    (               reduce using rule 52 (DirecaoFor -> DOWNTO .)
 
 
 state 99
@@ -2267,7 +2267,7 @@ state 99
     (45) Instrucao -> . Expressao
     (60) Instrucao -> . Bloco
     (16) While -> . WHILE Condicao DO LocalInstsList
-    (37) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
+    (39) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (10) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (2) Atribuicao -> . Atribuido : = Expressao
     (61) Expressao -> . Expressao + Termo
@@ -2541,9 +2541,9 @@ state 109
 state 110
 
     (14) Listavariaveis -> Listavariaveis Variaveis : . Tipo ;
-    (50) Tipo -> . Datatype
-    (51) Tipo -> . ARRAY [ Intervalo ] OF Datatype
-    (52) Tipo -> . ID
+    (48) Tipo -> . Datatype
+    (49) Tipo -> . ARRAY [ Intervalo ] OF Datatype
+    (50) Tipo -> . ID
     (74) Datatype -> . REAL_TYPE
     (75) Datatype -> . INTEGER_TYPE
     (76) Datatype -> . STRING_TYPE
@@ -2571,9 +2571,9 @@ state 111
 state 112
 
     (9) Dfuncao -> FUNCTION ID ArgumentosSetter : . Tipo ; GlobalInsts BEGIN LocalInstsList END ;
-    (50) Tipo -> . Datatype
-    (51) Tipo -> . ARRAY [ Intervalo ] OF Datatype
-    (52) Tipo -> . ID
+    (48) Tipo -> . Datatype
+    (49) Tipo -> . ARRAY [ Intervalo ] OF Datatype
+    (50) Tipo -> . ID
     (74) Datatype -> . REAL_TYPE
     (75) Datatype -> . INTEGER_TYPE
     (76) Datatype -> . STRING_TYPE
@@ -2691,15 +2691,15 @@ state 122
 
 state 123
 
-    (38) DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .
+    (37) DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .
     (61) Expressao -> Expressao . + Termo
     (62) Expressao -> Expressao . - Termo
 
-    DO              reduce using rule 38 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
-    AND             reduce using rule 38 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
-    OR              reduce using rule 38 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
-    THEN            reduce using rule 38 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
-    )               reduce using rule 38 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
+    DO              reduce using rule 37 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
+    AND             reduce using rule 37 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
+    OR              reduce using rule 37 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
+    THEN            reduce using rule 37 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
+    )               reduce using rule 37 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
     +               shift and go to state 54
     -               shift and go to state 55
 
@@ -2745,7 +2745,7 @@ state 126
 
 state 127
 
-    (37) CicloFor -> FOR Atribuicao DirecaoFor Expressao . DO LocalInstsList
+    (39) CicloFor -> FOR Atribuicao DirecaoFor Expressao . DO LocalInstsList
     (61) Expressao -> Expressao . + Termo
     (62) Expressao -> Expressao . - Termo
 
@@ -2965,27 +2965,27 @@ state 136
 
 state 137
 
-    (50) Tipo -> Datatype .
+    (48) Tipo -> Datatype .
 
-    ;               reduce using rule 50 (Tipo -> Datatype .)
-    )               reduce using rule 50 (Tipo -> Datatype .)
-    ,               reduce using rule 50 (Tipo -> Datatype .)
+    ;               reduce using rule 48 (Tipo -> Datatype .)
+    )               reduce using rule 48 (Tipo -> Datatype .)
+    ,               reduce using rule 48 (Tipo -> Datatype .)
 
 
 state 138
 
-    (51) Tipo -> ARRAY . [ Intervalo ] OF Datatype
+    (49) Tipo -> ARRAY . [ Intervalo ] OF Datatype
 
     [               shift and go to state 157
 
 
 state 139
 
-    (52) Tipo -> ID .
+    (50) Tipo -> ID .
 
-    ;               reduce using rule 52 (Tipo -> ID .)
-    )               reduce using rule 52 (Tipo -> ID .)
-    ,               reduce using rule 52 (Tipo -> ID .)
+    ;               reduce using rule 50 (Tipo -> ID .)
+    )               reduce using rule 50 (Tipo -> ID .)
+    ,               reduce using rule 50 (Tipo -> ID .)
 
 
 state 140
@@ -3101,7 +3101,7 @@ state 150
 
 state 151
 
-    (37) CicloFor -> FOR Atribuicao DirecaoFor Expressao DO . LocalInstsList
+    (39) CicloFor -> FOR Atribuicao DirecaoFor Expressao DO . LocalInstsList
     (3) LocalInstsList -> . LocalInstsList ; Instrucao
     (20) LocalInstsList -> . LocalInstsList ;
     (31) LocalInstsList -> . Instrucao
@@ -3112,7 +3112,7 @@ state 151
     (45) Instrucao -> . Expressao
     (60) Instrucao -> . Bloco
     (16) While -> . WHILE Condicao DO LocalInstsList
-    (37) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
+    (39) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (10) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (2) Atribuicao -> . Atribuido : = Expressao
     (61) Expressao -> . Expressao + Termo
@@ -3188,7 +3188,7 @@ state 153
     (45) Instrucao -> . Expressao
     (60) Instrucao -> . Bloco
     (16) While -> . WHILE Condicao DO LocalInstsList
-    (37) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
+    (39) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (10) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (2) Atribuicao -> . Atribuido : = Expressao
     (61) Expressao -> . Expressao + Termo
@@ -3279,7 +3279,7 @@ state 156
 
 state 157
 
-    (51) Tipo -> ARRAY [ . Intervalo ] OF Datatype
+    (49) Tipo -> ARRAY [ . Intervalo ] OF Datatype
     (68) Intervalo -> . INTEGER . . INTEGER
 
     INTEGER         shift and go to state 165
@@ -3310,9 +3310,9 @@ state 159
 state 160
 
     (91) Argumento -> ModificadorArgumento ID : . Tipo
-    (50) Tipo -> . Datatype
-    (51) Tipo -> . ARRAY [ Intervalo ] OF Datatype
-    (52) Tipo -> . ID
+    (48) Tipo -> . Datatype
+    (49) Tipo -> . ARRAY [ Intervalo ] OF Datatype
+    (50) Tipo -> . ID
     (74) Datatype -> . REAL_TYPE
     (75) Datatype -> . INTEGER_TYPE
     (76) Datatype -> . STRING_TYPE
@@ -3343,7 +3343,7 @@ state 161
     (45) Instrucao -> . Expressao
     (60) Instrucao -> . Bloco
     (16) While -> . WHILE Condicao DO LocalInstsList
-    (37) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
+    (39) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (10) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (2) Atribuicao -> . Atribuido : = Expressao
     (61) Expressao -> . Expressao + Termo
@@ -3399,16 +3399,16 @@ state 161
 
 state 162
 
-    (37) CicloFor -> FOR Atribuicao DirecaoFor Expressao DO LocalInstsList .
+    (39) CicloFor -> FOR Atribuicao DirecaoFor Expressao DO LocalInstsList .
     (3) LocalInstsList -> LocalInstsList . ; Instrucao
     (20) LocalInstsList -> LocalInstsList . ;
 
   ! shift/reduce conflict for ; resolved as shift
-    END             reduce using rule 37 (CicloFor -> FOR Atribuicao DirecaoFor Expressao DO LocalInstsList .)
-    ELSE            reduce using rule 37 (CicloFor -> FOR Atribuicao DirecaoFor Expressao DO LocalInstsList .)
+    END             reduce using rule 39 (CicloFor -> FOR Atribuicao DirecaoFor Expressao DO LocalInstsList .)
+    ELSE            reduce using rule 39 (CicloFor -> FOR Atribuicao DirecaoFor Expressao DO LocalInstsList .)
     ;               shift and go to state 53
 
-  ! ;               [ reduce using rule 37 (CicloFor -> FOR Atribuicao DirecaoFor Expressao DO LocalInstsList .) ]
+  ! ;               [ reduce using rule 39 (CicloFor -> FOR Atribuicao DirecaoFor Expressao DO LocalInstsList .) ]
 
 
 state 163
@@ -3427,7 +3427,7 @@ state 163
 
 state 164
 
-    (51) Tipo -> ARRAY [ Intervalo . ] OF Datatype
+    (49) Tipo -> ARRAY [ Intervalo . ] OF Datatype
 
     ]               shift and go to state 169
 
@@ -3480,7 +3480,7 @@ state 168
 
 state 169
 
-    (51) Tipo -> ARRAY [ Intervalo ] . OF Datatype
+    (49) Tipo -> ARRAY [ Intervalo ] . OF Datatype
 
     OF              shift and go to state 173
 
@@ -3505,7 +3505,7 @@ state 171
     (45) Instrucao -> . Expressao
     (60) Instrucao -> . Bloco
     (16) While -> . WHILE Condicao DO LocalInstsList
-    (37) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
+    (39) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (10) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (2) Atribuicao -> . Atribuido : = Expressao
     (61) Expressao -> . Expressao + Termo
@@ -3568,7 +3568,7 @@ state 172
 
 state 173
 
-    (51) Tipo -> ARRAY [ Intervalo ] OF . Datatype
+    (49) Tipo -> ARRAY [ Intervalo ] OF . Datatype
     (74) Datatype -> . REAL_TYPE
     (75) Datatype -> . INTEGER_TYPE
     (76) Datatype -> . STRING_TYPE
@@ -3612,11 +3612,11 @@ state 176
 
 state 177
 
-    (51) Tipo -> ARRAY [ Intervalo ] OF Datatype .
+    (49) Tipo -> ARRAY [ Intervalo ] OF Datatype .
 
-    ;               reduce using rule 51 (Tipo -> ARRAY [ Intervalo ] OF Datatype .)
-    )               reduce using rule 51 (Tipo -> ARRAY [ Intervalo ] OF Datatype .)
-    ,               reduce using rule 51 (Tipo -> ARRAY [ Intervalo ] OF Datatype .)
+    ;               reduce using rule 49 (Tipo -> ARRAY [ Intervalo ] OF Datatype .)
+    )               reduce using rule 49 (Tipo -> ARRAY [ Intervalo ] OF Datatype .)
+    ,               reduce using rule 49 (Tipo -> ARRAY [ Intervalo ] OF Datatype .)
 
 
 state 178
