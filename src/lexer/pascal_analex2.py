@@ -36,8 +36,8 @@ tokens = (
     'ID',
     'INTEGER',
     'REAL',
-    'LESSOREQUAL',#<=
-    'GREATEROREQUAL',#>=
+    #'LESSOREQUAL',#<=
+    #'GREATEROREQUAL',#>=
     'DIFFERENT',
     'STRING',
     'ONELINECOMMENTS',
@@ -298,14 +298,14 @@ def t_ID(t):
     r'\b[A-Za-z](?:\w+?)?\b'
     return t
 
-def t_LESSOREQUAL(t):
+""" def t_LESSOREQUAL(t):
     r'\<\='
     return t
-
-def t_GREATEROREQUAL(t):
+ """
+""" def t_GREATEROREQUAL(t):
     r'\>\='
     return t
-
+ """
 
 #t_ASSIGN = r'\:\='
 t_INTEGER =r'\b\d+\b'

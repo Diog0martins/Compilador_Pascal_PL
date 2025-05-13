@@ -33,7 +33,7 @@ def p_variavel_array(p):
 
 # ====== Produções de Expressões ======
 
-def p_expressao(p):
+def p_Expressao(p):
     '''
     Expressao : Expressao '+' Termo
               | Expressao '-' Termo
@@ -48,10 +48,10 @@ def p_expressao(p):
 def p_termo(p):
     '''
     Termo : Termo '*' Fator
-          | Termo '/' Fator
+          | Termo MOD Fator
+          | Termo DIV Fator
           | Fator
     '''
-#          | Termo MOD Fator
     if len(p) == 4:
         p[0] = f"({p[1]} {p[2]} {p[3]})"
         print(f"Termo reconhecido: {p[0]}")
@@ -65,25 +65,37 @@ def p_fator(p):
           | INTEGER
           | STRING
           | TRUE
-          | FALSE 
+          | FALSE
           | '(' Expressao ')'
-          | Condicao
           | Acesso_array
+          | ChamadaFuncao
     '''
     if len(p) == 2:
         p[0] = p[1]
     else:
         p[0] = p[2]
 
+
 # ====== Produção para Chamadas de Função ======
 
-def p_chamada_funcao(p):
+def p_ChamadaFuncao(p):
     '''
-    Fator : ID ArgumentosGetter
+    ChamadaFuncao : ID ArgumentosGetter
     '''
     print(f"Chamada de função reconhecida: {p[1]}(...)")
+    p[0] = f"{p[1]}(...)"
 
-#P.S.: RETIRAR BOOLEAN E VOLTAR A POR COND, NÃO ESQUECER 
+# Exemplo genérico da função ArgumentosGetter
+def p_ArgumentosGetter(p):
+    '''
+    ArgumentosGetter : '(' ListaArgumentos ')'
+                     | '(' ')'
+    '''
+    p[0] = '()'  # Podes adaptar isto conforme necessário
 
-#| ID OPENPARENTHESIS arguments CLOSEPARENTHESIS
-#           | condition
+def p_ListaArgumentos(p):
+    '''
+    ListaArgumentos : Expressao
+                    | ListaArgumentos ',' Expressao
+    '''
+    # Implementar conforme necessário
