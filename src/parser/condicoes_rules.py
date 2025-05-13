@@ -8,7 +8,6 @@ def p_Condicao(p):
              | DeclaracaoCondicao
              | '(' Condicao ')'
     '''
-    print(f"Condicao lógica reconhecida: {p[0]}\n")
 
     if len(p) == 4:
         p[0] = f"{p[1]} {p[2]} {p[3]}"
@@ -16,6 +15,7 @@ def p_Condicao(p):
         p[0] = f"{p[1]} {p[2]}"
     else:
         p[0] = p[1]
+    print(f"Condicao lógica reconhecida: {p[0]}\n")
 
 
 def p_DeclaracaoCondicao(p):

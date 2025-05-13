@@ -24,3 +24,5 @@ def p_blocofinal(p):
     '''
     BlocoPrincipal : BEGIN LocalInstsList END
     '''
+
+    p[0] = f"{p[1]} {p[2]} {p[3]}"
