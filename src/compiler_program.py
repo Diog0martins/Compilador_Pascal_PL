@@ -1,6 +1,7 @@
 from parser.pascal_anasin import rec_Parser
 import sys
 
+#filename = "../programas_teste/teste7.pas"
 
 def main():
     filename = sys.argv[1]
