@@ -1,6 +1,9 @@
+import symbol_table
+
 def p_dvariaveis(p):
     'Dvariaveis : VAR Listavariaveis'
     print("Declaração de variáveis encontrada")
+    p[0] = p[2]
 
 
 def p_listavariaveis(p):
@@ -9,9 +12,36 @@ def p_listavariaveis(p):
                    | 
     '''
     if len(p) > 1:
-        print(f"Variáveis encontradas: {p[2]} do tipo {p[4]}")
+        tipo = p[4].lower()
+
+        if tipo == "integer":
+            code = "PUSHI 0"
+            default = 0
+        elif tipo == "string":
+            code = 'PUSHS ""'
+            default = ""
+        elif tipo == "real":
+            code = "PUSHF 0"
+            default = 0.0
+        else:
+            code = f"; tipo não reconhecido: {tipo}"
+            default = None  
+
+        declarations = []
+
+        for var_name in p[2]:
+            try:
+                symbol_table.add_variable(var_name, tipo, default)
+                declarations.append(code)
+            except ValueError as e:
+                print(f"Erro: {e}")
+
+        joined_code = "\n".join(declarations)
+        p[0] = p[1] + "\n" + joined_code if p[1] else joined_code
+
+        print(f"Variáveis declaradas: {p[2]} do tipo {tipo}")
     else:
-        pass
+        p[0] = ""
 
 
 def p_variaveis(p):

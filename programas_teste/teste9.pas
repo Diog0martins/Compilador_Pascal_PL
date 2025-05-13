@@ -1,7 +1,8 @@
 program SimpleAssignment;
 var
-  num: integer;
+  num, i: integer;
+  test: string;
 begin
-  num := 42;
+  i := 42;
   writeln('The assigned number is: ', num);
 end.
