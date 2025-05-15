@@ -2,19 +2,21 @@
 
 def p_Condicao(p):
     '''
-    Condicao : Condicao AND DeclaracaoCondicao
-             | Condicao OR DeclaracaoCondicao
+    Condicao : Condicao AND Condicao
+             | Condicao OR Condicao
              | NOT Condicao
              | DeclaracaoCondicao
              | '(' Condicao ')'
     '''
     if len(p) == 4:
-        left = p[1]
-        right = p[3]
-        logic_op = p[2].upper()
-
-        op_code = "AND" if logic_op == "AND" else "OR"
-        p[0] = f"{left}\n{right}\n{op_code}"
+        if p[2].upper() in ("AND", "OR"):
+            left = p[1]
+            right = p[3]
+            logic_op = p[2].upper()
+            op_code = "AND" if logic_op == "AND" else "OR"
+            p[0] = f"{left}\n{right}\n{op_code}"
+        else:
+            p[0] = p[2]
 
     elif len(p) == 3:
         inner = p[2]
@@ -85,7 +87,6 @@ def p_SimboloCondicional(p):
                        | '>' '='
                        | '>'
     '''
-    print("AAAAAAAAAAAA")
     symbols = {
         '=': "EQUAL",
         '<>': "NEQ",
@@ -99,7 +100,5 @@ def p_SimboloCondicional(p):
         symbol = p[1]
     else:
         symbol = p[1] + p[2]
-    
-    print("AAAAAAAAAAaa")
 
     p[0] = symbols[symbol]

@@ -11,28 +11,24 @@ def p_While(p):
     '''
     While : WHILE Condicao DO LocalInstsList
     '''
-    print (
-        p[1], # Type of cycle
-        p[2], # Condition
-        p[3], # Condition
-        p[4], # Block of instructions
-    )
-
     counter.inc_while()
 
-    start_label = f"WHILE{counter.get_while()}"
-    end_label = f'ENDWHILE{counter.get_while()}'
+    idx = counter.get_while()
 
-    jump_cond = f'JZ {end_label}'
-    jump = f'JUMP {start_label}'
+    start_label = f"WHILE{idx}"
+    end_label = f"ENDWHILE{idx}"
 
-    cond_1 = f'push Cond'
-
-    cond_2 = f'push cond2'
-
-    cond_op = f'EQUAL'
-
-    p[0] = "\n".join([start_label + ':',p[2],jump_cond,p[4],jump,end_label+':'])
+    condition_code = p[2] 
+    body_code = p[4]
+    
+    p[0] = "\n".join([
+        f"{start_label}:",
+        condition_code,
+        f"JZ {end_label}",
+        body_code,
+        f"JUMP {start_label}",
+        f"{end_label}:"
+    ])
 
     # p[0] = f"{p[1]} {p[2]} {p[3]} {p[4]}"
 
