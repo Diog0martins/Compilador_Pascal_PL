@@ -31,7 +31,7 @@ def p_listavariaveis(p):
 
         for var_name in p[2]:
             try:
-                symbol_table.add_variable(var_name, tipo, default)
+                symbol_table.add_variable(var_name, tipo)
                 declarations.append(code)
             except ValueError as e:
                 print(f"Erro: {e}")

@@ -14,12 +14,33 @@ def p_atribuicao(p):
         p[0] = ""
         return
 
-    position = symbol_table.get_position(var_name)
+    # ===== GET THE VALUE CODE ===== #
+    
+    expr_val = p[4][0]
+    expr_type = p[4][1].lower()
+    expr_code = ""
 
-    # Generate the code for the expression + store result in variable
-    expr_code = p[4]
+    if expr_type == symbol_table.get_type(var_name):
+
+        if expr_type == "integer":
+            expr_code = f"PUSHI {expr_val}"
+        elif expr_type == "string":
+            expr_code = f"PUSHS {expr_val}"
+        elif expr_type == "real":
+            expr_code = f"PUSHF {expr_val}"
+        else:
+            print(f"; tipo não reconhecido: {expr_type}")
+    else: 
+        print(f"Erro: variável '{var_name}' é do tipo '{symbol_table.get_type(var_name)}'")
+
+    # ===== STORE THE VALUE CODE ===== #
+    
+    position = symbol_table.get_position(var_name)
+    
     store_code = f"STOREG {position}"
 
+    # ===== FINAL CODE FOR ATRIBUTTION ===== #
+    
     final_code = expr_code + "\n" + store_code
     p[0] = final_code
 
