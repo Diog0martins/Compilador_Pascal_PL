@@ -3,5 +3,10 @@ var
   num, i: integer;
   test: string;
 begin
-  test := 42;
+  num := 42;
+  i := 30;
+  num := 100 * num;
+
+  i := num - 20;
+  i := i -20;
 end.

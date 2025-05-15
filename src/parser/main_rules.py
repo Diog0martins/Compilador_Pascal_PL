@@ -5,7 +5,7 @@ def p_programa(p):
     '''
     Programa : PROGRAM ID ';' Duses GlobalInsts BlocoPrincipal '.'
     '''
-    p[0] = p[5] + "\nSTART" + p[6] + "\nSTOP"
+    p[0] = p[5] + "\nSTART\n" + p[6] + "\nSTOP"
 
 def p_globalinsts(p):
     '''
