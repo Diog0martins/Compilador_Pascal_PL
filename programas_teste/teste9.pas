@@ -4,9 +4,10 @@ var
   test: string;
 begin
   num := 42;
-  while num < 45 do
+  i := 30;
+  while num < 50 do 
   begin
-  num := 42;
+    num := num + 2;
+    i := i div 2;
   end;
-  
 end.

@@ -74,36 +74,36 @@ Rule 48    ArgumentosGetterBuffer -> Expressao
 Rule 49    ArgumentosGetterBuffer -> <empty>
 Rule 50    Instrucao -> Bloco
 Rule 51    CicloFor -> FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
-Rule 52    Bloco -> BEGIN LocalInstsList END
-Rule 53    Variaveis -> Variaveis , ID
-Rule 54    Variaveis -> ID
-Rule 55    ArgumentosSetter -> ( ArgumentosSetterBuffer )
-Rule 56    DirecaoFor -> TO
-Rule 57    DirecaoFor -> DOWNTO
-Rule 58    Atribuido -> ID
-Rule 59    Atribuido -> Acesso_array
-Rule 60    ArgumentosSetterBuffer -> ArgumentosSetterBuffer , Argumento
-Rule 61    ArgumentosSetterBuffer -> Argumento
-Rule 62    ArgumentosSetterBuffer -> <empty>
-Rule 63    Tipo -> Datatype
-Rule 64    Tipo -> ARRAY [ Intervalo ] OF Datatype
-Rule 65    Tipo -> ID
-Rule 66    Acesso_array -> Variavel_array [ Expressao ]
-Rule 67    Argumento -> ModificadorArgumento ID : Tipo
-Rule 68    Variavel_array -> ID
-Rule 69    Variavel_array -> Acesso_array
-Rule 70    Intervalo -> INTEGER . . INTEGER
-Rule 71    ModificadorArgumento -> VAR
-Rule 72    ModificadorArgumento -> CONST
-Rule 73    ModificadorArgumento -> <empty>
-Rule 74    Expressao -> Expressao + Termo
-Rule 75    Expressao -> Expressao - Termo
-Rule 76    Expressao -> Termo
-Rule 77    Datatype -> REAL_TYPE
-Rule 78    Datatype -> INTEGER_TYPE
-Rule 79    Datatype -> STRING_TYPE
-Rule 80    Datatype -> BOOLEAN_TYPE
-Rule 81    Datatype -> CHAR_TYPE
+Rule 52    Atribuido -> ID
+Rule 53    Atribuido -> Acesso_array
+Rule 54    Bloco -> BEGIN LocalInstsList END
+Rule 55    Variaveis -> Variaveis , ID
+Rule 56    Variaveis -> ID
+Rule 57    ArgumentosSetter -> ( ArgumentosSetterBuffer )
+Rule 58    DirecaoFor -> TO
+Rule 59    DirecaoFor -> DOWNTO
+Rule 60    Acesso_array -> Variavel_array [ Expressao ]
+Rule 61    ArgumentosSetterBuffer -> ArgumentosSetterBuffer , Argumento
+Rule 62    ArgumentosSetterBuffer -> Argumento
+Rule 63    ArgumentosSetterBuffer -> <empty>
+Rule 64    Tipo -> Datatype
+Rule 65    Tipo -> ARRAY [ Intervalo ] OF Datatype
+Rule 66    Tipo -> ID
+Rule 67    Variavel_array -> ID
+Rule 68    Variavel_array -> Acesso_array
+Rule 69    Argumento -> ModificadorArgumento ID : Tipo
+Rule 70    Expressao -> Expressao + Termo
+Rule 71    Expressao -> Expressao - Termo
+Rule 72    Intervalo -> INTEGER . . INTEGER
+Rule 73    ModificadorArgumento -> VAR
+Rule 74    ModificadorArgumento -> CONST
+Rule 75    ModificadorArgumento -> <empty>
+Rule 76    Datatype -> REAL_TYPE
+Rule 77    Datatype -> INTEGER_TYPE
+Rule 78    Datatype -> STRING_TYPE
+Rule 79    Datatype -> BOOLEAN_TYPE
+Rule 80    Datatype -> CHAR_TYPE
+Rule 81    Expressao -> Termo
 Rule 82    Termo -> Termo * Fator
 Rule 83    Termo -> Termo MOD Fator
 Rule 84    Termo -> Termo DIV Fator
@@ -125,82 +125,82 @@ Rule 99    ListaArgumentos -> ListaArgumentos , Expressao
 
 Terminals, with rules where they appear
 
-(                    : 6 40 55 92 96 97
-)                    : 6 40 55 92 96 97
+(                    : 6 40 57 92 96 97
+)                    : 6 40 57 92 96 97
 *                    : 82
-+                    : 74
-,                    : 17 47 53 60 99
--                    : 75
-.                    : 12 70 70
-:                    : 8 13 14 67
++                    : 70
+,                    : 17 47 55 61 99
+-                    : 71
+.                    : 12 72 72
+:                    : 8 13 14 69
 ;                    : 1 8 8 10 12 14 19 19 23
 <                    : 42 43 44
 =                    : 13 41 43 45
 >                    : 42 45 46
 AND                  : 2
-ARRAY                : 64
-BEGIN                : 8 19 39 52
-BOOLEAN_TYPE         : 80
+ARRAY                : 65
+BEGIN                : 8 19 39 54
+BOOLEAN_TYPE         : 79
 CASE                 : 
-CHAR_TYPE            : 81
-CONST                : 72
+CHAR_TYPE            : 80
+CONST                : 74
 DIFFERENT            : 
 DIV                  : 84
 DO                   : 20 51
-DOWNTO               : 57
+DOWNTO               : 59
 ELSE                 : 24
-END                  : 8 19 39 52
+END                  : 8 19 39 54
 FALSE                : 91
 FILE                 : 
 FOR                  : 51
 FUNCTION             : 8
 GOTO                 : 
-ID                   : 8 12 17 18 19 53 54 58 65 67 68 86 95
+ID                   : 8 12 17 18 19 52 55 56 66 67 69 86 95
 IF                   : 9
 IN                   : 
-INTEGER              : 70 70 87
-INTEGER_TYPE         : 78
+INTEGER              : 72 72 87
+INTEGER_TYPE         : 77
 KEYWORD              : 
 LABEL                : 
 MOD                  : 83
 MULTILINECOMMENTS    : 
 NIL                  : 
 NOT                  : 4
-OF                   : 64
+OF                   : 65
 ONELINECOMMENTS      : 
 OR                   : 3
 PACKED               : 
 PROCEDURE            : 19
 PROGRAM              : 12
 REAL                 : 88
-REAL_TYPE            : 77
+REAL_TYPE            : 76
 RECORD               : 
 REPEAT               : 
 SET                  : 
 STRING               : 89
-STRING_TYPE          : 79
+STRING_TYPE          : 78
 THEN                 : 9
-TO                   : 56
+TO                   : 58
 TRUE                 : 90
 TYPE                 : 
 UNTIL                : 
 USES                 : 10
-VAR                  : 7 71
+VAR                  : 7 73
 WHILE                : 20
 WITH                 : 
-[                    : 64 66
-]                    : 64 66
+[                    : 60 65
+]                    : 60 65
 error                : 
 
 Nonterminals, with rules where they appear
 
-Acesso_array         : 59 69 93
-Argumento            : 60 61
+Acesso_array         : 53 68 93
+Argumento            : 61 62
 ArgumentosGetter     : 95
 ArgumentosGetterBuffer : 40 47
 ArgumentosProcedimentoOpc : 19
 ArgumentosSetter     : 8 26
-ArgumentosSetterBuffer : 55 60
+ArgumentosSetterBuffer : 57 61
 Atribuicao           : 37 51
 Atribuido            : 13
 Bloco                : 50
@@ -209,32 +209,32 @@ BlocoPrincipal       : 12
 ChamadaFuncao        : 94
 CicloFor             : 35
 Condicao             : 2 3 4 6 9 20
-Datatype             : 63 64
+Datatype             : 64 65
 DeclaracaoCondicao   : 2 3 5
 Dfuncao              : 32
 DirecaoFor           : 51
 Dprocedimento        : 33
 Duses                : 12
 Dvariaveis           : 31
-Expressao            : 13 29 29 38 47 48 51 66 74 75 92 98 99
+Expressao            : 13 29 29 38 47 48 51 60 70 71 92 98 99
 Fator                : 30 82 83 84 85
 GlobalInst           : 21
 GlobalInsts          : 8 12 19 21
 Instrucao            : 1 28
 InstrucaoCondicional : 36
-Intervalo            : 64
+Intervalo            : 65
 ListaArgumentos      : 96 99
 Listavariaveis       : 7 14
-LocalInstsList       : 1 8 16 19 20 23 24 39 51 52
-ModificadorArgumento : 67
+LocalInstsList       : 1 8 16 19 20 23 24 39 51 54
+ModificadorArgumento : 69
 ParteElse            : 9
 Programa             : 0
 SimboloCondicional   : 29
-Termo                : 74 75 76 82 83 84
-Tipo                 : 8 14 67
+Termo                : 70 71 81 82 83 84
+Tipo                 : 8 14 69
 UseList              : 10 17
-Variaveis            : 14 53
-Variavel_array       : 66
+Variaveis            : 14 55
+Variavel_array       : 60
 While                : 34
 
 Parsing method: LALR
@@ -378,17 +378,17 @@ state 12
     (51) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (13) Atribuicao -> . Atribuido : = Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
-    (52) Bloco -> . BEGIN LocalInstsList END
-    (58) Atribuido -> . ID
-    (59) Atribuido -> . Acesso_array
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
+    (54) Bloco -> . BEGIN LocalInstsList END
+    (52) Atribuido -> . ID
+    (53) Atribuido -> . Acesso_array
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -398,8 +398,8 @@ state 12
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
     (95) ChamadaFuncao -> . ID ArgumentosGetter
 
     WHILE           shift and go to state 31
@@ -513,7 +513,7 @@ state 21
 
 state 22
 
-    (52) Bloco -> BEGIN . LocalInstsList END
+    (54) Bloco -> BEGIN . LocalInstsList END
     (1) LocalInstsList -> . LocalInstsList ; Instrucao
     (23) LocalInstsList -> . LocalInstsList ;
     (28) LocalInstsList -> . Instrucao
@@ -527,17 +527,17 @@ state 22
     (51) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (13) Atribuicao -> . Atribuido : = Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
-    (52) Bloco -> . BEGIN LocalInstsList END
-    (58) Atribuido -> . ID
-    (59) Atribuido -> . Acesso_array
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
+    (54) Bloco -> . BEGIN LocalInstsList END
+    (52) Atribuido -> . ID
+    (53) Atribuido -> . Acesso_array
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -547,8 +547,8 @@ state 22
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
     (95) ChamadaFuncao -> . ID ArgumentosGetter
 
     WHILE           shift and go to state 31
@@ -636,8 +636,8 @@ state 28
 state 29
 
     (38) Instrucao -> Expressao .
-    (74) Expressao -> Expressao . + Termo
-    (75) Expressao -> Expressao . - Termo
+    (70) Expressao -> Expressao . + Termo
+    (71) Expressao -> Expressao . - Termo
 
     END             reduce using rule 38 (Instrucao -> Expressao .)
     ;               reduce using rule 38 (Instrucao -> Expressao .)
@@ -665,9 +665,9 @@ state 31
     (6) Condicao -> . ( Condicao )
     (29) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
     (30) DeclaracaoCondicao -> . Fator
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -681,10 +681,10 @@ state 31
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     NOT             shift and go to state 58
     (               shift and go to state 59
@@ -708,11 +708,11 @@ state 32
 
     (51) CicloFor -> FOR . Atribuicao DirecaoFor Expressao DO LocalInstsList
     (13) Atribuicao -> . Atribuido : = Expressao
-    (58) Atribuido -> . ID
-    (59) Atribuido -> . Acesso_array
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (52) Atribuido -> . ID
+    (53) Atribuido -> . Acesso_array
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 65
 
@@ -731,9 +731,9 @@ state 33
     (6) Condicao -> . ( Condicao )
     (29) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
     (30) DeclaracaoCondicao -> . Fator
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -747,10 +747,10 @@ state 33
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     NOT             shift and go to state 58
     (               shift and go to state 59
@@ -779,28 +779,28 @@ state 34
 
 state 35
 
-    (76) Expressao -> Termo .
+    (81) Expressao -> Termo .
     (82) Termo -> Termo . * Fator
     (83) Termo -> Termo . MOD Fator
     (84) Termo -> Termo . DIV Fator
 
-    +               reduce using rule 76 (Expressao -> Termo .)
-    -               reduce using rule 76 (Expressao -> Termo .)
-    END             reduce using rule 76 (Expressao -> Termo .)
-    ;               reduce using rule 76 (Expressao -> Termo .)
-    =               reduce using rule 76 (Expressao -> Termo .)
-    <               reduce using rule 76 (Expressao -> Termo .)
-    >               reduce using rule 76 (Expressao -> Termo .)
-    )               reduce using rule 76 (Expressao -> Termo .)
-    ELSE            reduce using rule 76 (Expressao -> Termo .)
-    ,               reduce using rule 76 (Expressao -> Termo .)
-    ]               reduce using rule 76 (Expressao -> Termo .)
-    DO              reduce using rule 76 (Expressao -> Termo .)
-    AND             reduce using rule 76 (Expressao -> Termo .)
-    OR              reduce using rule 76 (Expressao -> Termo .)
-    THEN            reduce using rule 76 (Expressao -> Termo .)
-    TO              reduce using rule 76 (Expressao -> Termo .)
-    DOWNTO          reduce using rule 76 (Expressao -> Termo .)
+    +               reduce using rule 81 (Expressao -> Termo .)
+    -               reduce using rule 81 (Expressao -> Termo .)
+    END             reduce using rule 81 (Expressao -> Termo .)
+    ;               reduce using rule 81 (Expressao -> Termo .)
+    =               reduce using rule 81 (Expressao -> Termo .)
+    <               reduce using rule 81 (Expressao -> Termo .)
+    >               reduce using rule 81 (Expressao -> Termo .)
+    )               reduce using rule 81 (Expressao -> Termo .)
+    ELSE            reduce using rule 81 (Expressao -> Termo .)
+    ,               reduce using rule 81 (Expressao -> Termo .)
+    ]               reduce using rule 81 (Expressao -> Termo .)
+    DO              reduce using rule 81 (Expressao -> Termo .)
+    AND             reduce using rule 81 (Expressao -> Termo .)
+    OR              reduce using rule 81 (Expressao -> Termo .)
+    THEN            reduce using rule 81 (Expressao -> Termo .)
+    TO              reduce using rule 81 (Expressao -> Termo .)
+    DOWNTO          reduce using rule 81 (Expressao -> Termo .)
     *               shift and go to state 69
     MOD             shift and go to state 70
     DIV             shift and go to state 71
@@ -808,15 +808,15 @@ state 35
 
 state 36
 
-    (58) Atribuido -> ID .
+    (52) Atribuido -> ID .
     (86) Fator -> ID .
-    (68) Variavel_array -> ID .
+    (67) Variavel_array -> ID .
     (95) ChamadaFuncao -> ID . ArgumentosGetter
     (40) ArgumentosGetter -> . ( ArgumentosGetterBuffer )
     (96) ArgumentosGetter -> . ( ListaArgumentos )
     (97) ArgumentosGetter -> . ( )
 
-    :               reduce using rule 58 (Atribuido -> ID .)
+    :               reduce using rule 52 (Atribuido -> ID .)
     *               reduce using rule 86 (Fator -> ID .)
     MOD             reduce using rule 86 (Fator -> ID .)
     DIV             reduce using rule 86 (Fator -> ID .)
@@ -825,18 +825,18 @@ state 36
     END             reduce using rule 86 (Fator -> ID .)
     ;               reduce using rule 86 (Fator -> ID .)
     ELSE            reduce using rule 86 (Fator -> ID .)
-    [               reduce using rule 68 (Variavel_array -> ID .)
+    [               reduce using rule 67 (Variavel_array -> ID .)
     (               shift and go to state 73
 
     ArgumentosGetter               shift and go to state 72
 
 state 37
 
-    (59) Atribuido -> Acesso_array .
+    (53) Atribuido -> Acesso_array .
     (93) Fator -> Acesso_array .
-    (69) Variavel_array -> Acesso_array .
+    (68) Variavel_array -> Acesso_array .
 
-    :               reduce using rule 59 (Atribuido -> Acesso_array .)
+    :               reduce using rule 53 (Atribuido -> Acesso_array .)
     *               reduce using rule 93 (Fator -> Acesso_array .)
     MOD             reduce using rule 93 (Fator -> Acesso_array .)
     DIV             reduce using rule 93 (Fator -> Acesso_array .)
@@ -845,7 +845,7 @@ state 37
     END             reduce using rule 93 (Fator -> Acesso_array .)
     ;               reduce using rule 93 (Fator -> Acesso_array .)
     ELSE            reduce using rule 93 (Fator -> Acesso_array .)
-    [               reduce using rule 69 (Variavel_array -> Acesso_array .)
+    [               reduce using rule 68 (Variavel_array -> Acesso_array .)
 
 
 state 38
@@ -876,7 +876,7 @@ state 38
 
 state 39
 
-    (66) Acesso_array -> Variavel_array . [ Expressao ]
+    (60) Acesso_array -> Variavel_array . [ Expressao ]
 
     [               shift and go to state 74
 
@@ -1014,9 +1014,9 @@ state 44
 state 45
 
     (92) Fator -> ( . Expressao )
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
@@ -1030,10 +1030,10 @@ state 45
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -1080,8 +1080,8 @@ state 47
 
     (7) Dvariaveis -> VAR Listavariaveis .
     (14) Listavariaveis -> Listavariaveis . Variaveis : Tipo ;
-    (53) Variaveis -> . Variaveis , ID
-    (54) Variaveis -> . ID
+    (55) Variaveis -> . Variaveis , ID
+    (56) Variaveis -> . ID
 
     BEGIN           reduce using rule 7 (Dvariaveis -> VAR Listavariaveis .)
     VAR             reduce using rule 7 (Dvariaveis -> VAR Listavariaveis .)
@@ -1094,7 +1094,7 @@ state 47
 state 48
 
     (8) Dfuncao -> FUNCTION ID . ArgumentosSetter : Tipo ; GlobalInsts BEGIN LocalInstsList END ;
-    (55) ArgumentosSetter -> . ( ArgumentosSetterBuffer )
+    (57) ArgumentosSetter -> . ( ArgumentosSetterBuffer )
 
     (               shift and go to state 79
 
@@ -1105,7 +1105,7 @@ state 49
     (19) Dprocedimento -> PROCEDURE ID . ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ;
     (26) ArgumentosProcedimentoOpc -> . ArgumentosSetter
     (27) ArgumentosProcedimentoOpc -> .
-    (55) ArgumentosSetter -> . ( ArgumentosSetterBuffer )
+    (57) ArgumentosSetter -> . ( ArgumentosSetterBuffer )
 
     ;               reduce using rule 27 (ArgumentosProcedimentoOpc -> .)
     (               shift and go to state 79
@@ -1123,7 +1123,7 @@ state 50
 
 state 51
 
-    (52) Bloco -> BEGIN LocalInstsList . END
+    (54) Bloco -> BEGIN LocalInstsList . END
     (1) LocalInstsList -> LocalInstsList . ; Instrucao
     (23) LocalInstsList -> LocalInstsList . ;
 
@@ -1152,17 +1152,17 @@ state 53
     (51) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (13) Atribuicao -> . Atribuido : = Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
-    (52) Bloco -> . BEGIN LocalInstsList END
-    (58) Atribuido -> . ID
-    (59) Atribuido -> . Acesso_array
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
+    (54) Bloco -> . BEGIN LocalInstsList END
+    (52) Atribuido -> . ID
+    (53) Atribuido -> . Acesso_array
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -1172,8 +1172,8 @@ state 53
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
     (95) ChamadaFuncao -> . ID ArgumentosGetter
 
     END             reduce using rule 23 (LocalInstsList -> LocalInstsList ; .)
@@ -1207,7 +1207,7 @@ state 53
 
 state 54
 
-    (74) Expressao -> Expressao + . Termo
+    (70) Expressao -> Expressao + . Termo
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
@@ -1221,10 +1221,10 @@ state 54
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -1242,7 +1242,7 @@ state 54
 
 state 55
 
-    (75) Expressao -> Expressao - . Termo
+    (71) Expressao -> Expressao - . Termo
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
@@ -1256,10 +1256,10 @@ state 55
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -1307,9 +1307,9 @@ state 58
     (6) Condicao -> . ( Condicao )
     (29) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
     (30) DeclaracaoCondicao -> . Fator
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -1323,10 +1323,10 @@ state 58
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     NOT             shift and go to state 58
     (               shift and go to state 59
@@ -1355,9 +1355,9 @@ state 59
     (4) Condicao -> . NOT Condicao
     (5) Condicao -> . DeclaracaoCondicao
     (6) Condicao -> . ( Condicao )
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (29) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
     (30) DeclaracaoCondicao -> . Fator
     (82) Termo -> . Termo * Fator
@@ -1373,10 +1373,10 @@ state 59
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     NOT             shift and go to state 58
     (               shift and go to state 59
@@ -1399,8 +1399,8 @@ state 59
 state 60
 
     (29) DeclaracaoCondicao -> Expressao . SimboloCondicional Expressao
-    (74) Expressao -> Expressao . + Termo
-    (75) Expressao -> Expressao . - Termo
+    (70) Expressao -> Expressao . + Termo
+    (71) Expressao -> Expressao . - Termo
     (41) SimboloCondicional -> . =
     (42) SimboloCondicional -> . < >
     (43) SimboloCondicional -> . < =
@@ -1443,7 +1443,7 @@ state 62
 
     (86) Fator -> ID .
     (95) ChamadaFuncao -> ID . ArgumentosGetter
-    (68) Variavel_array -> ID .
+    (67) Variavel_array -> ID .
     (40) ArgumentosGetter -> . ( ArgumentosGetterBuffer )
     (96) ArgumentosGetter -> . ( ListaArgumentos )
     (97) ArgumentosGetter -> . ( )
@@ -1468,7 +1468,7 @@ state 62
     ]               reduce using rule 86 (Fator -> ID .)
     TO              reduce using rule 86 (Fator -> ID .)
     DOWNTO          reduce using rule 86 (Fator -> ID .)
-    [               reduce using rule 68 (Variavel_array -> ID .)
+    [               reduce using rule 67 (Variavel_array -> ID .)
     (               shift and go to state 73
 
     ArgumentosGetter               shift and go to state 72
@@ -1476,7 +1476,7 @@ state 62
 state 63
 
     (93) Fator -> Acesso_array .
-    (69) Variavel_array -> Acesso_array .
+    (68) Variavel_array -> Acesso_array .
 
     DO              reduce using rule 93 (Fator -> Acesso_array .)
     AND             reduce using rule 93 (Fator -> Acesso_array .)
@@ -1498,14 +1498,14 @@ state 63
     ]               reduce using rule 93 (Fator -> Acesso_array .)
     TO              reduce using rule 93 (Fator -> Acesso_array .)
     DOWNTO          reduce using rule 93 (Fator -> Acesso_array .)
-    [               reduce using rule 69 (Variavel_array -> Acesso_array .)
+    [               reduce using rule 68 (Variavel_array -> Acesso_array .)
 
 
 state 64
 
     (51) CicloFor -> FOR Atribuicao . DirecaoFor Expressao DO LocalInstsList
-    (56) DirecaoFor -> . TO
-    (57) DirecaoFor -> . DOWNTO
+    (58) DirecaoFor -> . TO
+    (59) DirecaoFor -> . DOWNTO
 
     TO              shift and go to state 97
     DOWNTO          shift and go to state 98
@@ -1514,20 +1514,20 @@ state 64
 
 state 65
 
-    (58) Atribuido -> ID .
-    (68) Variavel_array -> ID .
+    (52) Atribuido -> ID .
+    (67) Variavel_array -> ID .
 
-    :               reduce using rule 58 (Atribuido -> ID .)
-    [               reduce using rule 68 (Variavel_array -> ID .)
+    :               reduce using rule 52 (Atribuido -> ID .)
+    [               reduce using rule 67 (Variavel_array -> ID .)
 
 
 state 66
 
-    (59) Atribuido -> Acesso_array .
-    (69) Variavel_array -> Acesso_array .
+    (53) Atribuido -> Acesso_array .
+    (68) Variavel_array -> Acesso_array .
 
-    :               reduce using rule 59 (Atribuido -> Acesso_array .)
-    [               reduce using rule 69 (Variavel_array -> Acesso_array .)
+    :               reduce using rule 53 (Atribuido -> Acesso_array .)
+    [               reduce using rule 68 (Variavel_array -> Acesso_array .)
 
 
 state 67
@@ -1560,10 +1560,10 @@ state 69
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -1590,10 +1590,10 @@ state 70
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -1620,10 +1620,10 @@ state 71
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -1674,9 +1674,9 @@ state 73
     (49) ArgumentosGetterBuffer -> .
     (98) ListaArgumentos -> . Expressao
     (99) ListaArgumentos -> . ListaArgumentos , Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
@@ -1690,10 +1690,10 @@ state 73
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
   ! shift/reduce conflict for ) resolved as shift
     )               shift and go to state 105
@@ -1719,10 +1719,10 @@ state 73
 
 state 74
 
-    (66) Acesso_array -> Variavel_array [ . Expressao ]
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (60) Acesso_array -> Variavel_array [ . Expressao ]
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
@@ -1736,10 +1736,10 @@ state 74
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -1759,8 +1759,8 @@ state 74
 state 75
 
     (92) Fator -> ( Expressao . )
-    (74) Expressao -> Expressao . + Termo
-    (75) Expressao -> Expressao . - Termo
+    (70) Expressao -> Expressao . + Termo
+    (71) Expressao -> Expressao . - Termo
 
     )               shift and go to state 109
     +               shift and go to state 54
@@ -1770,7 +1770,7 @@ state 75
 state 76
 
     (14) Listavariaveis -> Listavariaveis Variaveis . : Tipo ;
-    (53) Variaveis -> Variaveis . , ID
+    (55) Variaveis -> Variaveis . , ID
 
     :               shift and go to state 110
     ,               shift and go to state 111
@@ -1778,10 +1778,10 @@ state 76
 
 state 77
 
-    (54) Variaveis -> ID .
+    (56) Variaveis -> ID .
 
-    :               reduce using rule 54 (Variaveis -> ID .)
-    ,               reduce using rule 54 (Variaveis -> ID .)
+    :               reduce using rule 56 (Variaveis -> ID .)
+    ,               reduce using rule 56 (Variaveis -> ID .)
 
 
 state 78
@@ -1793,20 +1793,20 @@ state 78
 
 state 79
 
-    (55) ArgumentosSetter -> ( . ArgumentosSetterBuffer )
-    (60) ArgumentosSetterBuffer -> . ArgumentosSetterBuffer , Argumento
-    (61) ArgumentosSetterBuffer -> . Argumento
-    (62) ArgumentosSetterBuffer -> .
-    (67) Argumento -> . ModificadorArgumento ID : Tipo
-    (71) ModificadorArgumento -> . VAR
-    (72) ModificadorArgumento -> . CONST
-    (73) ModificadorArgumento -> .
+    (57) ArgumentosSetter -> ( . ArgumentosSetterBuffer )
+    (61) ArgumentosSetterBuffer -> . ArgumentosSetterBuffer , Argumento
+    (62) ArgumentosSetterBuffer -> . Argumento
+    (63) ArgumentosSetterBuffer -> .
+    (69) Argumento -> . ModificadorArgumento ID : Tipo
+    (73) ModificadorArgumento -> . VAR
+    (74) ModificadorArgumento -> . CONST
+    (75) ModificadorArgumento -> .
 
-    )               reduce using rule 62 (ArgumentosSetterBuffer -> .)
-    ,               reduce using rule 62 (ArgumentosSetterBuffer -> .)
+    )               reduce using rule 63 (ArgumentosSetterBuffer -> .)
+    ,               reduce using rule 63 (ArgumentosSetterBuffer -> .)
     VAR             shift and go to state 116
     CONST           shift and go to state 117
-    ID              reduce using rule 73 (ModificadorArgumento -> .)
+    ID              reduce using rule 75 (ModificadorArgumento -> .)
 
     ArgumentosSetterBuffer         shift and go to state 113
     Argumento                      shift and go to state 114
@@ -1828,11 +1828,11 @@ state 81
 
 state 82
 
-    (52) Bloco -> BEGIN LocalInstsList END .
+    (54) Bloco -> BEGIN LocalInstsList END .
 
-    END             reduce using rule 52 (Bloco -> BEGIN LocalInstsList END .)
-    ;               reduce using rule 52 (Bloco -> BEGIN LocalInstsList END .)
-    ELSE            reduce using rule 52 (Bloco -> BEGIN LocalInstsList END .)
+    END             reduce using rule 54 (Bloco -> BEGIN LocalInstsList END .)
+    ;               reduce using rule 54 (Bloco -> BEGIN LocalInstsList END .)
+    ELSE            reduce using rule 54 (Bloco -> BEGIN LocalInstsList END .)
 
 
 state 83
@@ -1846,28 +1846,28 @@ state 83
 
 state 84
 
-    (74) Expressao -> Expressao + Termo .
+    (70) Expressao -> Expressao + Termo .
     (82) Termo -> Termo . * Fator
     (83) Termo -> Termo . MOD Fator
     (84) Termo -> Termo . DIV Fator
 
-    +               reduce using rule 74 (Expressao -> Expressao + Termo .)
-    -               reduce using rule 74 (Expressao -> Expressao + Termo .)
-    END             reduce using rule 74 (Expressao -> Expressao + Termo .)
-    ;               reduce using rule 74 (Expressao -> Expressao + Termo .)
-    =               reduce using rule 74 (Expressao -> Expressao + Termo .)
-    <               reduce using rule 74 (Expressao -> Expressao + Termo .)
-    >               reduce using rule 74 (Expressao -> Expressao + Termo .)
-    )               reduce using rule 74 (Expressao -> Expressao + Termo .)
-    ELSE            reduce using rule 74 (Expressao -> Expressao + Termo .)
-    ,               reduce using rule 74 (Expressao -> Expressao + Termo .)
-    ]               reduce using rule 74 (Expressao -> Expressao + Termo .)
-    DO              reduce using rule 74 (Expressao -> Expressao + Termo .)
-    AND             reduce using rule 74 (Expressao -> Expressao + Termo .)
-    OR              reduce using rule 74 (Expressao -> Expressao + Termo .)
-    THEN            reduce using rule 74 (Expressao -> Expressao + Termo .)
-    TO              reduce using rule 74 (Expressao -> Expressao + Termo .)
-    DOWNTO          reduce using rule 74 (Expressao -> Expressao + Termo .)
+    +               reduce using rule 70 (Expressao -> Expressao + Termo .)
+    -               reduce using rule 70 (Expressao -> Expressao + Termo .)
+    END             reduce using rule 70 (Expressao -> Expressao + Termo .)
+    ;               reduce using rule 70 (Expressao -> Expressao + Termo .)
+    =               reduce using rule 70 (Expressao -> Expressao + Termo .)
+    <               reduce using rule 70 (Expressao -> Expressao + Termo .)
+    >               reduce using rule 70 (Expressao -> Expressao + Termo .)
+    )               reduce using rule 70 (Expressao -> Expressao + Termo .)
+    ELSE            reduce using rule 70 (Expressao -> Expressao + Termo .)
+    ,               reduce using rule 70 (Expressao -> Expressao + Termo .)
+    ]               reduce using rule 70 (Expressao -> Expressao + Termo .)
+    DO              reduce using rule 70 (Expressao -> Expressao + Termo .)
+    AND             reduce using rule 70 (Expressao -> Expressao + Termo .)
+    OR              reduce using rule 70 (Expressao -> Expressao + Termo .)
+    THEN            reduce using rule 70 (Expressao -> Expressao + Termo .)
+    TO              reduce using rule 70 (Expressao -> Expressao + Termo .)
+    DOWNTO          reduce using rule 70 (Expressao -> Expressao + Termo .)
     *               shift and go to state 69
     MOD             shift and go to state 70
     DIV             shift and go to state 71
@@ -1875,28 +1875,28 @@ state 84
 
 state 85
 
-    (75) Expressao -> Expressao - Termo .
+    (71) Expressao -> Expressao - Termo .
     (82) Termo -> Termo . * Fator
     (83) Termo -> Termo . MOD Fator
     (84) Termo -> Termo . DIV Fator
 
-    +               reduce using rule 75 (Expressao -> Expressao - Termo .)
-    -               reduce using rule 75 (Expressao -> Expressao - Termo .)
-    END             reduce using rule 75 (Expressao -> Expressao - Termo .)
-    ;               reduce using rule 75 (Expressao -> Expressao - Termo .)
-    =               reduce using rule 75 (Expressao -> Expressao - Termo .)
-    <               reduce using rule 75 (Expressao -> Expressao - Termo .)
-    >               reduce using rule 75 (Expressao -> Expressao - Termo .)
-    )               reduce using rule 75 (Expressao -> Expressao - Termo .)
-    ELSE            reduce using rule 75 (Expressao -> Expressao - Termo .)
-    ,               reduce using rule 75 (Expressao -> Expressao - Termo .)
-    ]               reduce using rule 75 (Expressao -> Expressao - Termo .)
-    DO              reduce using rule 75 (Expressao -> Expressao - Termo .)
-    AND             reduce using rule 75 (Expressao -> Expressao - Termo .)
-    OR              reduce using rule 75 (Expressao -> Expressao - Termo .)
-    THEN            reduce using rule 75 (Expressao -> Expressao - Termo .)
-    TO              reduce using rule 75 (Expressao -> Expressao - Termo .)
-    DOWNTO          reduce using rule 75 (Expressao -> Expressao - Termo .)
+    +               reduce using rule 71 (Expressao -> Expressao - Termo .)
+    -               reduce using rule 71 (Expressao -> Expressao - Termo .)
+    END             reduce using rule 71 (Expressao -> Expressao - Termo .)
+    ;               reduce using rule 71 (Expressao -> Expressao - Termo .)
+    =               reduce using rule 71 (Expressao -> Expressao - Termo .)
+    <               reduce using rule 71 (Expressao -> Expressao - Termo .)
+    >               reduce using rule 71 (Expressao -> Expressao - Termo .)
+    )               reduce using rule 71 (Expressao -> Expressao - Termo .)
+    ELSE            reduce using rule 71 (Expressao -> Expressao - Termo .)
+    ,               reduce using rule 71 (Expressao -> Expressao - Termo .)
+    ]               reduce using rule 71 (Expressao -> Expressao - Termo .)
+    DO              reduce using rule 71 (Expressao -> Expressao - Termo .)
+    AND             reduce using rule 71 (Expressao -> Expressao - Termo .)
+    OR              reduce using rule 71 (Expressao -> Expressao - Termo .)
+    THEN            reduce using rule 71 (Expressao -> Expressao - Termo .)
+    TO              reduce using rule 71 (Expressao -> Expressao - Termo .)
+    DOWNTO          reduce using rule 71 (Expressao -> Expressao - Termo .)
     *               shift and go to state 69
     MOD             shift and go to state 70
     DIV             shift and go to state 71
@@ -1918,17 +1918,17 @@ state 86
     (51) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (13) Atribuicao -> . Atribuido : = Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
-    (52) Bloco -> . BEGIN LocalInstsList END
-    (58) Atribuido -> . ID
-    (59) Atribuido -> . Acesso_array
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
+    (54) Bloco -> . BEGIN LocalInstsList END
+    (52) Atribuido -> . ID
+    (53) Atribuido -> . Acesso_array
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -1938,8 +1938,8 @@ state 86
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
     (95) ChamadaFuncao -> . ID ArgumentosGetter
 
     WHILE           shift and go to state 31
@@ -1974,9 +1974,9 @@ state 87
     (2) Condicao -> Condicao AND . DeclaracaoCondicao
     (29) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
     (30) DeclaracaoCondicao -> . Fator
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -1990,10 +1990,10 @@ state 87
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -2016,9 +2016,9 @@ state 88
     (3) Condicao -> Condicao OR . DeclaracaoCondicao
     (29) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
     (30) DeclaracaoCondicao -> . Fator
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -2032,10 +2032,10 @@ state 88
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -2085,8 +2085,8 @@ state 90
 state 91
 
     (92) Fator -> ( Expressao . )
-    (74) Expressao -> Expressao . + Termo
-    (75) Expressao -> Expressao . - Termo
+    (70) Expressao -> Expressao . + Termo
+    (71) Expressao -> Expressao . - Termo
     (29) DeclaracaoCondicao -> Expressao . SimboloCondicional Expressao
     (41) SimboloCondicional -> . =
     (42) SimboloCondicional -> . < >
@@ -2107,9 +2107,9 @@ state 91
 state 92
 
     (29) DeclaracaoCondicao -> Expressao SimboloCondicional . Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
@@ -2123,10 +2123,10 @@ state 92
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -2191,9 +2191,9 @@ state 95
 state 96
 
     (51) CicloFor -> FOR Atribuicao DirecaoFor . Expressao DO LocalInstsList
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
@@ -2207,10 +2207,10 @@ state 96
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -2229,28 +2229,28 @@ state 96
 
 state 97
 
-    (56) DirecaoFor -> TO .
+    (58) DirecaoFor -> TO .
 
-    ID              reduce using rule 56 (DirecaoFor -> TO .)
-    INTEGER         reduce using rule 56 (DirecaoFor -> TO .)
-    REAL            reduce using rule 56 (DirecaoFor -> TO .)
-    STRING          reduce using rule 56 (DirecaoFor -> TO .)
-    TRUE            reduce using rule 56 (DirecaoFor -> TO .)
-    FALSE           reduce using rule 56 (DirecaoFor -> TO .)
-    (               reduce using rule 56 (DirecaoFor -> TO .)
+    ID              reduce using rule 58 (DirecaoFor -> TO .)
+    INTEGER         reduce using rule 58 (DirecaoFor -> TO .)
+    REAL            reduce using rule 58 (DirecaoFor -> TO .)
+    STRING          reduce using rule 58 (DirecaoFor -> TO .)
+    TRUE            reduce using rule 58 (DirecaoFor -> TO .)
+    FALSE           reduce using rule 58 (DirecaoFor -> TO .)
+    (               reduce using rule 58 (DirecaoFor -> TO .)
 
 
 state 98
 
-    (57) DirecaoFor -> DOWNTO .
+    (59) DirecaoFor -> DOWNTO .
 
-    ID              reduce using rule 57 (DirecaoFor -> DOWNTO .)
-    INTEGER         reduce using rule 57 (DirecaoFor -> DOWNTO .)
-    REAL            reduce using rule 57 (DirecaoFor -> DOWNTO .)
-    STRING          reduce using rule 57 (DirecaoFor -> DOWNTO .)
-    TRUE            reduce using rule 57 (DirecaoFor -> DOWNTO .)
-    FALSE           reduce using rule 57 (DirecaoFor -> DOWNTO .)
-    (               reduce using rule 57 (DirecaoFor -> DOWNTO .)
+    ID              reduce using rule 59 (DirecaoFor -> DOWNTO .)
+    INTEGER         reduce using rule 59 (DirecaoFor -> DOWNTO .)
+    REAL            reduce using rule 59 (DirecaoFor -> DOWNTO .)
+    STRING          reduce using rule 59 (DirecaoFor -> DOWNTO .)
+    TRUE            reduce using rule 59 (DirecaoFor -> DOWNTO .)
+    FALSE           reduce using rule 59 (DirecaoFor -> DOWNTO .)
+    (               reduce using rule 59 (DirecaoFor -> DOWNTO .)
 
 
 state 99
@@ -2270,17 +2270,17 @@ state 99
     (51) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (13) Atribuicao -> . Atribuido : = Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
-    (52) Bloco -> . BEGIN LocalInstsList END
-    (58) Atribuido -> . ID
-    (59) Atribuido -> . Acesso_array
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
+    (54) Bloco -> . BEGIN LocalInstsList END
+    (52) Atribuido -> . ID
+    (53) Atribuido -> . Acesso_array
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -2290,8 +2290,8 @@ state 99
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
     (95) ChamadaFuncao -> . ID ArgumentosGetter
 
     WHILE           shift and go to state 31
@@ -2325,9 +2325,9 @@ state 99
 state 100
 
     (13) Atribuicao -> Atribuido : = . Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
@@ -2341,10 +2341,10 @@ state 100
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -2487,8 +2487,8 @@ state 107
 
     (48) ArgumentosGetterBuffer -> Expressao .
     (98) ListaArgumentos -> Expressao .
-    (74) Expressao -> Expressao . + Termo
-    (75) Expressao -> Expressao . - Termo
+    (70) Expressao -> Expressao . + Termo
+    (71) Expressao -> Expressao . - Termo
 
   ! reduce/reduce conflict for ) resolved using rule 48 (ArgumentosGetterBuffer -> Expressao .)
   ! reduce/reduce conflict for , resolved using rule 48 (ArgumentosGetterBuffer -> Expressao .)
@@ -2503,9 +2503,9 @@ state 107
 
 state 108
 
-    (66) Acesso_array -> Variavel_array [ Expressao . ]
-    (74) Expressao -> Expressao . + Termo
-    (75) Expressao -> Expressao . - Termo
+    (60) Acesso_array -> Variavel_array [ Expressao . ]
+    (70) Expressao -> Expressao . + Termo
+    (71) Expressao -> Expressao . - Termo
 
     ]               shift and go to state 135
     +               shift and go to state 54
@@ -2541,14 +2541,14 @@ state 109
 state 110
 
     (14) Listavariaveis -> Listavariaveis Variaveis : . Tipo ;
-    (63) Tipo -> . Datatype
-    (64) Tipo -> . ARRAY [ Intervalo ] OF Datatype
-    (65) Tipo -> . ID
-    (77) Datatype -> . REAL_TYPE
-    (78) Datatype -> . INTEGER_TYPE
-    (79) Datatype -> . STRING_TYPE
-    (80) Datatype -> . BOOLEAN_TYPE
-    (81) Datatype -> . CHAR_TYPE
+    (64) Tipo -> . Datatype
+    (65) Tipo -> . ARRAY [ Intervalo ] OF Datatype
+    (66) Tipo -> . ID
+    (76) Datatype -> . REAL_TYPE
+    (77) Datatype -> . INTEGER_TYPE
+    (78) Datatype -> . STRING_TYPE
+    (79) Datatype -> . BOOLEAN_TYPE
+    (80) Datatype -> . CHAR_TYPE
 
     ARRAY           shift and go to state 138
     ID              shift and go to state 139
@@ -2563,7 +2563,7 @@ state 110
 
 state 111
 
-    (53) Variaveis -> Variaveis , . ID
+    (55) Variaveis -> Variaveis , . ID
 
     ID              shift and go to state 145
 
@@ -2571,14 +2571,14 @@ state 111
 state 112
 
     (8) Dfuncao -> FUNCTION ID ArgumentosSetter : . Tipo ; GlobalInsts BEGIN LocalInstsList END ;
-    (63) Tipo -> . Datatype
-    (64) Tipo -> . ARRAY [ Intervalo ] OF Datatype
-    (65) Tipo -> . ID
-    (77) Datatype -> . REAL_TYPE
-    (78) Datatype -> . INTEGER_TYPE
-    (79) Datatype -> . STRING_TYPE
-    (80) Datatype -> . BOOLEAN_TYPE
-    (81) Datatype -> . CHAR_TYPE
+    (64) Tipo -> . Datatype
+    (65) Tipo -> . ARRAY [ Intervalo ] OF Datatype
+    (66) Tipo -> . ID
+    (76) Datatype -> . REAL_TYPE
+    (77) Datatype -> . INTEGER_TYPE
+    (78) Datatype -> . STRING_TYPE
+    (79) Datatype -> . BOOLEAN_TYPE
+    (80) Datatype -> . CHAR_TYPE
 
     ARRAY           shift and go to state 138
     ID              shift and go to state 139
@@ -2593,8 +2593,8 @@ state 112
 
 state 113
 
-    (55) ArgumentosSetter -> ( ArgumentosSetterBuffer . )
-    (60) ArgumentosSetterBuffer -> ArgumentosSetterBuffer . , Argumento
+    (57) ArgumentosSetter -> ( ArgumentosSetterBuffer . )
+    (61) ArgumentosSetterBuffer -> ArgumentosSetterBuffer . , Argumento
 
     )               shift and go to state 147
     ,               shift and go to state 148
@@ -2602,31 +2602,31 @@ state 113
 
 state 114
 
-    (61) ArgumentosSetterBuffer -> Argumento .
+    (62) ArgumentosSetterBuffer -> Argumento .
 
-    )               reduce using rule 61 (ArgumentosSetterBuffer -> Argumento .)
-    ,               reduce using rule 61 (ArgumentosSetterBuffer -> Argumento .)
+    )               reduce using rule 62 (ArgumentosSetterBuffer -> Argumento .)
+    ,               reduce using rule 62 (ArgumentosSetterBuffer -> Argumento .)
 
 
 state 115
 
-    (67) Argumento -> ModificadorArgumento . ID : Tipo
+    (69) Argumento -> ModificadorArgumento . ID : Tipo
 
     ID              shift and go to state 149
 
 
 state 116
 
-    (71) ModificadorArgumento -> VAR .
+    (73) ModificadorArgumento -> VAR .
 
-    ID              reduce using rule 71 (ModificadorArgumento -> VAR .)
+    ID              reduce using rule 73 (ModificadorArgumento -> VAR .)
 
 
 state 117
 
-    (72) ModificadorArgumento -> CONST .
+    (74) ModificadorArgumento -> CONST .
 
-    ID              reduce using rule 72 (ModificadorArgumento -> CONST .)
+    ID              reduce using rule 74 (ModificadorArgumento -> CONST .)
 
 
 state 118
@@ -2692,8 +2692,8 @@ state 122
 state 123
 
     (29) DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .
-    (74) Expressao -> Expressao . + Termo
-    (75) Expressao -> Expressao . - Termo
+    (70) Expressao -> Expressao . + Termo
+    (71) Expressao -> Expressao . - Termo
 
     DO              reduce using rule 29 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
     AND             reduce using rule 29 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
@@ -2746,8 +2746,8 @@ state 126
 state 127
 
     (51) CicloFor -> FOR Atribuicao DirecaoFor Expressao . DO LocalInstsList
-    (74) Expressao -> Expressao . + Termo
-    (75) Expressao -> Expressao . - Termo
+    (70) Expressao -> Expressao . + Termo
+    (71) Expressao -> Expressao . - Termo
 
     DO              shift and go to state 151
     +               shift and go to state 54
@@ -2786,8 +2786,8 @@ state 129
 state 130
 
     (13) Atribuicao -> Atribuido : = Expressao .
-    (74) Expressao -> Expressao . + Termo
-    (75) Expressao -> Expressao . - Termo
+    (70) Expressao -> Expressao . + Termo
+    (71) Expressao -> Expressao . - Termo
 
     END             reduce using rule 13 (Atribuicao -> Atribuido : = Expressao .)
     ;               reduce using rule 13 (Atribuicao -> Atribuido : = Expressao .)
@@ -2827,9 +2827,9 @@ state 131
 state 132
 
     (47) ArgumentosGetterBuffer -> ArgumentosGetterBuffer , . Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
@@ -2843,10 +2843,10 @@ state 132
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -2892,9 +2892,9 @@ state 133
 state 134
 
     (99) ListaArgumentos -> ListaArgumentos , . Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
@@ -2908,10 +2908,10 @@ state 134
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (95) ChamadaFuncao -> . ID ArgumentosGetter
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
 
     ID              shift and go to state 62
     INTEGER         shift and go to state 40
@@ -2930,30 +2930,30 @@ state 134
 
 state 135
 
-    (66) Acesso_array -> Variavel_array [ Expressao ] .
+    (60) Acesso_array -> Variavel_array [ Expressao ] .
 
-    :               reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    *               reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    MOD             reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    DIV             reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    +               reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    -               reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    END             reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    ;               reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    [               reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    DO              reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    AND             reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    OR              reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    =               reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    <               reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    >               reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    THEN            reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    )               reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    ELSE            reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    ,               reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    ]               reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    TO              reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
-    DOWNTO          reduce using rule 66 (Acesso_array -> Variavel_array [ Expressao ] .)
+    :               reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    *               reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    MOD             reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    DIV             reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    +               reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    -               reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    END             reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    ;               reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    [               reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    DO              reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    AND             reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    OR              reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    =               reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    <               reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    >               reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    THEN            reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    )               reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    ELSE            reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    ,               reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    ]               reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    TO              reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
+    DOWNTO          reduce using rule 60 (Acesso_array -> Variavel_array [ Expressao ] .)
 
 
 state 136
@@ -2965,80 +2965,80 @@ state 136
 
 state 137
 
-    (63) Tipo -> Datatype .
+    (64) Tipo -> Datatype .
 
-    ;               reduce using rule 63 (Tipo -> Datatype .)
-    )               reduce using rule 63 (Tipo -> Datatype .)
-    ,               reduce using rule 63 (Tipo -> Datatype .)
+    ;               reduce using rule 64 (Tipo -> Datatype .)
+    )               reduce using rule 64 (Tipo -> Datatype .)
+    ,               reduce using rule 64 (Tipo -> Datatype .)
 
 
 state 138
 
-    (64) Tipo -> ARRAY . [ Intervalo ] OF Datatype
+    (65) Tipo -> ARRAY . [ Intervalo ] OF Datatype
 
     [               shift and go to state 157
 
 
 state 139
 
-    (65) Tipo -> ID .
+    (66) Tipo -> ID .
 
-    ;               reduce using rule 65 (Tipo -> ID .)
-    )               reduce using rule 65 (Tipo -> ID .)
-    ,               reduce using rule 65 (Tipo -> ID .)
+    ;               reduce using rule 66 (Tipo -> ID .)
+    )               reduce using rule 66 (Tipo -> ID .)
+    ,               reduce using rule 66 (Tipo -> ID .)
 
 
 state 140
 
-    (77) Datatype -> REAL_TYPE .
+    (76) Datatype -> REAL_TYPE .
 
-    ;               reduce using rule 77 (Datatype -> REAL_TYPE .)
-    )               reduce using rule 77 (Datatype -> REAL_TYPE .)
-    ,               reduce using rule 77 (Datatype -> REAL_TYPE .)
+    ;               reduce using rule 76 (Datatype -> REAL_TYPE .)
+    )               reduce using rule 76 (Datatype -> REAL_TYPE .)
+    ,               reduce using rule 76 (Datatype -> REAL_TYPE .)
 
 
 state 141
 
-    (78) Datatype -> INTEGER_TYPE .
+    (77) Datatype -> INTEGER_TYPE .
 
-    ;               reduce using rule 78 (Datatype -> INTEGER_TYPE .)
-    )               reduce using rule 78 (Datatype -> INTEGER_TYPE .)
-    ,               reduce using rule 78 (Datatype -> INTEGER_TYPE .)
+    ;               reduce using rule 77 (Datatype -> INTEGER_TYPE .)
+    )               reduce using rule 77 (Datatype -> INTEGER_TYPE .)
+    ,               reduce using rule 77 (Datatype -> INTEGER_TYPE .)
 
 
 state 142
 
-    (79) Datatype -> STRING_TYPE .
+    (78) Datatype -> STRING_TYPE .
 
-    ;               reduce using rule 79 (Datatype -> STRING_TYPE .)
-    )               reduce using rule 79 (Datatype -> STRING_TYPE .)
-    ,               reduce using rule 79 (Datatype -> STRING_TYPE .)
+    ;               reduce using rule 78 (Datatype -> STRING_TYPE .)
+    )               reduce using rule 78 (Datatype -> STRING_TYPE .)
+    ,               reduce using rule 78 (Datatype -> STRING_TYPE .)
 
 
 state 143
 
-    (80) Datatype -> BOOLEAN_TYPE .
+    (79) Datatype -> BOOLEAN_TYPE .
 
-    ;               reduce using rule 80 (Datatype -> BOOLEAN_TYPE .)
-    )               reduce using rule 80 (Datatype -> BOOLEAN_TYPE .)
-    ,               reduce using rule 80 (Datatype -> BOOLEAN_TYPE .)
+    ;               reduce using rule 79 (Datatype -> BOOLEAN_TYPE .)
+    )               reduce using rule 79 (Datatype -> BOOLEAN_TYPE .)
+    ,               reduce using rule 79 (Datatype -> BOOLEAN_TYPE .)
 
 
 state 144
 
-    (81) Datatype -> CHAR_TYPE .
+    (80) Datatype -> CHAR_TYPE .
 
-    ;               reduce using rule 81 (Datatype -> CHAR_TYPE .)
-    )               reduce using rule 81 (Datatype -> CHAR_TYPE .)
-    ,               reduce using rule 81 (Datatype -> CHAR_TYPE .)
+    ;               reduce using rule 80 (Datatype -> CHAR_TYPE .)
+    )               reduce using rule 80 (Datatype -> CHAR_TYPE .)
+    ,               reduce using rule 80 (Datatype -> CHAR_TYPE .)
 
 
 state 145
 
-    (53) Variaveis -> Variaveis , ID .
+    (55) Variaveis -> Variaveis , ID .
 
-    :               reduce using rule 53 (Variaveis -> Variaveis , ID .)
-    ,               reduce using rule 53 (Variaveis -> Variaveis , ID .)
+    :               reduce using rule 55 (Variaveis -> Variaveis , ID .)
+    ,               reduce using rule 55 (Variaveis -> Variaveis , ID .)
 
 
 state 146
@@ -3050,30 +3050,30 @@ state 146
 
 state 147
 
-    (55) ArgumentosSetter -> ( ArgumentosSetterBuffer ) .
+    (57) ArgumentosSetter -> ( ArgumentosSetterBuffer ) .
 
-    :               reduce using rule 55 (ArgumentosSetter -> ( ArgumentosSetterBuffer ) .)
-    ;               reduce using rule 55 (ArgumentosSetter -> ( ArgumentosSetterBuffer ) .)
+    :               reduce using rule 57 (ArgumentosSetter -> ( ArgumentosSetterBuffer ) .)
+    ;               reduce using rule 57 (ArgumentosSetter -> ( ArgumentosSetterBuffer ) .)
 
 
 state 148
 
-    (60) ArgumentosSetterBuffer -> ArgumentosSetterBuffer , . Argumento
-    (67) Argumento -> . ModificadorArgumento ID : Tipo
-    (71) ModificadorArgumento -> . VAR
-    (72) ModificadorArgumento -> . CONST
-    (73) ModificadorArgumento -> .
+    (61) ArgumentosSetterBuffer -> ArgumentosSetterBuffer , . Argumento
+    (69) Argumento -> . ModificadorArgumento ID : Tipo
+    (73) ModificadorArgumento -> . VAR
+    (74) ModificadorArgumento -> . CONST
+    (75) ModificadorArgumento -> .
 
     VAR             shift and go to state 116
     CONST           shift and go to state 117
-    ID              reduce using rule 73 (ModificadorArgumento -> .)
+    ID              reduce using rule 75 (ModificadorArgumento -> .)
 
     Argumento                      shift and go to state 159
     ModificadorArgumento           shift and go to state 115
 
 state 149
 
-    (67) Argumento -> ModificadorArgumento ID . : Tipo
+    (69) Argumento -> ModificadorArgumento ID . : Tipo
 
     :               shift and go to state 160
 
@@ -3115,17 +3115,17 @@ state 151
     (51) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (13) Atribuicao -> . Atribuido : = Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
-    (52) Bloco -> . BEGIN LocalInstsList END
-    (58) Atribuido -> . ID
-    (59) Atribuido -> . Acesso_array
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
+    (54) Bloco -> . BEGIN LocalInstsList END
+    (52) Atribuido -> . ID
+    (53) Atribuido -> . Acesso_array
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -3135,8 +3135,8 @@ state 151
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
     (95) ChamadaFuncao -> . ID ArgumentosGetter
 
     WHILE           shift and go to state 31
@@ -3191,17 +3191,17 @@ state 153
     (51) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (13) Atribuicao -> . Atribuido : = Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
-    (52) Bloco -> . BEGIN LocalInstsList END
-    (58) Atribuido -> . ID
-    (59) Atribuido -> . Acesso_array
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
+    (54) Bloco -> . BEGIN LocalInstsList END
+    (52) Atribuido -> . ID
+    (53) Atribuido -> . Acesso_array
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -3211,8 +3211,8 @@ state 153
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
     (95) ChamadaFuncao -> . ID ArgumentosGetter
 
     WHILE           shift and go to state 31
@@ -3245,8 +3245,8 @@ state 153
 state 154
 
     (47) ArgumentosGetterBuffer -> ArgumentosGetterBuffer , Expressao .
-    (74) Expressao -> Expressao . + Termo
-    (75) Expressao -> Expressao . - Termo
+    (70) Expressao -> Expressao . + Termo
+    (71) Expressao -> Expressao . - Termo
 
     )               reduce using rule 47 (ArgumentosGetterBuffer -> ArgumentosGetterBuffer , Expressao .)
     ,               reduce using rule 47 (ArgumentosGetterBuffer -> ArgumentosGetterBuffer , Expressao .)
@@ -3257,8 +3257,8 @@ state 154
 state 155
 
     (99) ListaArgumentos -> ListaArgumentos , Expressao .
-    (74) Expressao -> Expressao . + Termo
-    (75) Expressao -> Expressao . - Termo
+    (70) Expressao -> Expressao . + Termo
+    (71) Expressao -> Expressao . - Termo
 
     )               reduce using rule 99 (ListaArgumentos -> ListaArgumentos , Expressao .)
     ,               reduce using rule 99 (ListaArgumentos -> ListaArgumentos , Expressao .)
@@ -3279,8 +3279,8 @@ state 156
 
 state 157
 
-    (64) Tipo -> ARRAY [ . Intervalo ] OF Datatype
-    (70) Intervalo -> . INTEGER . . INTEGER
+    (65) Tipo -> ARRAY [ . Intervalo ] OF Datatype
+    (72) Intervalo -> . INTEGER . . INTEGER
 
     INTEGER         shift and go to state 165
 
@@ -3301,23 +3301,23 @@ state 158
 
 state 159
 
-    (60) ArgumentosSetterBuffer -> ArgumentosSetterBuffer , Argumento .
+    (61) ArgumentosSetterBuffer -> ArgumentosSetterBuffer , Argumento .
 
-    )               reduce using rule 60 (ArgumentosSetterBuffer -> ArgumentosSetterBuffer , Argumento .)
-    ,               reduce using rule 60 (ArgumentosSetterBuffer -> ArgumentosSetterBuffer , Argumento .)
+    )               reduce using rule 61 (ArgumentosSetterBuffer -> ArgumentosSetterBuffer , Argumento .)
+    ,               reduce using rule 61 (ArgumentosSetterBuffer -> ArgumentosSetterBuffer , Argumento .)
 
 
 state 160
 
-    (67) Argumento -> ModificadorArgumento ID : . Tipo
-    (63) Tipo -> . Datatype
-    (64) Tipo -> . ARRAY [ Intervalo ] OF Datatype
-    (65) Tipo -> . ID
-    (77) Datatype -> . REAL_TYPE
-    (78) Datatype -> . INTEGER_TYPE
-    (79) Datatype -> . STRING_TYPE
-    (80) Datatype -> . BOOLEAN_TYPE
-    (81) Datatype -> . CHAR_TYPE
+    (69) Argumento -> ModificadorArgumento ID : . Tipo
+    (64) Tipo -> . Datatype
+    (65) Tipo -> . ARRAY [ Intervalo ] OF Datatype
+    (66) Tipo -> . ID
+    (76) Datatype -> . REAL_TYPE
+    (77) Datatype -> . INTEGER_TYPE
+    (78) Datatype -> . STRING_TYPE
+    (79) Datatype -> . BOOLEAN_TYPE
+    (80) Datatype -> . CHAR_TYPE
 
     ARRAY           shift and go to state 138
     ID              shift and go to state 139
@@ -3346,17 +3346,17 @@ state 161
     (51) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (13) Atribuicao -> . Atribuido : = Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
-    (52) Bloco -> . BEGIN LocalInstsList END
-    (58) Atribuido -> . ID
-    (59) Atribuido -> . Acesso_array
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
+    (54) Bloco -> . BEGIN LocalInstsList END
+    (52) Atribuido -> . ID
+    (53) Atribuido -> . Acesso_array
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -3366,8 +3366,8 @@ state 161
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
     (95) ChamadaFuncao -> . ID ArgumentosGetter
 
     WHILE           shift and go to state 31
@@ -3427,14 +3427,14 @@ state 163
 
 state 164
 
-    (64) Tipo -> ARRAY [ Intervalo . ] OF Datatype
+    (65) Tipo -> ARRAY [ Intervalo . ] OF Datatype
 
     ]               shift and go to state 169
 
 
 state 165
 
-    (70) Intervalo -> INTEGER . . . INTEGER
+    (72) Intervalo -> INTEGER . . . INTEGER
 
     .               shift and go to state 170
 
@@ -3462,10 +3462,10 @@ state 166
 
 state 167
 
-    (67) Argumento -> ModificadorArgumento ID : Tipo .
+    (69) Argumento -> ModificadorArgumento ID : Tipo .
 
-    )               reduce using rule 67 (Argumento -> ModificadorArgumento ID : Tipo .)
-    ,               reduce using rule 67 (Argumento -> ModificadorArgumento ID : Tipo .)
+    )               reduce using rule 69 (Argumento -> ModificadorArgumento ID : Tipo .)
+    ,               reduce using rule 69 (Argumento -> ModificadorArgumento ID : Tipo .)
 
 
 state 168
@@ -3480,14 +3480,14 @@ state 168
 
 state 169
 
-    (64) Tipo -> ARRAY [ Intervalo ] . OF Datatype
+    (65) Tipo -> ARRAY [ Intervalo ] . OF Datatype
 
     OF              shift and go to state 173
 
 
 state 170
 
-    (70) Intervalo -> INTEGER . . . INTEGER
+    (72) Intervalo -> INTEGER . . . INTEGER
 
     .               shift and go to state 174
 
@@ -3508,17 +3508,17 @@ state 171
     (51) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
     (13) Atribuicao -> . Atribuido : = Expressao
-    (74) Expressao -> . Expressao + Termo
-    (75) Expressao -> . Expressao - Termo
-    (76) Expressao -> . Termo
-    (52) Bloco -> . BEGIN LocalInstsList END
-    (58) Atribuido -> . ID
-    (59) Atribuido -> . Acesso_array
+    (70) Expressao -> . Expressao + Termo
+    (71) Expressao -> . Expressao - Termo
+    (81) Expressao -> . Termo
+    (54) Bloco -> . BEGIN LocalInstsList END
+    (52) Atribuido -> . ID
+    (53) Atribuido -> . Acesso_array
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
     (85) Termo -> . Fator
-    (66) Acesso_array -> . Variavel_array [ Expressao ]
+    (60) Acesso_array -> . Variavel_array [ Expressao ]
     (86) Fator -> . ID
     (87) Fator -> . INTEGER
     (88) Fator -> . REAL
@@ -3528,8 +3528,8 @@ state 171
     (92) Fator -> . ( Expressao )
     (93) Fator -> . Acesso_array
     (94) Fator -> . ChamadaFuncao
-    (68) Variavel_array -> . ID
-    (69) Variavel_array -> . Acesso_array
+    (67) Variavel_array -> . ID
+    (68) Variavel_array -> . Acesso_array
     (95) ChamadaFuncao -> . ID ArgumentosGetter
 
     WHILE           shift and go to state 31
@@ -3568,12 +3568,12 @@ state 172
 
 state 173
 
-    (64) Tipo -> ARRAY [ Intervalo ] OF . Datatype
-    (77) Datatype -> . REAL_TYPE
-    (78) Datatype -> . INTEGER_TYPE
-    (79) Datatype -> . STRING_TYPE
-    (80) Datatype -> . BOOLEAN_TYPE
-    (81) Datatype -> . CHAR_TYPE
+    (65) Tipo -> ARRAY [ Intervalo ] OF . Datatype
+    (76) Datatype -> . REAL_TYPE
+    (77) Datatype -> . INTEGER_TYPE
+    (78) Datatype -> . STRING_TYPE
+    (79) Datatype -> . BOOLEAN_TYPE
+    (80) Datatype -> . CHAR_TYPE
 
     REAL_TYPE       shift and go to state 140
     INTEGER_TYPE    shift and go to state 141
@@ -3585,7 +3585,7 @@ state 173
 
 state 174
 
-    (70) Intervalo -> INTEGER . . . INTEGER
+    (72) Intervalo -> INTEGER . . . INTEGER
 
     INTEGER         shift and go to state 178
 
@@ -3612,18 +3612,18 @@ state 176
 
 state 177
 
-    (64) Tipo -> ARRAY [ Intervalo ] OF Datatype .
+    (65) Tipo -> ARRAY [ Intervalo ] OF Datatype .
 
-    ;               reduce using rule 64 (Tipo -> ARRAY [ Intervalo ] OF Datatype .)
-    )               reduce using rule 64 (Tipo -> ARRAY [ Intervalo ] OF Datatype .)
-    ,               reduce using rule 64 (Tipo -> ARRAY [ Intervalo ] OF Datatype .)
+    ;               reduce using rule 65 (Tipo -> ARRAY [ Intervalo ] OF Datatype .)
+    )               reduce using rule 65 (Tipo -> ARRAY [ Intervalo ] OF Datatype .)
+    ,               reduce using rule 65 (Tipo -> ARRAY [ Intervalo ] OF Datatype .)
 
 
 state 178
 
-    (70) Intervalo -> INTEGER . . INTEGER .
+    (72) Intervalo -> INTEGER . . INTEGER .
 
-    ]               reduce using rule 70 (Intervalo -> INTEGER . . INTEGER .)
+    ]               reduce using rule 72 (Intervalo -> INTEGER . . INTEGER .)
 
 
 state 179
