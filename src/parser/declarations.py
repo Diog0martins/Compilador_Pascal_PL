@@ -14,7 +14,7 @@ def p_listavariaveis(p):
     if len(p) > 1:
         tipo = p[4].lower()
 
-        if tipo == "integer":
+        if tipo == "integer" or tipo == "boolean":
             code = "PUSHI 0"
             default = 0
         elif tipo == "string":
