@@ -15,7 +15,7 @@ begin
     while (c < b) or flag do
     begin
       c := c + 1;
-      flag := true;
+      {flag := true;}
     end;
 
     flag := false;

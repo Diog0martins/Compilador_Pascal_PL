@@ -31,39 +31,39 @@ Rule 5     Condicao -> DeclaracaoCondicao
 Rule 6     Condicao -> ( Condicao )
 Rule 7     Dvariaveis -> VAR Listavariaveis
 Rule 8     Dfuncao -> FUNCTION ID ArgumentosSetter : Tipo ; GlobalInsts BEGIN LocalInstsList END ;
-Rule 9     InstrucaoCondicional -> IF Condicao THEN BlocoCondicional ParteElse
-Rule 10    Duses -> USES UseList ;
-Rule 11    Duses -> <empty>
-Rule 12    Programa -> PROGRAM ID ; Duses GlobalInsts BlocoPrincipal .
-Rule 13    Atribuicao -> Atribuido : = Expressao
+Rule 9     Duses -> USES UseList ;
+Rule 10    Duses -> <empty>
+Rule 11    Programa -> PROGRAM ID ; Duses GlobalInsts BlocoPrincipal .
+Rule 12    Atribuicao -> Atribuido : = Expressao
+Rule 13    InstrucaoCondicional -> IF Condicao THEN BlocoCondicional ParteElse
 Rule 14    LocalInstsList -> LocalInstsList ;
 Rule 15    Listavariaveis -> Listavariaveis Variaveis : Tipo ;
 Rule 16    Listavariaveis -> <empty>
-Rule 17    BlocoCondicional -> LocalInstsList
-Rule 18    UseList -> UseList , ID
-Rule 19    UseList -> ID
-Rule 20    Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ;
-Rule 21    While -> WHILE Condicao DO LocalInstsList
-Rule 22    GlobalInsts -> GlobalInsts GlobalInst
-Rule 23    GlobalInsts -> <empty>
-Rule 24    LocalInstsList -> Instrucao
-Rule 25    ParteElse -> ELSE LocalInstsList
-Rule 26    ParteElse -> <empty>
-Rule 27    ArgumentosProcedimentoOpc -> ArgumentosSetter
-Rule 28    ArgumentosProcedimentoOpc -> <empty>
-Rule 29    GlobalInst -> Dvariaveis
-Rule 30    GlobalInst -> Dfuncao
-Rule 31    GlobalInst -> Dprocedimento
-Rule 32    Instrucao -> While
-Rule 33    Instrucao -> CicloFor
-Rule 34    Instrucao -> InstrucaoCondicional
-Rule 35    Instrucao -> Atribuicao
-Rule 36    Instrucao -> Expressao
-Rule 37    DeclaracaoCondicao -> Expressao SimboloCondicional Expressao
-Rule 38    DeclaracaoCondicao -> Fator
-Rule 39    BlocoPrincipal -> BEGIN LocalInstsList END
-Rule 40    ArgumentosGetter -> ( ArgumentosGetterBuffer )
-Rule 41    Instrucao -> Bloco
+Rule 17    UseList -> UseList , ID
+Rule 18    UseList -> ID
+Rule 19    Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ;
+Rule 20    While -> WHILE Condicao DO Instrucao
+Rule 21    GlobalInsts -> GlobalInsts GlobalInst
+Rule 22    GlobalInsts -> <empty>
+Rule 23    LocalInstsList -> Instrucao
+Rule 24    ArgumentosProcedimentoOpc -> ArgumentosSetter
+Rule 25    ArgumentosProcedimentoOpc -> <empty>
+Rule 26    GlobalInst -> Dvariaveis
+Rule 27    GlobalInst -> Dfuncao
+Rule 28    GlobalInst -> Dprocedimento
+Rule 29    Instrucao -> While
+Rule 30    Instrucao -> CicloFor
+Rule 31    Instrucao -> InstrucaoCondicional
+Rule 32    Instrucao -> Atribuicao
+Rule 33    Instrucao -> Expressao
+Rule 34    BlocoCondicional -> LocalInstsList
+Rule 35    DeclaracaoCondicao -> Expressao SimboloCondicional Expressao
+Rule 36    DeclaracaoCondicao -> Fator
+Rule 37    BlocoPrincipal -> BEGIN LocalInstsList END
+Rule 38    ArgumentosGetter -> ( ArgumentosGetterBuffer )
+Rule 39    Instrucao -> Bloco
+Rule 40    ParteElse -> ELSE LocalInstsList
+Rule 41    ParteElse -> <empty>
 Rule 42    ArgumentosGetterBuffer -> ArgumentosGetterBuffer , Expressao
 Rule 43    ArgumentosGetterBuffer -> Expressao
 Rule 44    ArgumentosGetterBuffer -> <empty>
@@ -125,38 +125,38 @@ Rule 99    ListaArgumentos -> ListaArgumentos , Expressao
 
 Terminals, with rules where they appear
 
-(                    : 6 40 53 92 96 97
-)                    : 6 40 53 92 96 97
+(                    : 6 38 53 92 96 97
+)                    : 6 38 53 92 96 97
 *                    : 82
 +                    : 64
-,                    : 18 42 51 55 99
+,                    : 17 42 51 55 99
 -                    : 65
-.                    : 12 66 66
-:                    : 8 13 15 63
-;                    : 1 8 8 10 12 14 15 20 20
+.                    : 11 66 66
+:                    : 8 12 15 63
+;                    : 1 8 8 9 11 14 15 19 19
 <                    : 71 72 73
-=                    : 13 70 72 74
+=                    : 12 70 72 74
 >                    : 71 74 75
 AND                  : 2
 ARRAY                : 59
-BEGIN                : 8 20 39 46
+BEGIN                : 8 19 37 46
 BOOLEAN_TYPE         : 79
 CASE                 : 
 CHAR_TYPE            : 80
 CONST                : 68
 DIFFERENT            : 
 DIV                  : 84
-DO                   : 21 45
+DO                   : 20 45
 DOWNTO               : 50
-ELSE                 : 25
-END                  : 8 20 39 46
+ELSE                 : 40
+END                  : 8 19 37 46
 FALSE                : 91
 FILE                 : 
 FOR                  : 45
 FUNCTION             : 8
 GOTO                 : 
-ID                   : 8 12 18 19 20 47 51 52 60 61 63 86 95
-IF                   : 9
+ID                   : 8 11 17 18 19 47 51 52 60 61 63 86 95
+IF                   : 13
 IN                   : 
 INTEGER              : 66 66 87
 INTEGER_TYPE         : 77
@@ -170,8 +170,8 @@ OF                   : 59
 ONELINECOMMENTS      : 
 OR                   : 3
 PACKED               : 
-PROCEDURE            : 20
-PROGRAM              : 12
+PROCEDURE            : 19
+PROGRAM              : 11
 REAL                 : 88
 REAL_TYPE            : 76
 RECORD               : 
@@ -179,14 +179,14 @@ REPEAT               :
 SET                  : 
 STRING               : 89
 STRING_TYPE          : 78
-THEN                 : 9
+THEN                 : 13
 TO                   : 49
 TRUE                 : 90
 TYPE                 : 
 UNTIL                : 
-USES                 : 10
+USES                 : 9
 VAR                  : 7 67
-WHILE                : 21
+WHILE                : 20
 WITH                 : 
 [                    : 54 59
 ]                    : 54 59
@@ -197,52 +197,52 @@ Nonterminals, with rules where they appear
 Acesso_array         : 48 62 93
 Argumento            : 55 56
 ArgumentosGetter     : 95
-ArgumentosGetterBuffer : 40 42
-ArgumentosProcedimentoOpc : 20
-ArgumentosSetter     : 8 27
+ArgumentosGetterBuffer : 38 42
+ArgumentosProcedimentoOpc : 19
+ArgumentosSetter     : 8 24
 ArgumentosSetterBuffer : 53 55
-Atribuicao           : 35 45
-Atribuido            : 13
-Bloco                : 41
-BlocoCondicional     : 9
-BlocoPrincipal       : 12
+Atribuicao           : 32 45
+Atribuido            : 12
+Bloco                : 39
+BlocoCondicional     : 13
+BlocoPrincipal       : 11
 ChamadaFuncao        : 94
-CicloFor             : 33
-Condicao             : 2 2 3 3 4 6 9 21
+CicloFor             : 30
+Condicao             : 2 2 3 3 4 6 13 20
 Datatype             : 58 59
 DeclaracaoCondicao   : 5
-Dfuncao              : 30
+Dfuncao              : 27
 DirecaoFor           : 45
-Dprocedimento        : 31
-Duses                : 12
-Dvariaveis           : 29
-Expressao            : 13 36 37 37 42 43 45 54 64 65 92 98 99
-Fator                : 38 82 83 84 85
-GlobalInst           : 22
-GlobalInsts          : 8 12 20 22
-Instrucao            : 1 24
-InstrucaoCondicional : 34
+Dprocedimento        : 28
+Duses                : 11
+Dvariaveis           : 26
+Expressao            : 12 33 35 35 42 43 45 54 64 65 92 98 99
+Fator                : 36 82 83 84 85
+GlobalInst           : 21
+GlobalInsts          : 8 11 19 21
+Instrucao            : 1 20 23
+InstrucaoCondicional : 31
 Intervalo            : 59
 ListaArgumentos      : 96 99
 Listavariaveis       : 7 15
-LocalInstsList       : 1 8 14 17 20 21 25 39 45 46
+LocalInstsList       : 1 8 14 19 34 37 40 45 46
 ModificadorArgumento : 63
-ParteElse            : 9
+ParteElse            : 13
 Programa             : 0
-SimboloCondicional   : 37
+SimboloCondicional   : 35
 Termo                : 64 65 81 82 83 84
 Tipo                 : 8 15 63
-UseList              : 10 18
+UseList              : 9 17
 Variaveis            : 15 51
 Variavel_array       : 54
-While                : 32
+While                : 29
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . Programa
-    (12) Programa -> . PROGRAM ID ; Duses GlobalInsts BlocoPrincipal .
+    (11) Programa -> . PROGRAM ID ; Duses GlobalInsts BlocoPrincipal .
 
     PROGRAM         shift and go to state 2
 
@@ -256,50 +256,50 @@ state 1
 
 state 2
 
-    (12) Programa -> PROGRAM . ID ; Duses GlobalInsts BlocoPrincipal .
+    (11) Programa -> PROGRAM . ID ; Duses GlobalInsts BlocoPrincipal .
 
     ID              shift and go to state 3
 
 
 state 3
 
-    (12) Programa -> PROGRAM ID . ; Duses GlobalInsts BlocoPrincipal .
+    (11) Programa -> PROGRAM ID . ; Duses GlobalInsts BlocoPrincipal .
 
     ;               shift and go to state 4
 
 
 state 4
 
-    (12) Programa -> PROGRAM ID ; . Duses GlobalInsts BlocoPrincipal .
-    (10) Duses -> . USES UseList ;
-    (11) Duses -> .
+    (11) Programa -> PROGRAM ID ; . Duses GlobalInsts BlocoPrincipal .
+    (9) Duses -> . USES UseList ;
+    (10) Duses -> .
 
     USES            shift and go to state 6
-    BEGIN           reduce using rule 11 (Duses -> .)
-    VAR             reduce using rule 11 (Duses -> .)
-    FUNCTION        reduce using rule 11 (Duses -> .)
-    PROCEDURE       reduce using rule 11 (Duses -> .)
+    BEGIN           reduce using rule 10 (Duses -> .)
+    VAR             reduce using rule 10 (Duses -> .)
+    FUNCTION        reduce using rule 10 (Duses -> .)
+    PROCEDURE       reduce using rule 10 (Duses -> .)
 
     Duses                          shift and go to state 5
 
 state 5
 
-    (12) Programa -> PROGRAM ID ; Duses . GlobalInsts BlocoPrincipal .
-    (22) GlobalInsts -> . GlobalInsts GlobalInst
-    (23) GlobalInsts -> .
+    (11) Programa -> PROGRAM ID ; Duses . GlobalInsts BlocoPrincipal .
+    (21) GlobalInsts -> . GlobalInsts GlobalInst
+    (22) GlobalInsts -> .
 
-    BEGIN           reduce using rule 23 (GlobalInsts -> .)
-    VAR             reduce using rule 23 (GlobalInsts -> .)
-    FUNCTION        reduce using rule 23 (GlobalInsts -> .)
-    PROCEDURE       reduce using rule 23 (GlobalInsts -> .)
+    BEGIN           reduce using rule 22 (GlobalInsts -> .)
+    VAR             reduce using rule 22 (GlobalInsts -> .)
+    FUNCTION        reduce using rule 22 (GlobalInsts -> .)
+    PROCEDURE       reduce using rule 22 (GlobalInsts -> .)
 
     GlobalInsts                    shift and go to state 7
 
 state 6
 
-    (10) Duses -> USES . UseList ;
-    (18) UseList -> . UseList , ID
-    (19) UseList -> . ID
+    (9) Duses -> USES . UseList ;
+    (17) UseList -> . UseList , ID
+    (18) UseList -> . ID
 
     ID              shift and go to state 9
 
@@ -307,15 +307,15 @@ state 6
 
 state 7
 
-    (12) Programa -> PROGRAM ID ; Duses GlobalInsts . BlocoPrincipal .
-    (22) GlobalInsts -> GlobalInsts . GlobalInst
-    (39) BlocoPrincipal -> . BEGIN LocalInstsList END
-    (29) GlobalInst -> . Dvariaveis
-    (30) GlobalInst -> . Dfuncao
-    (31) GlobalInst -> . Dprocedimento
+    (11) Programa -> PROGRAM ID ; Duses GlobalInsts . BlocoPrincipal .
+    (21) GlobalInsts -> GlobalInsts . GlobalInst
+    (37) BlocoPrincipal -> . BEGIN LocalInstsList END
+    (26) GlobalInst -> . Dvariaveis
+    (27) GlobalInst -> . Dfuncao
+    (28) GlobalInst -> . Dprocedimento
     (7) Dvariaveis -> . VAR Listavariaveis
     (8) Dfuncao -> . FUNCTION ID ArgumentosSetter : Tipo ; GlobalInsts BEGIN LocalInstsList END ;
-    (20) Dprocedimento -> . PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ;
+    (19) Dprocedimento -> . PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ;
 
     BEGIN           shift and go to state 12
     VAR             shift and go to state 16
@@ -330,8 +330,8 @@ state 7
 
 state 8
 
-    (10) Duses -> USES UseList . ;
-    (18) UseList -> UseList . , ID
+    (9) Duses -> USES UseList . ;
+    (17) UseList -> UseList . , ID
 
     ;               shift and go to state 19
     ,               shift and go to state 20
@@ -339,45 +339,45 @@ state 8
 
 state 9
 
-    (19) UseList -> ID .
+    (18) UseList -> ID .
 
-    ;               reduce using rule 19 (UseList -> ID .)
-    ,               reduce using rule 19 (UseList -> ID .)
+    ;               reduce using rule 18 (UseList -> ID .)
+    ,               reduce using rule 18 (UseList -> ID .)
 
 
 state 10
 
-    (12) Programa -> PROGRAM ID ; Duses GlobalInsts BlocoPrincipal . .
+    (11) Programa -> PROGRAM ID ; Duses GlobalInsts BlocoPrincipal . .
 
     .               shift and go to state 21
 
 
 state 11
 
-    (22) GlobalInsts -> GlobalInsts GlobalInst .
+    (21) GlobalInsts -> GlobalInsts GlobalInst .
 
-    BEGIN           reduce using rule 22 (GlobalInsts -> GlobalInsts GlobalInst .)
-    VAR             reduce using rule 22 (GlobalInsts -> GlobalInsts GlobalInst .)
-    FUNCTION        reduce using rule 22 (GlobalInsts -> GlobalInsts GlobalInst .)
-    PROCEDURE       reduce using rule 22 (GlobalInsts -> GlobalInsts GlobalInst .)
+    BEGIN           reduce using rule 21 (GlobalInsts -> GlobalInsts GlobalInst .)
+    VAR             reduce using rule 21 (GlobalInsts -> GlobalInsts GlobalInst .)
+    FUNCTION        reduce using rule 21 (GlobalInsts -> GlobalInsts GlobalInst .)
+    PROCEDURE       reduce using rule 21 (GlobalInsts -> GlobalInsts GlobalInst .)
 
 
 state 12
 
-    (39) BlocoPrincipal -> BEGIN . LocalInstsList END
+    (37) BlocoPrincipal -> BEGIN . LocalInstsList END
     (1) LocalInstsList -> . LocalInstsList ; Instrucao
     (14) LocalInstsList -> . LocalInstsList ;
-    (24) LocalInstsList -> . Instrucao
-    (32) Instrucao -> . While
-    (33) Instrucao -> . CicloFor
-    (34) Instrucao -> . InstrucaoCondicional
-    (35) Instrucao -> . Atribuicao
-    (36) Instrucao -> . Expressao
-    (41) Instrucao -> . Bloco
-    (21) While -> . WHILE Condicao DO LocalInstsList
+    (23) LocalInstsList -> . Instrucao
+    (29) Instrucao -> . While
+    (30) Instrucao -> . CicloFor
+    (31) Instrucao -> . InstrucaoCondicional
+    (32) Instrucao -> . Atribuicao
+    (33) Instrucao -> . Expressao
+    (39) Instrucao -> . Bloco
+    (20) While -> . WHILE Condicao DO Instrucao
     (45) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
-    (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
-    (13) Atribuicao -> . Atribuido : = Expressao
+    (13) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
+    (12) Atribuicao -> . Atribuido : = Expressao
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -431,32 +431,32 @@ state 12
 
 state 13
 
-    (29) GlobalInst -> Dvariaveis .
+    (26) GlobalInst -> Dvariaveis .
 
-    BEGIN           reduce using rule 29 (GlobalInst -> Dvariaveis .)
-    VAR             reduce using rule 29 (GlobalInst -> Dvariaveis .)
-    FUNCTION        reduce using rule 29 (GlobalInst -> Dvariaveis .)
-    PROCEDURE       reduce using rule 29 (GlobalInst -> Dvariaveis .)
+    BEGIN           reduce using rule 26 (GlobalInst -> Dvariaveis .)
+    VAR             reduce using rule 26 (GlobalInst -> Dvariaveis .)
+    FUNCTION        reduce using rule 26 (GlobalInst -> Dvariaveis .)
+    PROCEDURE       reduce using rule 26 (GlobalInst -> Dvariaveis .)
 
 
 state 14
 
-    (30) GlobalInst -> Dfuncao .
+    (27) GlobalInst -> Dfuncao .
 
-    BEGIN           reduce using rule 30 (GlobalInst -> Dfuncao .)
-    VAR             reduce using rule 30 (GlobalInst -> Dfuncao .)
-    FUNCTION        reduce using rule 30 (GlobalInst -> Dfuncao .)
-    PROCEDURE       reduce using rule 30 (GlobalInst -> Dfuncao .)
+    BEGIN           reduce using rule 27 (GlobalInst -> Dfuncao .)
+    VAR             reduce using rule 27 (GlobalInst -> Dfuncao .)
+    FUNCTION        reduce using rule 27 (GlobalInst -> Dfuncao .)
+    PROCEDURE       reduce using rule 27 (GlobalInst -> Dfuncao .)
 
 
 state 15
 
-    (31) GlobalInst -> Dprocedimento .
+    (28) GlobalInst -> Dprocedimento .
 
-    BEGIN           reduce using rule 31 (GlobalInst -> Dprocedimento .)
-    VAR             reduce using rule 31 (GlobalInst -> Dprocedimento .)
-    FUNCTION        reduce using rule 31 (GlobalInst -> Dprocedimento .)
-    PROCEDURE       reduce using rule 31 (GlobalInst -> Dprocedimento .)
+    BEGIN           reduce using rule 28 (GlobalInst -> Dprocedimento .)
+    VAR             reduce using rule 28 (GlobalInst -> Dprocedimento .)
+    FUNCTION        reduce using rule 28 (GlobalInst -> Dprocedimento .)
+    PROCEDURE       reduce using rule 28 (GlobalInst -> Dprocedimento .)
 
 
 state 16
@@ -482,33 +482,33 @@ state 17
 
 state 18
 
-    (20) Dprocedimento -> PROCEDURE . ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ;
+    (19) Dprocedimento -> PROCEDURE . ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ;
 
     ID              shift and go to state 49
 
 
 state 19
 
-    (10) Duses -> USES UseList ; .
+    (9) Duses -> USES UseList ; .
 
-    BEGIN           reduce using rule 10 (Duses -> USES UseList ; .)
-    VAR             reduce using rule 10 (Duses -> USES UseList ; .)
-    FUNCTION        reduce using rule 10 (Duses -> USES UseList ; .)
-    PROCEDURE       reduce using rule 10 (Duses -> USES UseList ; .)
+    BEGIN           reduce using rule 9 (Duses -> USES UseList ; .)
+    VAR             reduce using rule 9 (Duses -> USES UseList ; .)
+    FUNCTION        reduce using rule 9 (Duses -> USES UseList ; .)
+    PROCEDURE       reduce using rule 9 (Duses -> USES UseList ; .)
 
 
 state 20
 
-    (18) UseList -> UseList , . ID
+    (17) UseList -> UseList , . ID
 
     ID              shift and go to state 50
 
 
 state 21
 
-    (12) Programa -> PROGRAM ID ; Duses GlobalInsts BlocoPrincipal . .
+    (11) Programa -> PROGRAM ID ; Duses GlobalInsts BlocoPrincipal . .
 
-    $end            reduce using rule 12 (Programa -> PROGRAM ID ; Duses GlobalInsts BlocoPrincipal . .)
+    $end            reduce using rule 11 (Programa -> PROGRAM ID ; Duses GlobalInsts BlocoPrincipal . .)
 
 
 state 22
@@ -516,17 +516,17 @@ state 22
     (46) Bloco -> BEGIN . LocalInstsList END
     (1) LocalInstsList -> . LocalInstsList ; Instrucao
     (14) LocalInstsList -> . LocalInstsList ;
-    (24) LocalInstsList -> . Instrucao
-    (32) Instrucao -> . While
-    (33) Instrucao -> . CicloFor
-    (34) Instrucao -> . InstrucaoCondicional
-    (35) Instrucao -> . Atribuicao
-    (36) Instrucao -> . Expressao
-    (41) Instrucao -> . Bloco
-    (21) While -> . WHILE Condicao DO LocalInstsList
+    (23) LocalInstsList -> . Instrucao
+    (29) Instrucao -> . While
+    (30) Instrucao -> . CicloFor
+    (31) Instrucao -> . InstrucaoCondicional
+    (32) Instrucao -> . Atribuicao
+    (33) Instrucao -> . Expressao
+    (39) Instrucao -> . Bloco
+    (20) While -> . WHILE Condicao DO Instrucao
     (45) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
-    (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
-    (13) Atribuicao -> . Atribuido : = Expressao
+    (13) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
+    (12) Atribuicao -> . Atribuido : = Expressao
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -580,7 +580,7 @@ state 22
 
 state 23
 
-    (39) BlocoPrincipal -> BEGIN LocalInstsList . END
+    (37) BlocoPrincipal -> BEGIN LocalInstsList . END
     (1) LocalInstsList -> LocalInstsList . ; Instrucao
     (14) LocalInstsList -> LocalInstsList . ;
 
@@ -590,81 +590,81 @@ state 23
 
 state 24
 
-    (24) LocalInstsList -> Instrucao .
+    (23) LocalInstsList -> Instrucao .
 
-    END             reduce using rule 24 (LocalInstsList -> Instrucao .)
-    ;               reduce using rule 24 (LocalInstsList -> Instrucao .)
-    ELSE            reduce using rule 24 (LocalInstsList -> Instrucao .)
+    END             reduce using rule 23 (LocalInstsList -> Instrucao .)
+    ;               reduce using rule 23 (LocalInstsList -> Instrucao .)
+    ELSE            reduce using rule 23 (LocalInstsList -> Instrucao .)
 
 
 state 25
 
-    (32) Instrucao -> While .
+    (29) Instrucao -> While .
 
-    END             reduce using rule 32 (Instrucao -> While .)
-    ;               reduce using rule 32 (Instrucao -> While .)
-    ELSE            reduce using rule 32 (Instrucao -> While .)
+    END             reduce using rule 29 (Instrucao -> While .)
+    ;               reduce using rule 29 (Instrucao -> While .)
+    ELSE            reduce using rule 29 (Instrucao -> While .)
 
 
 state 26
 
-    (33) Instrucao -> CicloFor .
+    (30) Instrucao -> CicloFor .
 
-    END             reduce using rule 33 (Instrucao -> CicloFor .)
-    ;               reduce using rule 33 (Instrucao -> CicloFor .)
-    ELSE            reduce using rule 33 (Instrucao -> CicloFor .)
+    END             reduce using rule 30 (Instrucao -> CicloFor .)
+    ;               reduce using rule 30 (Instrucao -> CicloFor .)
+    ELSE            reduce using rule 30 (Instrucao -> CicloFor .)
 
 
 state 27
 
-    (34) Instrucao -> InstrucaoCondicional .
+    (31) Instrucao -> InstrucaoCondicional .
 
-    END             reduce using rule 34 (Instrucao -> InstrucaoCondicional .)
-    ;               reduce using rule 34 (Instrucao -> InstrucaoCondicional .)
-    ELSE            reduce using rule 34 (Instrucao -> InstrucaoCondicional .)
+    END             reduce using rule 31 (Instrucao -> InstrucaoCondicional .)
+    ;               reduce using rule 31 (Instrucao -> InstrucaoCondicional .)
+    ELSE            reduce using rule 31 (Instrucao -> InstrucaoCondicional .)
 
 
 state 28
 
-    (35) Instrucao -> Atribuicao .
+    (32) Instrucao -> Atribuicao .
 
-    END             reduce using rule 35 (Instrucao -> Atribuicao .)
-    ;               reduce using rule 35 (Instrucao -> Atribuicao .)
-    ELSE            reduce using rule 35 (Instrucao -> Atribuicao .)
+    END             reduce using rule 32 (Instrucao -> Atribuicao .)
+    ;               reduce using rule 32 (Instrucao -> Atribuicao .)
+    ELSE            reduce using rule 32 (Instrucao -> Atribuicao .)
 
 
 state 29
 
-    (36) Instrucao -> Expressao .
+    (33) Instrucao -> Expressao .
     (64) Expressao -> Expressao . + Termo
     (65) Expressao -> Expressao . - Termo
 
-    END             reduce using rule 36 (Instrucao -> Expressao .)
-    ;               reduce using rule 36 (Instrucao -> Expressao .)
-    ELSE            reduce using rule 36 (Instrucao -> Expressao .)
+    END             reduce using rule 33 (Instrucao -> Expressao .)
+    ;               reduce using rule 33 (Instrucao -> Expressao .)
+    ELSE            reduce using rule 33 (Instrucao -> Expressao .)
     +               shift and go to state 54
     -               shift and go to state 55
 
 
 state 30
 
-    (41) Instrucao -> Bloco .
+    (39) Instrucao -> Bloco .
 
-    END             reduce using rule 41 (Instrucao -> Bloco .)
-    ;               reduce using rule 41 (Instrucao -> Bloco .)
-    ELSE            reduce using rule 41 (Instrucao -> Bloco .)
+    END             reduce using rule 39 (Instrucao -> Bloco .)
+    ;               reduce using rule 39 (Instrucao -> Bloco .)
+    ELSE            reduce using rule 39 (Instrucao -> Bloco .)
 
 
 state 31
 
-    (21) While -> WHILE . Condicao DO LocalInstsList
+    (20) While -> WHILE . Condicao DO Instrucao
     (2) Condicao -> . Condicao AND Condicao
     (3) Condicao -> . Condicao OR Condicao
     (4) Condicao -> . NOT Condicao
     (5) Condicao -> . DeclaracaoCondicao
     (6) Condicao -> . ( Condicao )
-    (37) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
-    (38) DeclaracaoCondicao -> . Fator
+    (35) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
+    (36) DeclaracaoCondicao -> . Fator
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -707,7 +707,7 @@ state 31
 state 32
 
     (45) CicloFor -> FOR . Atribuicao DirecaoFor Expressao DO LocalInstsList
-    (13) Atribuicao -> . Atribuido : = Expressao
+    (12) Atribuicao -> . Atribuido : = Expressao
     (47) Atribuido -> . ID
     (48) Atribuido -> . Acesso_array
     (54) Acesso_array -> . Variavel_array [ Expressao ]
@@ -723,14 +723,14 @@ state 32
 
 state 33
 
-    (9) InstrucaoCondicional -> IF . Condicao THEN BlocoCondicional ParteElse
+    (13) InstrucaoCondicional -> IF . Condicao THEN BlocoCondicional ParteElse
     (2) Condicao -> . Condicao AND Condicao
     (3) Condicao -> . Condicao OR Condicao
     (4) Condicao -> . NOT Condicao
     (5) Condicao -> . DeclaracaoCondicao
     (6) Condicao -> . ( Condicao )
-    (37) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
-    (38) DeclaracaoCondicao -> . Fator
+    (35) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
+    (36) DeclaracaoCondicao -> . Fator
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -772,7 +772,7 @@ state 33
 
 state 34
 
-    (13) Atribuicao -> Atribuido . : = Expressao
+    (12) Atribuicao -> Atribuido . : = Expressao
 
     :               shift and go to state 68
 
@@ -812,7 +812,7 @@ state 36
     (86) Fator -> ID .
     (61) Variavel_array -> ID .
     (95) ChamadaFuncao -> ID . ArgumentosGetter
-    (40) ArgumentosGetter -> . ( ArgumentosGetterBuffer )
+    (38) ArgumentosGetter -> . ( ArgumentosGetterBuffer )
     (96) ArgumentosGetter -> . ( ListaArgumentos )
     (97) ArgumentosGetter -> . ( )
 
@@ -1102,12 +1102,12 @@ state 48
 
 state 49
 
-    (20) Dprocedimento -> PROCEDURE ID . ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ;
-    (27) ArgumentosProcedimentoOpc -> . ArgumentosSetter
-    (28) ArgumentosProcedimentoOpc -> .
+    (19) Dprocedimento -> PROCEDURE ID . ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ;
+    (24) ArgumentosProcedimentoOpc -> . ArgumentosSetter
+    (25) ArgumentosProcedimentoOpc -> .
     (53) ArgumentosSetter -> . ( ArgumentosSetterBuffer )
 
-    ;               reduce using rule 28 (ArgumentosProcedimentoOpc -> .)
+    ;               reduce using rule 25 (ArgumentosProcedimentoOpc -> .)
     (               shift and go to state 79
 
     ArgumentosProcedimentoOpc      shift and go to state 80
@@ -1115,10 +1115,10 @@ state 49
 
 state 50
 
-    (18) UseList -> UseList , ID .
+    (17) UseList -> UseList , ID .
 
-    ;               reduce using rule 18 (UseList -> UseList , ID .)
-    ,               reduce using rule 18 (UseList -> UseList , ID .)
+    ;               reduce using rule 17 (UseList -> UseList , ID .)
+    ,               reduce using rule 17 (UseList -> UseList , ID .)
 
 
 state 51
@@ -1133,25 +1133,25 @@ state 51
 
 state 52
 
-    (39) BlocoPrincipal -> BEGIN LocalInstsList END .
+    (37) BlocoPrincipal -> BEGIN LocalInstsList END .
 
-    .               reduce using rule 39 (BlocoPrincipal -> BEGIN LocalInstsList END .)
+    .               reduce using rule 37 (BlocoPrincipal -> BEGIN LocalInstsList END .)
 
 
 state 53
 
     (1) LocalInstsList -> LocalInstsList ; . Instrucao
     (14) LocalInstsList -> LocalInstsList ; .
-    (32) Instrucao -> . While
-    (33) Instrucao -> . CicloFor
-    (34) Instrucao -> . InstrucaoCondicional
-    (35) Instrucao -> . Atribuicao
-    (36) Instrucao -> . Expressao
-    (41) Instrucao -> . Bloco
-    (21) While -> . WHILE Condicao DO LocalInstsList
+    (29) Instrucao -> . While
+    (30) Instrucao -> . CicloFor
+    (31) Instrucao -> . InstrucaoCondicional
+    (32) Instrucao -> . Atribuicao
+    (33) Instrucao -> . Expressao
+    (39) Instrucao -> . Bloco
+    (20) While -> . WHILE Condicao DO Instrucao
     (45) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
-    (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
-    (13) Atribuicao -> . Atribuido : = Expressao
+    (13) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
+    (12) Atribuicao -> . Atribuido : = Expressao
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -1277,7 +1277,7 @@ state 55
 
 state 56
 
-    (21) While -> WHILE Condicao . DO LocalInstsList
+    (20) While -> WHILE Condicao . DO Instrucao
     (2) Condicao -> Condicao . AND Condicao
     (3) Condicao -> Condicao . OR Condicao
 
@@ -1294,8 +1294,8 @@ state 57
     (4) Condicao -> . NOT Condicao
     (5) Condicao -> . DeclaracaoCondicao
     (6) Condicao -> . ( Condicao )
-    (37) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
-    (38) DeclaracaoCondicao -> . Fator
+    (35) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
+    (36) DeclaracaoCondicao -> . Fator
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -1358,8 +1358,8 @@ state 59
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
-    (37) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
-    (38) DeclaracaoCondicao -> . Fator
+    (35) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
+    (36) DeclaracaoCondicao -> . Fator
     (82) Termo -> . Termo * Fator
     (83) Termo -> . Termo MOD Fator
     (84) Termo -> . Termo DIV Fator
@@ -1398,7 +1398,7 @@ state 59
 
 state 60
 
-    (37) DeclaracaoCondicao -> Expressao . SimboloCondicional Expressao
+    (35) DeclaracaoCondicao -> Expressao . SimboloCondicional Expressao
     (64) Expressao -> Expressao . + Termo
     (65) Expressao -> Expressao . - Termo
     (70) SimboloCondicional -> . =
@@ -1418,15 +1418,15 @@ state 60
 
 state 61
 
-    (38) DeclaracaoCondicao -> Fator .
+    (36) DeclaracaoCondicao -> Fator .
     (85) Termo -> Fator .
 
-  ! reduce/reduce conflict for ) resolved using rule 38 (DeclaracaoCondicao -> Fator .)
-    DO              reduce using rule 38 (DeclaracaoCondicao -> Fator .)
-    AND             reduce using rule 38 (DeclaracaoCondicao -> Fator .)
-    OR              reduce using rule 38 (DeclaracaoCondicao -> Fator .)
-    THEN            reduce using rule 38 (DeclaracaoCondicao -> Fator .)
-    )               reduce using rule 38 (DeclaracaoCondicao -> Fator .)
+  ! reduce/reduce conflict for ) resolved using rule 36 (DeclaracaoCondicao -> Fator .)
+    DO              reduce using rule 36 (DeclaracaoCondicao -> Fator .)
+    AND             reduce using rule 36 (DeclaracaoCondicao -> Fator .)
+    OR              reduce using rule 36 (DeclaracaoCondicao -> Fator .)
+    THEN            reduce using rule 36 (DeclaracaoCondicao -> Fator .)
+    )               reduce using rule 36 (DeclaracaoCondicao -> Fator .)
     *               reduce using rule 85 (Termo -> Fator .)
     MOD             reduce using rule 85 (Termo -> Fator .)
     DIV             reduce using rule 85 (Termo -> Fator .)
@@ -1444,7 +1444,7 @@ state 62
     (86) Fator -> ID .
     (95) ChamadaFuncao -> ID . ArgumentosGetter
     (61) Variavel_array -> ID .
-    (40) ArgumentosGetter -> . ( ArgumentosGetterBuffer )
+    (38) ArgumentosGetter -> . ( ArgumentosGetterBuffer )
     (96) ArgumentosGetter -> . ( ListaArgumentos )
     (97) ArgumentosGetter -> . ( )
 
@@ -1532,7 +1532,7 @@ state 66
 
 state 67
 
-    (9) InstrucaoCondicional -> IF Condicao . THEN BlocoCondicional ParteElse
+    (13) InstrucaoCondicional -> IF Condicao . THEN BlocoCondicional ParteElse
     (2) Condicao -> Condicao . AND Condicao
     (3) Condicao -> Condicao . OR Condicao
 
@@ -1543,7 +1543,7 @@ state 67
 
 state 68
 
-    (13) Atribuicao -> Atribuido : . = Expressao
+    (12) Atribuicao -> Atribuido : . = Expressao
 
     =               shift and go to state 100
 
@@ -1666,7 +1666,7 @@ state 72
 
 state 73
 
-    (40) ArgumentosGetter -> ( . ArgumentosGetterBuffer )
+    (38) ArgumentosGetter -> ( . ArgumentosGetterBuffer )
     (96) ArgumentosGetter -> ( . ListaArgumentos )
     (97) ArgumentosGetter -> ( . )
     (42) ArgumentosGetterBuffer -> . ArgumentosGetterBuffer , Expressao
@@ -1814,16 +1814,16 @@ state 79
 
 state 80
 
-    (20) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc . ; GlobalInsts BEGIN LocalInstsList END ;
+    (19) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc . ; GlobalInsts BEGIN LocalInstsList END ;
 
     ;               shift and go to state 118
 
 
 state 81
 
-    (27) ArgumentosProcedimentoOpc -> ArgumentosSetter .
+    (24) ArgumentosProcedimentoOpc -> ArgumentosSetter .
 
-    ;               reduce using rule 27 (ArgumentosProcedimentoOpc -> ArgumentosSetter .)
+    ;               reduce using rule 24 (ArgumentosProcedimentoOpc -> ArgumentosSetter .)
 
 
 state 82
@@ -1904,20 +1904,17 @@ state 85
 
 state 86
 
-    (21) While -> WHILE Condicao DO . LocalInstsList
-    (1) LocalInstsList -> . LocalInstsList ; Instrucao
-    (14) LocalInstsList -> . LocalInstsList ;
-    (24) LocalInstsList -> . Instrucao
-    (32) Instrucao -> . While
-    (33) Instrucao -> . CicloFor
-    (34) Instrucao -> . InstrucaoCondicional
-    (35) Instrucao -> . Atribuicao
-    (36) Instrucao -> . Expressao
-    (41) Instrucao -> . Bloco
-    (21) While -> . WHILE Condicao DO LocalInstsList
+    (20) While -> WHILE Condicao DO . Instrucao
+    (29) Instrucao -> . While
+    (30) Instrucao -> . CicloFor
+    (31) Instrucao -> . InstrucaoCondicional
+    (32) Instrucao -> . Atribuicao
+    (33) Instrucao -> . Expressao
+    (39) Instrucao -> . Bloco
+    (20) While -> . WHILE Condicao DO Instrucao
     (45) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
-    (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
-    (13) Atribuicao -> . Atribuido : = Expressao
+    (13) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
+    (12) Atribuicao -> . Atribuido : = Expressao
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -1954,8 +1951,7 @@ state 86
     FALSE           shift and go to state 44
     (               shift and go to state 45
 
-    LocalInstsList                 shift and go to state 119
-    Instrucao                      shift and go to state 24
+    Instrucao                      shift and go to state 119
     While                          shift and go to state 25
     CicloFor                       shift and go to state 26
     InstrucaoCondicional           shift and go to state 27
@@ -1977,8 +1973,8 @@ state 87
     (4) Condicao -> . NOT Condicao
     (5) Condicao -> . DeclaracaoCondicao
     (6) Condicao -> . ( Condicao )
-    (37) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
-    (38) DeclaracaoCondicao -> . Fator
+    (35) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
+    (36) DeclaracaoCondicao -> . Fator
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -2026,8 +2022,8 @@ state 88
     (4) Condicao -> . NOT Condicao
     (5) Condicao -> . DeclaracaoCondicao
     (6) Condicao -> . ( Condicao )
-    (37) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
-    (38) DeclaracaoCondicao -> . Fator
+    (35) DeclaracaoCondicao -> . Expressao SimboloCondicional Expressao
+    (36) DeclaracaoCondicao -> . Fator
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -2101,7 +2097,7 @@ state 91
     (92) Fator -> ( Expressao . )
     (64) Expressao -> Expressao . + Termo
     (65) Expressao -> Expressao . - Termo
-    (37) DeclaracaoCondicao -> Expressao . SimboloCondicional Expressao
+    (35) DeclaracaoCondicao -> Expressao . SimboloCondicional Expressao
     (70) SimboloCondicional -> . =
     (71) SimboloCondicional -> . < >
     (72) SimboloCondicional -> . < =
@@ -2120,7 +2116,7 @@ state 91
 
 state 92
 
-    (37) DeclaracaoCondicao -> Expressao SimboloCondicional . Expressao
+    (35) DeclaracaoCondicao -> Expressao SimboloCondicional . Expressao
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -2269,21 +2265,21 @@ state 98
 
 state 99
 
-    (9) InstrucaoCondicional -> IF Condicao THEN . BlocoCondicional ParteElse
-    (17) BlocoCondicional -> . LocalInstsList
+    (13) InstrucaoCondicional -> IF Condicao THEN . BlocoCondicional ParteElse
+    (34) BlocoCondicional -> . LocalInstsList
     (1) LocalInstsList -> . LocalInstsList ; Instrucao
     (14) LocalInstsList -> . LocalInstsList ;
-    (24) LocalInstsList -> . Instrucao
-    (32) Instrucao -> . While
-    (33) Instrucao -> . CicloFor
-    (34) Instrucao -> . InstrucaoCondicional
-    (35) Instrucao -> . Atribuicao
-    (36) Instrucao -> . Expressao
-    (41) Instrucao -> . Bloco
-    (21) While -> . WHILE Condicao DO LocalInstsList
+    (23) LocalInstsList -> . Instrucao
+    (29) Instrucao -> . While
+    (30) Instrucao -> . CicloFor
+    (31) Instrucao -> . InstrucaoCondicional
+    (32) Instrucao -> . Atribuicao
+    (33) Instrucao -> . Expressao
+    (39) Instrucao -> . Bloco
+    (20) While -> . WHILE Condicao DO Instrucao
     (45) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
-    (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
-    (13) Atribuicao -> . Atribuido : = Expressao
+    (13) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
+    (12) Atribuicao -> . Atribuido : = Expressao
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -2338,7 +2334,7 @@ state 99
 
 state 100
 
-    (13) Atribuicao -> Atribuido : = . Expressao
+    (12) Atribuicao -> Atribuido : = . Expressao
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -2455,7 +2451,7 @@ state 103
 
 state 104
 
-    (40) ArgumentosGetter -> ( ArgumentosGetterBuffer . )
+    (38) ArgumentosGetter -> ( ArgumentosGetterBuffer . )
     (42) ArgumentosGetterBuffer -> ArgumentosGetterBuffer . , Expressao
 
     )               shift and go to state 131
@@ -2645,29 +2641,24 @@ state 117
 
 state 118
 
-    (20) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; . GlobalInsts BEGIN LocalInstsList END ;
-    (22) GlobalInsts -> . GlobalInsts GlobalInst
-    (23) GlobalInsts -> .
+    (19) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; . GlobalInsts BEGIN LocalInstsList END ;
+    (21) GlobalInsts -> . GlobalInsts GlobalInst
+    (22) GlobalInsts -> .
 
-    BEGIN           reduce using rule 23 (GlobalInsts -> .)
-    VAR             reduce using rule 23 (GlobalInsts -> .)
-    FUNCTION        reduce using rule 23 (GlobalInsts -> .)
-    PROCEDURE       reduce using rule 23 (GlobalInsts -> .)
+    BEGIN           reduce using rule 22 (GlobalInsts -> .)
+    VAR             reduce using rule 22 (GlobalInsts -> .)
+    FUNCTION        reduce using rule 22 (GlobalInsts -> .)
+    PROCEDURE       reduce using rule 22 (GlobalInsts -> .)
 
     GlobalInsts                    shift and go to state 150
 
 state 119
 
-    (21) While -> WHILE Condicao DO LocalInstsList .
-    (1) LocalInstsList -> LocalInstsList . ; Instrucao
-    (14) LocalInstsList -> LocalInstsList . ;
+    (20) While -> WHILE Condicao DO Instrucao .
 
-  ! shift/reduce conflict for ; resolved as shift
-    END             reduce using rule 21 (While -> WHILE Condicao DO LocalInstsList .)
-    ELSE            reduce using rule 21 (While -> WHILE Condicao DO LocalInstsList .)
-    ;               shift and go to state 53
-
-  ! ;               [ reduce using rule 21 (While -> WHILE Condicao DO LocalInstsList .) ]
+    END             reduce using rule 20 (While -> WHILE Condicao DO Instrucao .)
+    ;               reduce using rule 20 (While -> WHILE Condicao DO Instrucao .)
+    ELSE            reduce using rule 20 (While -> WHILE Condicao DO Instrucao .)
 
 
 state 120
@@ -2719,15 +2710,15 @@ state 122
 
 state 123
 
-    (37) DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .
+    (35) DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .
     (64) Expressao -> Expressao . + Termo
     (65) Expressao -> Expressao . - Termo
 
-    DO              reduce using rule 37 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
-    AND             reduce using rule 37 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
-    OR              reduce using rule 37 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
-    THEN            reduce using rule 37 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
-    )               reduce using rule 37 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
+    DO              reduce using rule 35 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
+    AND             reduce using rule 35 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
+    OR              reduce using rule 35 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
+    THEN            reduce using rule 35 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
+    )               reduce using rule 35 (DeclaracaoCondicao -> Expressao SimboloCondicional Expressao .)
     +               shift and go to state 54
     -               shift and go to state 55
 
@@ -2784,72 +2775,72 @@ state 127
 
 state 128
 
-    (9) InstrucaoCondicional -> IF Condicao THEN BlocoCondicional . ParteElse
-    (25) ParteElse -> . ELSE LocalInstsList
-    (26) ParteElse -> .
+    (13) InstrucaoCondicional -> IF Condicao THEN BlocoCondicional . ParteElse
+    (40) ParteElse -> . ELSE LocalInstsList
+    (41) ParteElse -> .
 
   ! shift/reduce conflict for ELSE resolved as shift
     ELSE            shift and go to state 153
-    END             reduce using rule 26 (ParteElse -> .)
-    ;               reduce using rule 26 (ParteElse -> .)
+    END             reduce using rule 41 (ParteElse -> .)
+    ;               reduce using rule 41 (ParteElse -> .)
 
-  ! ELSE            [ reduce using rule 26 (ParteElse -> .) ]
+  ! ELSE            [ reduce using rule 41 (ParteElse -> .) ]
 
     ParteElse                      shift and go to state 152
 
 state 129
 
-    (17) BlocoCondicional -> LocalInstsList .
+    (34) BlocoCondicional -> LocalInstsList .
     (1) LocalInstsList -> LocalInstsList . ; Instrucao
     (14) LocalInstsList -> LocalInstsList . ;
 
   ! shift/reduce conflict for ; resolved as shift
-    END             reduce using rule 17 (BlocoCondicional -> LocalInstsList .)
-    ELSE            reduce using rule 17 (BlocoCondicional -> LocalInstsList .)
+    END             reduce using rule 34 (BlocoCondicional -> LocalInstsList .)
+    ELSE            reduce using rule 34 (BlocoCondicional -> LocalInstsList .)
     ;               shift and go to state 53
 
-  ! ;               [ reduce using rule 17 (BlocoCondicional -> LocalInstsList .) ]
+  ! ;               [ reduce using rule 34 (BlocoCondicional -> LocalInstsList .) ]
 
 
 state 130
 
-    (13) Atribuicao -> Atribuido : = Expressao .
+    (12) Atribuicao -> Atribuido : = Expressao .
     (64) Expressao -> Expressao . + Termo
     (65) Expressao -> Expressao . - Termo
 
-    END             reduce using rule 13 (Atribuicao -> Atribuido : = Expressao .)
-    ;               reduce using rule 13 (Atribuicao -> Atribuido : = Expressao .)
-    TO              reduce using rule 13 (Atribuicao -> Atribuido : = Expressao .)
-    DOWNTO          reduce using rule 13 (Atribuicao -> Atribuido : = Expressao .)
-    ELSE            reduce using rule 13 (Atribuicao -> Atribuido : = Expressao .)
+    END             reduce using rule 12 (Atribuicao -> Atribuido : = Expressao .)
+    ;               reduce using rule 12 (Atribuicao -> Atribuido : = Expressao .)
+    TO              reduce using rule 12 (Atribuicao -> Atribuido : = Expressao .)
+    DOWNTO          reduce using rule 12 (Atribuicao -> Atribuido : = Expressao .)
+    ELSE            reduce using rule 12 (Atribuicao -> Atribuido : = Expressao .)
     +               shift and go to state 54
     -               shift and go to state 55
 
 
 state 131
 
-    (40) ArgumentosGetter -> ( ArgumentosGetterBuffer ) .
+    (38) ArgumentosGetter -> ( ArgumentosGetterBuffer ) .
 
-    *               reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    MOD             reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    DIV             reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    +               reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    -               reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    END             reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    ;               reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    ELSE            reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    DO              reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    AND             reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    OR              reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    =               reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    <               reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    >               reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    THEN            reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    )               reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    ,               reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    ]               reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    TO              reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
-    DOWNTO          reduce using rule 40 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    *               reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    MOD             reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    DIV             reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    +               reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    -               reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    END             reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    ;               reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    ELSE            reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    DO              reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    AND             reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    OR              reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    =               reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    <               reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    >               reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    THEN            reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    )               reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    ,               reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    ]               reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    TO              reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
+    DOWNTO          reduce using rule 38 (ArgumentosGetter -> ( ArgumentosGetterBuffer ) .)
 
 
 state 132
@@ -3108,14 +3099,14 @@ state 149
 
 state 150
 
-    (20) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts . BEGIN LocalInstsList END ;
-    (22) GlobalInsts -> GlobalInsts . GlobalInst
-    (29) GlobalInst -> . Dvariaveis
-    (30) GlobalInst -> . Dfuncao
-    (31) GlobalInst -> . Dprocedimento
+    (19) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts . BEGIN LocalInstsList END ;
+    (21) GlobalInsts -> GlobalInsts . GlobalInst
+    (26) GlobalInst -> . Dvariaveis
+    (27) GlobalInst -> . Dfuncao
+    (28) GlobalInst -> . Dprocedimento
     (7) Dvariaveis -> . VAR Listavariaveis
     (8) Dfuncao -> . FUNCTION ID ArgumentosSetter : Tipo ; GlobalInsts BEGIN LocalInstsList END ;
-    (20) Dprocedimento -> . PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ;
+    (19) Dprocedimento -> . PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ;
 
     BEGIN           shift and go to state 161
     VAR             shift and go to state 16
@@ -3132,17 +3123,17 @@ state 151
     (45) CicloFor -> FOR Atribuicao DirecaoFor Expressao DO . LocalInstsList
     (1) LocalInstsList -> . LocalInstsList ; Instrucao
     (14) LocalInstsList -> . LocalInstsList ;
-    (24) LocalInstsList -> . Instrucao
-    (32) Instrucao -> . While
-    (33) Instrucao -> . CicloFor
-    (34) Instrucao -> . InstrucaoCondicional
-    (35) Instrucao -> . Atribuicao
-    (36) Instrucao -> . Expressao
-    (41) Instrucao -> . Bloco
-    (21) While -> . WHILE Condicao DO LocalInstsList
+    (23) LocalInstsList -> . Instrucao
+    (29) Instrucao -> . While
+    (30) Instrucao -> . CicloFor
+    (31) Instrucao -> . InstrucaoCondicional
+    (32) Instrucao -> . Atribuicao
+    (33) Instrucao -> . Expressao
+    (39) Instrucao -> . Bloco
+    (20) While -> . WHILE Condicao DO Instrucao
     (45) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
-    (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
-    (13) Atribuicao -> . Atribuido : = Expressao
+    (13) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
+    (12) Atribuicao -> . Atribuido : = Expressao
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -3196,29 +3187,29 @@ state 151
 
 state 152
 
-    (9) InstrucaoCondicional -> IF Condicao THEN BlocoCondicional ParteElse .
+    (13) InstrucaoCondicional -> IF Condicao THEN BlocoCondicional ParteElse .
 
-    END             reduce using rule 9 (InstrucaoCondicional -> IF Condicao THEN BlocoCondicional ParteElse .)
-    ;               reduce using rule 9 (InstrucaoCondicional -> IF Condicao THEN BlocoCondicional ParteElse .)
-    ELSE            reduce using rule 9 (InstrucaoCondicional -> IF Condicao THEN BlocoCondicional ParteElse .)
+    END             reduce using rule 13 (InstrucaoCondicional -> IF Condicao THEN BlocoCondicional ParteElse .)
+    ;               reduce using rule 13 (InstrucaoCondicional -> IF Condicao THEN BlocoCondicional ParteElse .)
+    ELSE            reduce using rule 13 (InstrucaoCondicional -> IF Condicao THEN BlocoCondicional ParteElse .)
 
 
 state 153
 
-    (25) ParteElse -> ELSE . LocalInstsList
+    (40) ParteElse -> ELSE . LocalInstsList
     (1) LocalInstsList -> . LocalInstsList ; Instrucao
     (14) LocalInstsList -> . LocalInstsList ;
-    (24) LocalInstsList -> . Instrucao
-    (32) Instrucao -> . While
-    (33) Instrucao -> . CicloFor
-    (34) Instrucao -> . InstrucaoCondicional
-    (35) Instrucao -> . Atribuicao
-    (36) Instrucao -> . Expressao
-    (41) Instrucao -> . Bloco
-    (21) While -> . WHILE Condicao DO LocalInstsList
+    (23) LocalInstsList -> . Instrucao
+    (29) Instrucao -> . While
+    (30) Instrucao -> . CicloFor
+    (31) Instrucao -> . InstrucaoCondicional
+    (32) Instrucao -> . Atribuicao
+    (33) Instrucao -> . Expressao
+    (39) Instrucao -> . Bloco
+    (20) While -> . WHILE Condicao DO Instrucao
     (45) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
-    (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
-    (13) Atribuicao -> . Atribuido : = Expressao
+    (13) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
+    (12) Atribuicao -> . Atribuido : = Expressao
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -3317,13 +3308,13 @@ state 157
 state 158
 
     (8) Dfuncao -> FUNCTION ID ArgumentosSetter : Tipo ; . GlobalInsts BEGIN LocalInstsList END ;
-    (22) GlobalInsts -> . GlobalInsts GlobalInst
-    (23) GlobalInsts -> .
+    (21) GlobalInsts -> . GlobalInsts GlobalInst
+    (22) GlobalInsts -> .
 
-    BEGIN           reduce using rule 23 (GlobalInsts -> .)
-    VAR             reduce using rule 23 (GlobalInsts -> .)
-    FUNCTION        reduce using rule 23 (GlobalInsts -> .)
-    PROCEDURE       reduce using rule 23 (GlobalInsts -> .)
+    BEGIN           reduce using rule 22 (GlobalInsts -> .)
+    VAR             reduce using rule 22 (GlobalInsts -> .)
+    FUNCTION        reduce using rule 22 (GlobalInsts -> .)
+    PROCEDURE       reduce using rule 22 (GlobalInsts -> .)
 
     GlobalInsts                    shift and go to state 166
 
@@ -3360,20 +3351,20 @@ state 160
 
 state 161
 
-    (20) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN . LocalInstsList END ;
+    (19) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN . LocalInstsList END ;
     (1) LocalInstsList -> . LocalInstsList ; Instrucao
     (14) LocalInstsList -> . LocalInstsList ;
-    (24) LocalInstsList -> . Instrucao
-    (32) Instrucao -> . While
-    (33) Instrucao -> . CicloFor
-    (34) Instrucao -> . InstrucaoCondicional
-    (35) Instrucao -> . Atribuicao
-    (36) Instrucao -> . Expressao
-    (41) Instrucao -> . Bloco
-    (21) While -> . WHILE Condicao DO LocalInstsList
+    (23) LocalInstsList -> . Instrucao
+    (29) Instrucao -> . While
+    (30) Instrucao -> . CicloFor
+    (31) Instrucao -> . InstrucaoCondicional
+    (32) Instrucao -> . Atribuicao
+    (33) Instrucao -> . Expressao
+    (39) Instrucao -> . Bloco
+    (20) While -> . WHILE Condicao DO Instrucao
     (45) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
-    (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
-    (13) Atribuicao -> . Atribuido : = Expressao
+    (13) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
+    (12) Atribuicao -> . Atribuido : = Expressao
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -3441,16 +3432,16 @@ state 162
 
 state 163
 
-    (25) ParteElse -> ELSE LocalInstsList .
+    (40) ParteElse -> ELSE LocalInstsList .
     (1) LocalInstsList -> LocalInstsList . ; Instrucao
     (14) LocalInstsList -> LocalInstsList . ;
 
   ! shift/reduce conflict for ; resolved as shift
-    END             reduce using rule 25 (ParteElse -> ELSE LocalInstsList .)
-    ELSE            reduce using rule 25 (ParteElse -> ELSE LocalInstsList .)
+    END             reduce using rule 40 (ParteElse -> ELSE LocalInstsList .)
+    ELSE            reduce using rule 40 (ParteElse -> ELSE LocalInstsList .)
     ;               shift and go to state 53
 
-  ! ;               [ reduce using rule 25 (ParteElse -> ELSE LocalInstsList .) ]
+  ! ;               [ reduce using rule 40 (ParteElse -> ELSE LocalInstsList .) ]
 
 
 state 164
@@ -3470,13 +3461,13 @@ state 165
 state 166
 
     (8) Dfuncao -> FUNCTION ID ArgumentosSetter : Tipo ; GlobalInsts . BEGIN LocalInstsList END ;
-    (22) GlobalInsts -> GlobalInsts . GlobalInst
-    (29) GlobalInst -> . Dvariaveis
-    (30) GlobalInst -> . Dfuncao
-    (31) GlobalInst -> . Dprocedimento
+    (21) GlobalInsts -> GlobalInsts . GlobalInst
+    (26) GlobalInst -> . Dvariaveis
+    (27) GlobalInst -> . Dfuncao
+    (28) GlobalInst -> . Dprocedimento
     (7) Dvariaveis -> . VAR Listavariaveis
     (8) Dfuncao -> . FUNCTION ID ArgumentosSetter : Tipo ; GlobalInsts BEGIN LocalInstsList END ;
-    (20) Dprocedimento -> . PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ;
+    (19) Dprocedimento -> . PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ;
 
     BEGIN           shift and go to state 171
     VAR             shift and go to state 16
@@ -3498,7 +3489,7 @@ state 167
 
 state 168
 
-    (20) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList . END ;
+    (19) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList . END ;
     (1) LocalInstsList -> LocalInstsList . ; Instrucao
     (14) LocalInstsList -> LocalInstsList . ;
 
@@ -3525,17 +3516,17 @@ state 171
     (8) Dfuncao -> FUNCTION ID ArgumentosSetter : Tipo ; GlobalInsts BEGIN . LocalInstsList END ;
     (1) LocalInstsList -> . LocalInstsList ; Instrucao
     (14) LocalInstsList -> . LocalInstsList ;
-    (24) LocalInstsList -> . Instrucao
-    (32) Instrucao -> . While
-    (33) Instrucao -> . CicloFor
-    (34) Instrucao -> . InstrucaoCondicional
-    (35) Instrucao -> . Atribuicao
-    (36) Instrucao -> . Expressao
-    (41) Instrucao -> . Bloco
-    (21) While -> . WHILE Condicao DO LocalInstsList
+    (23) LocalInstsList -> . Instrucao
+    (29) Instrucao -> . While
+    (30) Instrucao -> . CicloFor
+    (31) Instrucao -> . InstrucaoCondicional
+    (32) Instrucao -> . Atribuicao
+    (33) Instrucao -> . Expressao
+    (39) Instrucao -> . Bloco
+    (20) While -> . WHILE Condicao DO Instrucao
     (45) CicloFor -> . FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
-    (9) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
-    (13) Atribuicao -> . Atribuido : = Expressao
+    (13) InstrucaoCondicional -> . IF Condicao THEN BlocoCondicional ParteElse
+    (12) Atribuicao -> . Atribuido : = Expressao
     (64) Expressao -> . Expressao + Termo
     (65) Expressao -> . Expressao - Termo
     (81) Expressao -> . Termo
@@ -3589,7 +3580,7 @@ state 171
 
 state 172
 
-    (20) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END . ;
+    (19) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END . ;
 
     ;               shift and go to state 176
 
@@ -3630,12 +3621,12 @@ state 175
 
 state 176
 
-    (20) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ; .
+    (19) Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ; .
 
-    BEGIN           reduce using rule 20 (Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ; .)
-    VAR             reduce using rule 20 (Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ; .)
-    FUNCTION        reduce using rule 20 (Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ; .)
-    PROCEDURE       reduce using rule 20 (Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ; .)
+    BEGIN           reduce using rule 19 (Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ; .)
+    VAR             reduce using rule 19 (Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ; .)
+    FUNCTION        reduce using rule 19 (Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ; .)
+    PROCEDURE       reduce using rule 19 (Dprocedimento -> PROCEDURE ID ArgumentosProcedimentoOpc ; GlobalInsts BEGIN LocalInstsList END ; .)
 
 
 state 177
@@ -3676,7 +3667,6 @@ WARNING:
 WARNING: shift/reduce conflict for ) in state 73 resolved as shift
 WARNING: shift/reduce conflict for AND in state 89 resolved as shift
 WARNING: shift/reduce conflict for OR in state 89 resolved as shift
-WARNING: shift/reduce conflict for ; in state 119 resolved as shift
 WARNING: shift/reduce conflict for AND in state 120 resolved as shift
 WARNING: shift/reduce conflict for OR in state 120 resolved as shift
 WARNING: shift/reduce conflict for AND in state 121 resolved as shift

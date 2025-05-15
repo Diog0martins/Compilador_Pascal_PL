@@ -9,7 +9,7 @@ VERIFICAR SE É POSSÍVEL TROCAR POR BLOCO DO MAIN
 
 def p_While(p):
     '''
-    While : WHILE Condicao DO LocalInstsList
+    While : WHILE Condicao DO Instrucao
     '''
     counter.inc_while()
 
@@ -20,6 +20,7 @@ def p_While(p):
 
     condition_code = p[2] 
     body_code = p[4]
+    print("SENAITA\n\n\n" + body_code + "\n\n\n")
     
     p[0] = "\n".join([
         f"{start_label}:",
