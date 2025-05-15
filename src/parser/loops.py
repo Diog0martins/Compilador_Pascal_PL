@@ -32,7 +32,7 @@ def p_While(p):
 
     cond_op = f'EQUAL'
 
-    p[0] = "\n".join([start_label + ':',cond_1,cond_2,cond_op,jump_cond,p[4],jump,end_label+':'])
+    p[0] = "\n".join([start_label + ':',p[2],jump_cond,p[4],jump,end_label+':'])
 
     # p[0] = f"{p[1]} {p[2]} {p[3]} {p[4]}"
 

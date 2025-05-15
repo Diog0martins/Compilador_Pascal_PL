@@ -85,6 +85,7 @@ def p_SimboloCondicional(p):
                        | '>' '='
                        | '>'
     '''
+    print("AAAAAAAAAAAA")
     symbols = {
         '=': "EQUAL",
         '<>': "NEQ",
@@ -94,9 +95,11 @@ def p_SimboloCondicional(p):
         '>': "SUP"
     }
 
-    if len(p) == 1:
+    if len(p) == 2:
         symbol = p[1]
     else:
         symbol = p[1] + p[2]
+    
+    print("AAAAAAAAAAaa")
 
     p[0] = symbols[symbol]
