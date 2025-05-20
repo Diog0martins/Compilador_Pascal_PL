@@ -41,6 +41,7 @@ def p_ciclo_for(p):
     '''
     CicloFor : FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
     '''
+    p[0] = f"{p[1]} {p[2]} {p[3]} {p[4]} {p[5]} {p[6]}"
     print("Ciclo FOR reconhecido")
 
 def p_direcao_for(p):
