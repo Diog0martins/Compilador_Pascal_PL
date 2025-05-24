@@ -33,6 +33,8 @@ def p_argumentos_getter(p):
     '''
     print("Reconhecida chamada de função com argumentos")
 
+    p[0] = f"({p[2]})"
+
 def p_argumentos_getter_buffer(p):
     '''
     ArgumentosGetterBuffer : ArgumentosGetterBuffer ',' Expressao
@@ -41,8 +43,10 @@ def p_argumentos_getter_buffer(p):
     '''
     if len(p) == 4:
         print("Mais um argumento passado na chamada")
+        p[0] = f"{p[1]},{p[3]}"
     elif len(p) == 2:
         print("Argumento passado na chamada")
+        p[0] = f"{p[1]}"
     else:
         print("Nenhum argumento passado")
 
@@ -51,6 +55,7 @@ def p_argumentos_setter(p):
     ArgumentosSetter : '(' ArgumentosSetterBuffer ')'
     '''
     print("Reconhecida definição de argumentos")
+    p[0] = f"({p[2]})"
 
 def p_argumentos_setter_buffer(p):
     '''
@@ -60,7 +65,9 @@ def p_argumentos_setter_buffer(p):
     '''
     if len(p) == 4:
         print("Mais um argumento declarado")
+        p[0] = f"{p[1]},{p[3]}"
     elif len(p) == 2:
+        p[0] = f"{p[1]}"
         print("Argumento declarado")
     else:
         print("Nenhum argumento declarado")

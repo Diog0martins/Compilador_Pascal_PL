@@ -227,8 +227,8 @@ def p_ChamadaFuncao(p):
     '''
     ChamadaFuncao : ID ArgumentosGetter
     '''
-    print(f"Chamada de função reconhecida: {p[1]}(...)")
-    p[0] = f"{p[1]}(...)"
+    print(f"Chamada de função reconhecida: {p[1]}{p[2]}")
+    p[0] = f"{p[1]} {p[2]}"
 
 
 def p_ArgumentosGetter(p):
@@ -236,6 +236,11 @@ def p_ArgumentosGetter(p):
     ArgumentosGetter : '(' ListaArgumentos ')'
                      | '(' ')'
     '''
+
+    if len(p) == 4:
+        p[0] = f"({p[2]})"  # Podes adaptar isto conforme necessário
+    else:
+        p[0] = "()"
     p[0] = '()' 
 
 def p_ListaArgumentos(p):
@@ -243,3 +248,11 @@ def p_ListaArgumentos(p):
     ListaArgumentos : Expressao
                     | ListaArgumentos ',' Expressao
     '''
+
+    if len(p) == 2:
+        p[0] = p[1]
+
+    else:
+        p[0] = f"{p[1]},{p[3]}"
+        
+    # Implementar conforme necessário
