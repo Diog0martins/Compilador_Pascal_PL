@@ -1,7 +1,7 @@
 import os
 import sys
 from parser.pascal_anasin import rec_Parser
-import symbol_table
+from symbol_table import generalSTable
 
 
 #filename = "../programas_teste/teste7.pas"
@@ -10,10 +10,13 @@ result_folder = "../programas_máquina"
 
 def main():
 
-    symbol_table.reset()
+    generalSTable.reset()
     print("Symbol table initialized.")
 
     input_path = sys.argv[1]
+
+    if len(sys.argv) == 3:
+        result_folder = sys.argv[2]
 
     try:
         with open(input_path, 'r') as file:
@@ -22,7 +25,7 @@ def main():
         result = rec_Parser(content)
 
         
-        symbol_table.dump()
+        generalSTable.dump()
 
         
         input_filename = os.path.basename(input_path)

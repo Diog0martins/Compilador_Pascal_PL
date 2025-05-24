@@ -7,7 +7,6 @@ var
   sum, average: Real;
 
 begin
-  clrscr;
   sum := 0;
   count := 0;
 

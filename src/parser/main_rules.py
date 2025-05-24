@@ -17,6 +17,7 @@ def p_globalinsts(p):
     else:
         p[0] = "" 
 
+    print(p[0] + "\n\n")
 
 def p_globalinst(p):
     '''

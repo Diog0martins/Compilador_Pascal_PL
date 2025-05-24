@@ -1,4 +1,5 @@
-import symbol_table
+from symbol_table import generalSTable
+from symbol_table import SymbolTable
 
 # ====== Produções de Atribuições ======
 
@@ -7,15 +8,17 @@ def p_atribuicao(p):
     Atribuicao : Atribuido ':' '=' Expressao
     '''
     var_name = p[1]
-    if not symbol_table.has_variable(var_name):
+    if not generalSTable.has_variable(var_name):
         print(f"Erro: variável '{var_name}' não declarada.")
         p[0] = ""
         return
 
-    expected_type = symbol_table.get_type(var_name)
+    expected_type = generalSTable.get_type(var_name)
     expr_val, expr_type, expr_code = p[4]
 
-    if expr_type != expected_type:
+
+    
+    if expr_type != "integer" and expr_type != "real" and expr_type != expected_type:
         print(f"Erro: tipos incompatíveis: variável '{var_name}' é '{expected_type}', expressão é '{expr_type}'")
         p[0] = ""
         return
@@ -35,7 +38,7 @@ def p_atribuicao(p):
             p[0] = ""
             return
 
-    pos = symbol_table.get_position(var_name)
+    pos = generalSTable.get_position(var_name)
     p[0] = expr_code + f"\nSTOREG {pos}"
 
     print(f"Atribuição reconhecida: {var_name} := {p[4]}")
@@ -57,7 +60,6 @@ def p_acesso_array(p):
     Acesso_array : Variavel_array '[' Expressao ']'
     '''
     p[0] = f"{p[1]}[{p[3]}]"
-    print(f"Acesso a array reconhecido: {p[0]}")
 
 
 def p_variavel_array(p):
@@ -154,13 +156,13 @@ def p_termo_simple(p):
 def p_fator_id(p):
     'Fator : ID'
     name = p[1]
-    if not symbol_table.has_variable(name):
+    if not generalSTable.has_variable(name):
         print(f"Erro: variável '{name}' não declarada.")
-        p[0] = (None, "error", "")
+        p[0] = (p[1], "error", "")
     else:
-        var_type = symbol_table.get_type(name)
-        pos = symbol_table.get_position(name)
-        p[0] = (None, var_type, f"PUSHG {pos}")
+        var_type = generalSTable.get_type(name)
+        pos = generalSTable.get_position(name)
+        p[0] = (p[1], var_type, f"PUSHG {pos}")
 
 
 
@@ -228,7 +230,99 @@ def p_ChamadaFuncao(p):
     ChamadaFuncao : ID ArgumentosGetter
     '''
     print(f"Chamada de função reconhecida: {p[1]}{p[2]}")
-    p[0] = f"{p[1]} {p[2]}"
+
+
+    func_name = p[1].lower()
+    arguments = p[2]
+
+
+    if func_name == "writeln" or func_name == "write":
+        generalSTable.add_function("write", "None", "string")
+        generalSTable.add_function("writeln", "None", "string")
+
+        p[0] = ""
+        print(p[1])
+        print(p[2])
+        for x in arguments:
+            if x[2] != "":
+                p[0] = p[0] + x[2]
+                match(x[1]):
+                    case "string":
+                        p[0] = p[0] + (f"\nWRITES")
+                    case "integer":
+                        p[0] = p[0] + (f"\nWRITEI")
+                    case "real":
+                        p[0] = p[0] + (f"\nWRITER")
+                    case "boolean":
+                        if x[0] == "TRUE":
+                            p[0] = p[0] + (f"\nWRITEI")
+                        else:
+                            p[0] = p[0] + (f"\nWRITEI")
+
+            else:
+                match(x[1]):
+                    case "string":
+                        p[0] = p[0] + (f"\nPUSHS \"{x[0][1:-1]}\"")
+                        p[0] = p[0] + (f"\nWRITES")
+                    case "integer":
+                        p[0] = p[0] + (f"\nPUSHI {x[0]}")
+                        p[0] = p[0] + (f"\nWRITEI")
+                    case "real":
+                        p[0] = p[0] + (f"\nPUSHR {x[0]}")
+                        p[0] = p[0] + (f"\nWRITER")
+                    case "boolean":
+                        if x[0] == "TRUE":
+                            p[0] = p[0] + (f"\nPUSHI 1")
+                            p[0] = p[0] + (f"\nWRITEI")
+                        else:
+                            p[0] = p[0] + (f"\nPUSHI 0")
+                            p[0] = p[0] + (f"\nWRITEI")
+
+
+    elif func_name == "readln" or func_name == "read" :
+        generalSTable.add_function("readln", "None", "string")
+
+
+    elif func_name == "length":
+        print("\n\n")
+        
+        generalSTable.add_function("length", "integer", "string")
+        #print(p[2][0])
+
+        code = f"\n{p[2][0][2]}" + "\nSTRLEN"
+
+        generalSTable.dump()
+
+        p[0] = code
+
+        print(p[0])
+
+        #if p[2][0][2] == "":
+        #    p[0] = f"PUSHI 1"
+
+    else:
+
+        if not generalSTable.has_variable(func_name):
+                print(f"A função [{func_name}] não existe")
+
+        expected_argument_types = generalSTable.get_func_args(func_name)
+
+        if generalSTable.get_func_return(func_name) != "None": code = f"\nPUSHI 0"
+        
+        i = 0
+        for x in arguments:
+            tipo, code = x[1], x[2]
+            if tipo != expected_argument_types[i]:
+                print(f"A função {func_name} esperava tipo [{expected_argument_types[i]}], recebeu [{tipo}]")
+
+            code += f"\n{code}"
+            
+        p[0] = p[0] + '\n'.join([
+            f"PUSHA {func_name}",
+            "CALL",
+        ])
+
+        p[0] = code
 
 
 def p_ArgumentosGetter(p):
@@ -238,21 +332,21 @@ def p_ArgumentosGetter(p):
     '''
 
     if len(p) == 4:
-        p[0] = f"({p[2]})"  # Podes adaptar isto conforme necessário
+        p[0] = p[2]  # Podes adaptar isto conforme necessário
     else:
-        p[0] = "()"
-    p[0] = '()' 
+        p[0] = []
 
 def p_ListaArgumentos(p):
     '''
-    ListaArgumentos : Expressao
-                    | ListaArgumentos ',' Expressao
+    ListaArgumentos : ListaArgumentos ',' Expressao
+                    | Expressao
     '''
 
     if len(p) == 2:
-        p[0] = p[1]
+        p[0] = [p[1]]
 
     else:
-        p[0] = f"{p[1]},{p[3]}"
-        
+        p[1].append(p[3])
+        p[0] = p[1]
+
     # Implementar conforme necessário

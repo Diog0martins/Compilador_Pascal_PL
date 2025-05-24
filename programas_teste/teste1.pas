@@ -1,4 +1,4 @@
 program HelloWorld;
 begin
-    writeln('Ola, Mundo!' + 'test');
+    writeln('Ola, Mundo!');
 end.
