@@ -50,9 +50,9 @@ def p_variaveis(p):
               | ID
     '''
     if len(p) == 4:
-        p[0] = f"{p[1]},{p[3]}"
+        p[0] = p[1] + [p[3]]
     else:
-        p[0] = p[1] 
+        p[0] = [p[1]]
 
 
 def p_tipo(p):

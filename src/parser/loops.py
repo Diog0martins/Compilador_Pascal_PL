@@ -60,33 +60,37 @@ def p_ciclo_for(p):
 
     behavior = p[6]
 
+    pattern = re.compile(r'(PUSH[IFL] \d+)\n(STOREG \d+)')
+
+    setup_variable= pattern.sub(r'\t\1\n\t\2',setup_variable)
+
     p[0] = '\n'.join([
         # atribuicao do valor do iterador
         setup_variable,
         # inicio do ciclo 
-        "START",
+        # "START",
         # definicao do limite
-        set_limit,
+        '\t' + set_limit,
         # rotulo de inicio
         f'{start_label}:',
         # verificacao
-        "PUSHL 0",
-        f"PUSHG {increment_position}",
-        "EQUAL",
-        "NOT",
-        f"JZ {end_label}",
+        "\tPUSHL 0",
+        f"\tPUSHG {increment_position}",
+        "\tEQUAL",
+        "\tNOT",
+        f"\tJZ {end_label}",
         # corpo
-        behavior,
+        '\t' + behavior,
         # alterar iterador
-        f'PUSHG {increment_position}',
-        'PUSHI 1',
-        operation,
-        f'STOREG {increment_position}',
-        f'JUMP {start_label}',
+        f'\tPUSHG {increment_position}',
+        '\tPUSHI 1',
+        '\t'+operation,
+        f'\tSTOREG {increment_position}',
+        f'\tJUMP {start_label}',
         # rotulo de fim de ciclo
         f'{end_label}:',
         # retiro da variável de limite
-        'POP 1',
+        '\tPOP 1',
     ])
 
     # p[0] = f"{p[1]} {p[2]} {p[3]} {p[4]} {p[5]} {p[6]}"
@@ -99,8 +103,6 @@ def p_direcao_for(p):
     '''
     # print(f"Direção do FOR: {p[1]}")
     if p[1] == 'to':
-        print('TOTO AFRICA')
         p[0] = 'ADD'
     if p[1] == 'downto':
-        print('SINDROME DOWN')
         p[0] = 'SUB'

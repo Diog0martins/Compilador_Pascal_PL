@@ -1,9 +1,10 @@
 program CountUp;
 var
-  i: integer;
+  i, j: integer;
 begin
+  j := 56;
   for i := 1 to 5 do
   begin
-    i:=i;
+    j:=j + 1;
   end;
 end.
