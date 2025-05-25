@@ -1,5 +1,4 @@
 from symbol_table import generalSTable
-from symbol_table import SymbolTable
 
 # ====== Produções de Atribuições ======
 
@@ -8,6 +7,8 @@ def p_atribuicao(p):
     Atribuicao : Atribuido ':' '=' Expressao
     '''
     var_name = p[1]
+    print(p[4])
+    print("==========")
     if not generalSTable.has_variable(var_name):
         print(f"Erro: variável '{var_name}' não declarada.")
         p[0] = ""
@@ -17,13 +18,12 @@ def p_atribuicao(p):
     expr_val, expr_type, expr_code = p[4]
 
 
-    
     if expr_type != "integer" and expr_type != "real" and expr_type != expected_type:
         print(f"Erro: tipos incompatíveis: variável '{var_name}' é '{expected_type}', expressão é '{expr_type}'")
         p[0] = ""
         return
 
-    if expr_val is not None:
+    if expr_code == "":
         # Constant folding — no need for code execution
         if expr_type == "integer":
             expr_code = f"PUSHI {expr_val}"
@@ -89,7 +89,7 @@ def p_Expressao_complex(p):
     op_code = "ADD" if op == '+' else "SUB"
 
     # ===== Constant folding =====
-    if left_val is not None and right_val is not None:
+    if left_code == "" and right_code == "":
         result = left_val + right_val if op == '+' else left_val - right_val
         p[0] = (result, left_type, "")
     else:
@@ -127,7 +127,7 @@ def p_termo_complex(p):
     op_code = op_map[op]
 
     # ===== Constant folding =====
-    if left_val is not None and right_val is not None:
+    if left_code == "" and right_code == "":
         if op == "*":
             result = left_val * right_val
         elif op == "mod":
@@ -151,8 +151,6 @@ def p_termo_simple(p):
     p[0] = p[1]
 
 
-
-
 def p_fator_id(p):
     'Fator : ID'
     name = p[1]
@@ -162,6 +160,7 @@ def p_fator_id(p):
     else:
         var_type = generalSTable.get_type(name)
         pos = generalSTable.get_position(name)
+
         p[0] = (p[1], var_type, f"PUSHG {pos}")
 
 
@@ -237,8 +236,8 @@ def p_ChamadaFuncao(p):
 
 
     if func_name == "writeln" or func_name == "write":
-        generalSTable.add_function("write", "None", "string")
-        generalSTable.add_function("writeln", "None", "string")
+        #generalSTable.add_function("write", "None", "string")
+        #generalSTable.add_function("writeln", "None", "string")
 
         p[0] = ""
         print(p[1])
@@ -262,25 +261,42 @@ def p_ChamadaFuncao(p):
             else:
                 match(x[1]):
                     case "string":
-                        p[0] = p[0] + (f"\nPUSHS \"{x[0][1:-1]}\"")
+                        p[0] = p[0] + (f"PUSHS \"{x[0][1:-1]}\"")
                         p[0] = p[0] + (f"\nWRITES")
                     case "integer":
-                        p[0] = p[0] + (f"\nPUSHI {x[0]}")
+                        p[0] = p[0] + (f"PUSHI {x[0]}")
                         p[0] = p[0] + (f"\nWRITEI")
                     case "real":
-                        p[0] = p[0] + (f"\nPUSHR {x[0]}")
+                        p[0] = p[0] + (f"PUSHR {x[0]}")
                         p[0] = p[0] + (f"\nWRITER")
                     case "boolean":
                         if x[0] == "TRUE":
-                            p[0] = p[0] + (f"\nPUSHI 1")
+                            p[0] = p[0] + (f"PUSHI 1")
                             p[0] = p[0] + (f"\nWRITEI")
                         else:
-                            p[0] = p[0] + (f"\nPUSHI 0")
+                            p[0] = p[0] + (f"PUSHI 0")
                             p[0] = p[0] + (f"\nWRITEI")
 
 
-    elif func_name == "readln" or func_name == "read" :
-        generalSTable.add_function("readln", "None", "string")
+    elif func_name == "readln" or func_name == "read":
+        p[0] = ""
+        for arg in arguments:
+            var_name = arg[0]
+
+            var_type = generalSTable.get_type(var_name)
+            var_pos = generalSTable.get_position(var_name)
+
+            p[0] += f"READ"
+
+            match var_type:
+                case "integer":
+                    p[0] += f"\nATOI"
+                case "real":
+                    p[0] += f"\nATOF"
+
+
+            # Guardar valor na variável
+            p[0] += f"\nSTOREG {var_pos}"
 
 
     elif func_name == "length":
@@ -332,7 +348,7 @@ def p_ArgumentosGetter(p):
     '''
 
     if len(p) == 4:
-        p[0] = p[2]  # Podes adaptar isto conforme necessário
+        p[0] = p[2]
     else:
         p[0] = []
 

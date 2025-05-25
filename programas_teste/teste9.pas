@@ -1,23 +1,12 @@
-program WhileOnlyComplex;
+program Fatorial;
 var
-  a, b, c: integer;
-  flag: boolean;
+n, i, fat: integer;
 begin
-  a := 0;
-  b := 5;
-  c := 2;
-  flag := false;
-
-  while (a < b) and not flag do
-  begin
-    a := a + 1;
-
-    while (c < b) or flag do
-    begin
-      c := c + 1;
-      {flag := true;}
-    end;
-
-    flag := false;
-  end;
+  writeln('Introduza um número inteiro positivo:');
+  readln(n);
+  fat := 1;
+  for i := 1 to n do
+    fat := fat * i;
+    
+  writeln('Fatorial de ', n, ': ', fat);
 end.

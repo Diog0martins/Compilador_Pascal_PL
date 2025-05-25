@@ -42,7 +42,7 @@ def p_DeclaracaoCondicao(p):
             return
 
         # Constant folding
-        if left_val is not None and right_val is not None:
+        if left_code == "" and right_code == "":
             result = eval_condition(op_code, left_val, right_val)
             p[0] = f"PUSHI {1 if result else 0}"
         else:

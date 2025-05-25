@@ -39,7 +39,7 @@ def p_parte_else(p):
     if len(p) > 1:
         p[0] = f"{p[1]} {p[2]}"
         print("Reconhecido bloco ELSE")
-        p[0] = p[1]
+        p[0] = p[2]
     else:
         print("Não há bloco Else")
         p[0] = '\n'

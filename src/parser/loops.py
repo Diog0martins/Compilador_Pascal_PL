@@ -54,7 +54,23 @@ def p_ciclo_for(p):
 
     increment_position = re.findall(r'STOREG (\d+)',setup_variable)[0]
 
-    set_limit = f"PUSHI {p[4][0]}"
+    expr_val, expr_type, expr_code = p[4]
+    
+    if expr_code == "":
+        # Constant folding — no need for code execution
+        if expr_type == "integer":
+            expr_code = f"PUSHI {expr_val}"
+        elif expr_type == "string" or expr_type == "boolean" or expr_type == "real":
+            print(f"{expr_val} do tipo '{expr_type}' não é integer")
+            p[0] = ""
+            return
+        else:
+            print(f"Tipo desconhecido '{expr_type}'")
+            p[0] = ""
+            return
+    
+    
+    set_limit = expr_code
 
     operation = p[3]
 
@@ -63,6 +79,7 @@ def p_ciclo_for(p):
     pattern = re.compile(r'(PUSH[IFL] \d+)\n(STOREG \d+)')
 
     setup_variable= pattern.sub(r'\t\1\n\t\2',setup_variable)
+
 
     p[0] = '\n'.join([
         # atribuicao do valor do iterador
