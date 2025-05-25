@@ -26,14 +26,14 @@ def p_instrucao_condicional(p):
 
 def p_bloco_condicional(p):
     '''
-    BlocoCondicional : LocalInstsList
+    BlocoCondicional : Instrucao
     '''
     print("Reconhecido bloco do THEN")
     p[0] = p[1]
 
 def p_parte_else(p):
     '''
-    ParteElse : ELSE LocalInstsList
+    ParteElse : ELSE Instrucao
               | 
     '''
     if len(p) > 1:

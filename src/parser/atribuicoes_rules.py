@@ -7,10 +7,10 @@ def p_atribuicao(p):
     Atribuicao : Atribuido ':' '=' Expressao
     '''
     var_name = p[1]
-    print(p[4])
-    print("==========")
+    # print(p[4])
+    # print("==========")
     if not generalSTable.has_variable(var_name):
-        print(f"Erro: variável '{var_name}' não declarada.")
+        # print(f"Erro: variável '{var_name}' não declarada.")
         p[0] = ""
         return
 
@@ -19,7 +19,7 @@ def p_atribuicao(p):
 
 
     if expr_type != "integer" and expr_type != "real" and expr_type != expected_type:
-        print(f"Erro: tipos incompatíveis: variável '{var_name}' é '{expected_type}', expressão é '{expr_type}'")
+        # print(f"Erro: tipos incompatíveis: variável '{var_name}' é '{expected_type}', expressão é '{expr_type}'")
         p[0] = ""
         return
 
@@ -34,14 +34,14 @@ def p_atribuicao(p):
         elif expr_type == "boolean":
             expr_code = f"PUSHI {1 if expr_val else 0}"
         else:
-            print(f"Tipo desconhecido '{expr_type}'")
+            # print(f"Tipo desconhecido '{expr_type}'")
             p[0] = ""
             return
 
     pos = generalSTable.get_position(var_name)
     p[0] = expr_code + f"\nSTOREG {pos}"
 
-    print(f"Atribuição reconhecida: {var_name} := {p[4]}")
+    # print(f"Atribuição reconhecida: {var_name} := {p[4]}")
 
 
 
@@ -82,7 +82,7 @@ def p_Expressao_complex(p):
     op = p[2]
 
     if left_type != right_type:
-        print("Erro: tipos incompatíveis na expressão")
+        # print("Erro: tipos incompatíveis na expressão")
         p[0] = (None, "error", "")
         return
 
@@ -119,7 +119,7 @@ def p_termo_complex(p):
     op = p[2].lower()
 
     if left_type != right_type:
-        print("Erro: tipos incompatíveis no termo")
+        # print("Erro: tipos incompatíveis no termo")
         p[0] = (None, "error", "")
         return
 
@@ -155,7 +155,7 @@ def p_fator_id(p):
     'Fator : ID'
     name = p[1]
     if not generalSTable.has_variable(name):
-        print(f"Erro: variável '{name}' não declarada.")
+        # print(f"Erro: variável '{name}' não declarada.")
         p[0] = (p[1], "error", "")
     else:
         var_type = generalSTable.get_type(name)
@@ -218,7 +218,8 @@ def p_fator_func_call(p):
     '''
     Fator : ChamadaFuncao
     '''
-    p[0] = p[1]  
+    p[0] = p[1]
+    # print('É uma chamadinha de funcao')
 
 
 
@@ -228,7 +229,7 @@ def p_ChamadaFuncao(p):
     '''
     ChamadaFuncao : ID ArgumentosGetter
     '''
-    print(f"Chamada de função reconhecida: {p[1]}{p[2]}")
+    # print(f"Chamada de função reconhecida: {p[1]}{p[2]}")
 
 
     func_name = p[1].lower()
@@ -240,8 +241,8 @@ def p_ChamadaFuncao(p):
         #generalSTable.add_function("writeln", "None", "string")
 
         p[0] = ""
-        print(p[1])
-        print(p[2])
+        # print(p[1])
+        # print(p[2])
         for x in arguments:
             if x[2] != "":
                 p[0] = p[0] + x[2]
@@ -276,7 +277,7 @@ def p_ChamadaFuncao(p):
                         else:
                             p[0] = p[0] + (f"PUSHI 0")
                             p[0] = p[0] + (f"\nWRITEI")
-
+                p[0] = p[0] + "\nWRITELN"
 
     elif func_name == "readln" or func_name == "read":
         p[0] = ""
@@ -300,10 +301,10 @@ def p_ChamadaFuncao(p):
 
 
     elif func_name == "length":
-        print("\n\n")
+        # print("\n\n")
         
         generalSTable.add_function("length", "integer", "string")
-        #print(p[2][0])
+        print(p[2][0])
 
         code = f"\n{p[2][0][2]}" + "\nSTRLEN"
 
@@ -311,15 +312,15 @@ def p_ChamadaFuncao(p):
 
         p[0] = code
 
-        print(p[0])
+        # print(p[0])
 
         #if p[2][0][2] == "":
         #    p[0] = f"PUSHI 1"
 
     else:
 
-        if not generalSTable.has_variable(func_name):
-                print(f"A função [{func_name}] não existe")
+        # if not generalSTable.has_variable(func_name):
+                # print(f"A função [{func_name}] não existe")
 
         expected_argument_types = generalSTable.get_func_args(func_name)
 
@@ -328,8 +329,8 @@ def p_ChamadaFuncao(p):
         i = 0
         for x in arguments:
             tipo, code = x[1], x[2]
-            if tipo != expected_argument_types[i]:
-                print(f"A função {func_name} esperava tipo [{expected_argument_types[i]}], recebeu [{tipo}]")
+            # if tipo != expected_argument_types[i]:
+                # print(f"A função {func_name} esperava tipo [{expected_argument_types[i]}], recebeu [{tipo}]")
 
             code += f"\n{code}"
             

@@ -19,6 +19,7 @@ from .condicoes_rules import *
 def p_error(p):
     if p:
         print(f"Syntax error at token {p.type}, value {p.value}")
+        print(f'Line number : {p.lineno}')
     else:
         print("Syntax error at EOF")
 
