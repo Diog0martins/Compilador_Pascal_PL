@@ -38,91 +38,12 @@ def p_While(p):
 
 # ====== Produções do Ciclo FOR ======
 
-
-
-
-# def p_ciclo_for(p):
-#     '''
-#     CicloFor : FOR Atribuicao DirecaoFor Expressao DO LocalInstsList
-#     '''
-#     start_label = f'FORSTART{counter.get_for()}'
-#     end_label = f'FOREND{counter.get_for()}'
-#     print(start_label)
-#     counter.inc_for()
-#     setup_variable = p[2]
-#     print('#########################')
-#     print(setup_variable)
-#     print('#########################')
-
-
-#     increment_position = re.findall(r'STOREG (\d+)',setup_variable)[0]
-
-#     expr_val, expr_type, expr_code = p[4]
-    
-#     if expr_code == "":
-#         # Constant folding — no need for code execution
-#         if expr_type == "integer":
-#             expr_code = f"PUSHI {expr_val}"
-#         elif expr_type == "string" or expr_type == "boolean" or expr_type == "real":
-#             print(f"{expr_val} do tipo '{expr_type}' não é integer")
-#             p[0] = ""
-#             return
-#         else:
-#             print(f"Tipo desconhecido '{expr_type}'")
-#             p[0] = ""
-#             return
-    
-    
-#     set_limit = expr_code
-
-#     operation = p[3]
-
-#     behavior = p[6]
-
-#     pattern = re.compile(r'(PUSH[IFL] \d+)\n(STOREG \d+)')
-
-#     setup_variable= pattern.sub(r'\t\1\n\t\2',setup_variable)
-
-
-#     p[0] = '\n'.join([
-#         # atribuicao do valor do iterador
-#         setup_variable,
-#         # inicio do ciclo 
-#         # "START",
-#         # definicao do limite
-#         '\t' + set_limit,
-#         # rotulo de inicio
-#         f'{start_label}:',
-#         # verificacao
-#         "\tPUSHL 0",
-#         f"\tPUSHG {increment_position}",
-#         "\tEQUAL",
-#         "\tNOT",
-#         f"\tJZ {end_label}",
-#         # corpo
-#         '\t' + behavior,
-#         # alterar iterador
-#         f'\tPUSHG {increment_position}',
-#         '\tPUSHI 1',
-#         '\t'+operation,
-#         f'\tSTOREG {increment_position}',
-#         f'\tJUMP {start_label}',
-#         # rotulo de fim de ciclo
-#         f'{end_label}:',
-#         # retiro da variável de limite
-#         '\tPOP 1',
-#     ])
-
-#     # p[0] = f"{p[1]} {p[2]} {p[3]} {p[4]} {p[5]} {p[6]}"
-#     # print("Ciclo FOR reconhecido")
-
-
 def p_ciclo_for(p):
     '''
     CicloFor : FOR Atribuicao DirecaoFor Expressao DO Instrucao
     '''
 
-    print('================FORCICLEDEBUG===================')
+    # print('================FORCICLEDEBUG===================')
 
     # Obter o contador para o ciclo
     iter = counter.get_for()
@@ -139,10 +60,6 @@ def p_ciclo_for(p):
     increment_position = re.findall(r'STOREG (\d+)',setup_variable)[0]
 
     expr_val, expr_type, expr_code = p[4]
-
-    print(expr_val)
-    print(expr_type)
-    print(expr_code)
 
     if expr_code == "":
         # Constant folding — no need for code execution
@@ -165,6 +82,8 @@ def p_ciclo_for(p):
     # Obter a operação de incremento
     operation = p[3]
 
+    limit_offset = f'PUSHI 1\n{operation}'
+
     # Obter o corpo do ciclo
     behavior = p[6]
     
@@ -172,43 +91,10 @@ def p_ciclo_for(p):
 
     setup_variable= pattern.sub(r'\t\1\n\t\2',setup_variable)
 
-    # Atribuicao valor inicial do contador
-    print(setup_variable,)
 
-
-    # Colocar o limite no topo da stack
-    print('\t' + set_limit,)
-
-
-    # Inicio do ciclo
-    print(f'{start_label}:',)
-
-
-    # Condição do ciclo
-    print('\tPUSHL 0',)
-    print(f"\tPUSHG {increment_position}",)
-    print("\tEQUAL",)
-    print("\tNOT",)
-    print(f"\tJZ {end_label}",)
-
-
-    # Corpo do ciclo
-    print('\t' + behavior,)
-
-
-    # Passo de incremento/update do contador
-    print(f'\tPUSHG {increment_position}',)
-    print('\tPUSHI 1',)
-    print(f'\t{operation}',)
-    print(f'\tSTOREG {increment_position}')
-    print(f'JUMP {start_label}',)
-
-
-    # Fim do ciclo
-    # Necessário remover limite da stack
-    print(f'{end_label}:',)
-    print('\tPOP 1')
-
+    # Funcao join é utilizada para todos os comandos seresm acopolados
+    # a um \n i.e.
+    # e.g. pushi 1\ncomando\n
     p[0] = '\n'.join([
 
         # Atribuicao valor inicial do contador
@@ -219,8 +105,7 @@ def p_ciclo_for(p):
         '\t' + set_limit,
         
         # Necessário incrementar uma vez o limite dos ciclos
-        '\tPUSHI 1',
-        '\tADD',
+        limit_offset,
 
 
         # Inicio do ciclo
@@ -254,36 +139,6 @@ def p_ciclo_for(p):
 
     ])
     
-    print('================================================')
-
-    # p[0] = '\n'.join([
-    #     # atribuicao do valor do iterador
-    #     setup_variable,
-    #     # inicio do ciclo 
-    #     # "START",
-    #     # definicao do limite
-    #     '\t' + set_limit,
-    #     # rotulo de inicio
-    #     f'{start_label}:',
-    #     # verificacao
-    #     "\tPUSHL 0",
-    #     f"\tPUSHG {increment_position}",
-    #     "\tEQUAL",
-    #     "\tNOT",
-    #     f"\tJZ {end_label}",
-    #     # corpo
-    #     '\t' + behavior,
-    #     # alterar iterador
-    #     f'\tPUSHG {increment_position}',
-    #     '\tPUSHI 1',
-    #     '\t'+operation,
-    #     f'\tSTOREG {increment_position}',
-    #     f'\tJUMP {start_label}',
-    #     # rotulo de fim de ciclo
-    #     f'{end_label}:',
-    #     # retiro da variável de limite
-    #     '\tPOP 1',
-    # ])
 
 
 

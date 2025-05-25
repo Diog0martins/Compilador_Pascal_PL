@@ -1,10 +1,9 @@
 program CountUp;
 var
-  i, j: integer;
+  i: integer;
 begin
-  j := 0;
-  for i := 1 to 5 do
+  for i := 5 downto 1 do
   begin
-    j:= j + 1;
+    writeln('GG');
   end;
 end.
