@@ -1,4 +1,5 @@
 from symbol_table import generalSTable
+import re
 
 # ====== Produções de Atribuições ======
 
@@ -15,8 +16,23 @@ def p_atribuicao(p):
         return
 
     expected_type = generalSTable.get_type(var_name)
+    print(f'p[1] : {p[1]}')
+    print(f'p[2] : {p[2]}')
+    print(f'p[3] : {p[3]}')
+    print(f'p[4] : {p[4]}')
+    if type(p[4]) == str:
+        print('STRLEN FOUND')
+        print(p[4].lower().encode())
+        print(re.search('strlen',p[4].lower()).group())
+        if re.search('strlen',p[4].lower()).group():
+            print('entered the search condition')
+            expr_code = p[4]
+            pos = generalSTable.get_position(var_name)
+            p[0] = expr_code + f"\nSTOREG {pos}"
+            return
     expr_val, expr_type, expr_code = p[4]
-
+    print(f'expr_val : {expr_val}')
+    print(f'expr_type : {expr_type}')
 
     if expr_type != "integer" and expr_type != "real" and expr_type != expected_type:
         # print(f"Erro: tipos incompatíveis: variável '{var_name}' é '{expected_type}', expressão é '{expr_type}'")
@@ -169,7 +185,7 @@ def p_fator_integer(p):
     '''
     Fator : INTEGER
     '''
-    p[0] = (p[1], "integer", "")
+    p[0] = (p[1], "integer", "") # Value tipo Codigo
 
 
 def p_fator_real(p):
@@ -301,16 +317,15 @@ def p_ChamadaFuncao(p):
 
 
     elif func_name == "length":
-        # print("\n\n")
-        
-        generalSTable.add_function("length", "integer", "string")
-        print(p[2][0])
+        # generalSTable.add_function("length", "integer", "string")
 
-        code = f"\n{p[2][0][2]}" + "\nSTRLEN"
+        code = '\n' + p[2][0][2] + "\nSTRLEN"
 
         generalSTable.dump()
 
-        p[0] = code
+        x = "length(" + p[2][0][0] + ")"
+
+        p[0] = (x,'integer',code)
 
         # print(p[0])
 

@@ -32,6 +32,8 @@ def p_DeclaracaoCondicao(p):
                        | Fator
     '''
     if len(p) == 4:
+        print(type(p[1]))
+        print(f'p[1] : {p[1]}')
         left_val, left_type, left_code = p[1]
         right_val, right_type, right_code = p[3]
         op_code = p[2]
