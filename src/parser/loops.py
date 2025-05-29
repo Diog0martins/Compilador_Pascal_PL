@@ -43,8 +43,6 @@ def p_ciclo_for(p):
     CicloFor : FOR Atribuicao DirecaoFor Expressao DO Instrucao
     '''
 
-    # print('================FORCICLEDEBUG===================')
-
     # Obter o contador para o ciclo
     iter = counter.get_for()
     counter.inc_for()
@@ -89,7 +87,7 @@ def p_ciclo_for(p):
     
     pattern = re.compile(r'(PUSH[IFL] \d+)\n(STOREG \d+)')
 
-    setup_variable= pattern.sub(r'\t\1\n\t\2',setup_variable)
+    setup_variable= pattern.sub(r'\1\n\2',setup_variable)
 
 
     # Funcao join é utilizada para todos os comandos seresm acopolados
@@ -102,7 +100,7 @@ def p_ciclo_for(p):
 
 
         # Colocar o limite no topo da stack
-        '\t' + set_limit,
+        set_limit,
         
         # Necessário incrementar uma vez o limite dos ciclos
         limit_offset,
@@ -113,29 +111,29 @@ def p_ciclo_for(p):
 
 
         # Condição do ciclo
-        '\tPUSHL 0',
-        f"\tPUSHG {increment_position}",
-        "\tEQUAL",
-        "\tNOT",
-        f"\tJZ {end_label}",        
+        'PUSHL 0',
+        f"PUSHG {increment_position}",
+        "EQUAL",
+        "NOT",
+        f"JZ {end_label}",        
 
 
         # Corpo do ciclo
-        '\t' + behavior,
+        behavior,
 
 
         # Passo de incremento/update do contador
-        f'\tPUSHG {increment_position}',
-        '\tPUSHI 1',
-        f'\t{operation}',
-        f'\tSTOREG {increment_position}',
+        f'PUSHG {increment_position}',
+        'PUSHI 1',
+        f'{operation}',
+        f'STOREG {increment_position}',
         f'JUMP {start_label}',
 
 
         # Fim do ciclo
         # Necessário remover limite da stack
         f'{end_label}:',
-        '\tPOP 1'
+        'POP 1'
 
     ])
     

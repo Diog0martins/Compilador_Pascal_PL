@@ -7,57 +7,97 @@ def p_atribuicao(p):
     '''
     Atribuicao : Atribuido ':' '=' Expressao
     '''
-    var_name = p[1]
-    # print(p[4])
-    # print("==========")
-    if not generalSTable.has_variable(var_name):
-        # print(f"Erro: variável '{var_name}' não declarada.")
-        p[0] = ""
-        return
+    destino = p[1]
 
-    expected_type = generalSTable.get_type(var_name)
-    print(f'p[1] : {p[1]}')
-    print(f'p[2] : {p[2]}')
-    print(f'p[3] : {p[3]}')
-    print(f'p[4] : {p[4]}')
-    if type(p[4]) == str:
-        print('STRLEN FOUND')
-        print(p[4].lower().encode())
-        print(re.search('strlen',p[4].lower()).group())
-        if re.search('strlen',p[4].lower()).group():
-            print('entered the search condition')
+    # ===============================
+    # CASO: EXPRESSÃO DO TIPO strlen
+    # ===============================
+    if isinstance(p[4], str):
+        if re.search('strlen', p[4].lower()):
             expr_code = p[4]
-            pos = generalSTable.get_position(var_name)
-            p[0] = expr_code + f"\nSTOREG {pos}"
-            return
+            if isinstance(destino, str):  # variável simples
+                pos = generalSTable.get_position(destino)
+                p[0] = expr_code + f"\nSTOREG {pos}"
+                return
+            elif isinstance(destino, tuple) and destino[0] == "array":
+                _, _, _, index_code = destino
+                p[0] = index_code + "\n" + expr_code + "\nSTOREN"
+                return
+
+    # ===============================
+    # EXPRESSÃO NORMAL
+    # ===============================
     expr_val, expr_type, expr_code = p[4]
-    print(f'expr_val : {expr_val}')
-    print(f'expr_type : {expr_type}')
 
-    if expr_type != "integer" and expr_type != "real" and expr_type != expected_type:
-        # print(f"Erro: tipos incompatíveis: variável '{var_name}' é '{expected_type}', expressão é '{expr_type}'")
-        p[0] = ""
-        return
+    # --------------------------------
+    # CASO 1: VARIÁVEL SIMPLES
+    # --------------------------------
+    if isinstance(destino, str):
+        var_name = destino
 
-    if expr_code == "":
-        # Constant folding — no need for code execution
-        if expr_type == "integer":
-            expr_code = f"PUSHI {expr_val}"
-        elif expr_type == "real":
-            expr_code = f"PUSHF {expr_val}"
-        elif expr_type == "string":
-            expr_code = f'PUSHS "{expr_val}"'
-        elif expr_type == "boolean":
-            expr_code = f"PUSHI {1 if expr_val else 0}"
-        else:
-            # print(f"Tipo desconhecido '{expr_type}'")
+        if not generalSTable.has_variable(var_name):
+            print(f"Erro: variável '{var_name}' não declarada.")
             p[0] = ""
             return
 
-    pos = generalSTable.get_position(var_name)
-    p[0] = expr_code + f"\nSTOREG {pos}"
+        expected_type = generalSTable.get_type(var_name)
 
-    # print(f"Atribuição reconhecida: {var_name} := {p[4]}")
+        if expr_type != expected_type and expected_type not in ("integer", "real"):
+            print(f"Erro: tipos incompatíveis: variável '{var_name}' é '{expected_type}', expressão é '{expr_type}'")
+            p[0] = ""
+            return
+
+        if expr_code == "":
+            # Constant folding
+            if expr_type == "integer":
+                expr_code = f"PUSHI {expr_val}"
+            elif expr_type == "real":
+                expr_code = f"PUSHF {expr_val}"
+            elif expr_type == "string":
+                expr_code = f'PUSHS "{expr_val}"'
+            elif expr_type == "boolean":
+                expr_code = f"PUSHI {1 if expr_val else 0}"
+            else:
+                print(f"Tipo desconhecido '{expr_type}'")
+                p[0] = ""
+                return
+
+        pos = generalSTable.get_position(var_name)
+        p[0] = expr_code + f"\nSTOREG {pos}"
+        return
+
+    # --------------------------------
+    # CASO 2: ARRAY
+    # destino = ("array", base_type, array_name, index_code)
+    # --------------------------------
+    elif isinstance(destino, tuple) and destino[0] == "array":
+        _, base_type, array_name, index_code = destino
+
+        if expr_type != base_type:
+            print(f"Erro: tipo incompatível em atribuição ao array '{array_name}'")
+            p[0] = ""
+            return
+
+        if expr_code == "":
+            if expr_type == "integer":
+                expr_code = f"PUSHI {expr_val}"
+            elif expr_type == "real":
+                expr_code = f"PUSHF {expr_val}"
+            elif expr_type == "string":
+                expr_code = f'PUSHS "{expr_val}"'
+            elif expr_type == "boolean":
+                expr_code = f"PUSHI {1 if expr_val else 0}"
+            else:
+                print(f"Tipo desconhecido '{expr_type}'")
+                p[0] = ""
+                return
+
+        p[0] = index_code + "\n" + expr_code + "\nSTOREN"
+        return
+
+    else:
+        print("Erro: destino de atribuição inválido")
+        p[0] = ""
 
 
 
@@ -75,7 +115,40 @@ def p_acesso_array(p):
     '''
     Acesso_array : Variavel_array '[' Expressao ']'
     '''
-    p[0] = f"{p[1]}[{p[3]}]"
+    array_name = p[1]
+    index_val, index_type, index_code = p[3]
+
+    if not generalSTable.has_variable(array_name):
+        print(f"Erro: variável array '{array_name}' não declarada.")
+        p[0] = (None, "error", "")
+        return
+
+    if not generalSTable.is_array(array_name):
+        print(f"Erro: '{array_name}' não é um array.")
+        p[0] = (None, "error", "")
+        return
+    
+    access_code = ""
+
+    if index_code == "":
+            if index_type == "integer":
+                access_code = f"PUSHI {index_val}"
+            else:
+                print(f"Tipo desconhecido '{index_type}'")
+                p[0] = ""
+                return
+    else:
+        access_code = index_code
+
+
+    base_type = generalSTable.get_array_base_type(array_name)
+    lower_bound = generalSTable.get_array_lower_bound(array_name)
+    base_pos = generalSTable.get_position(array_name)
+
+    # Código para calcular o índice real na stack: (índice - lower_bound) + base_pos
+    access_code =  f"PUSHGP\nPUSHI {base_pos}\nPADD\n" + access_code + f"\nPUSHI {lower_bound}\nSUB"
+    # Isto representa a instrução para LOAD/STORE
+    p[0] = ("array", base_type, array_name, access_code)
 
 
 def p_variavel_array(p):
@@ -178,6 +251,7 @@ def p_fator_id(p):
         pos = generalSTable.get_position(name)
 
         p[0] = (p[1], var_type, f"PUSHG {pos}")
+        
 
 
 
@@ -227,7 +301,13 @@ def p_fator_array(p):
     '''
     Fator : Acesso_array
     '''
-    p[0] = p[1] 
+    destino = p[1]
+
+    if isinstance(destino, tuple) and destino[0] == "array":
+        _, base_type, array_name, index_code = destino
+        code = f"{index_code}\nLOADN"
+        p[0] = (array_name, base_type, code)
+
 
 
 def p_fator_func_call(p):
@@ -235,7 +315,6 @@ def p_fator_func_call(p):
     Fator : ChamadaFuncao
     '''
     p[0] = p[1]
-    # print('É uma chamadinha de funcao')
 
 
 
@@ -257,8 +336,6 @@ def p_ChamadaFuncao(p):
         #generalSTable.add_function("writeln", "None", "string")
 
         p[0] = ""
-        # print(p[1])
-        # print(p[2])
         for x in arguments:
             if x[2] != "":
                 p[0] = p[0] + x[2]
@@ -299,21 +376,32 @@ def p_ChamadaFuncao(p):
         p[0] = ""
         for arg in arguments:
             var_name = arg[0]
-
             var_type = generalSTable.get_type(var_name)
             var_pos = generalSTable.get_position(var_name)
 
+            # Instruções de leitura e conversão
             p[0] += f"READ"
-
-            match var_type:
+            match arg[1]:
                 case "integer":
                     p[0] += f"\nATOI"
                 case "real":
                     p[0] += f"\nATOF"
 
+            # Verifica se é array
+            if generalSTable.is_array(var_name):
+                print("Sou array")
+                array_name, base_type, index_code = arg
 
-            # Guardar valor na variável
-            p[0] += f"\nSTOREG {var_pos}"
+                # Remove o LOADN se estiver presente
+                lines = index_code.split("\n")
+                lines = [line for line in lines if "LOADN" not in line]
+                cleaned_index_code = "\n".join(lines)
+
+                # Gera o código final sem o LOADN
+                p[0] = cleaned_index_code + "\n" + p[0] + "\nSTOREN"
+            else:
+                # Variável simples
+                p[0] += f"\nSTOREG {var_pos}"
 
 
     elif func_name == "length":

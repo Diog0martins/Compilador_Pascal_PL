@@ -1,12 +1,15 @@
-program Fatorial;
+program TesteArrays;
+
 var
-n, i, fat: integer;
+  i, j, k: integer;
+  a: array[3..5] of integer;
+  temp: integer;
+
 begin
-  writeln('Introduza um número inteiro positivo:');
-  readln(n);
-  fat := 1;
-  for i := 1 to n do
-    fat := fat * i;
-    
-  writeln('Fatorial de ', n, ': ', fat);
+  i := 3;
+  j := 1;
+  k := 2;
+  a[4] := 10;
+  a[i] := 20;
+  temp := a[1];
 end.
