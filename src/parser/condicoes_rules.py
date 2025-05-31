@@ -23,6 +23,10 @@ def p_Condicao(p):
         p[0] = f"{inner}\nNOT"
     else:
         p[0] = p[1]
+    print("======================")
+    print(p[1])
+    print(p[0])
+    print("======================")
 
 
 
@@ -32,11 +36,7 @@ def p_DeclaracaoCondicao(p):
                        | Fator
     '''
     if len(p) == 4:
-        print(type(p[1]))
-        print(f'p[1] : {p[1]}')
 
-        print(type(p[3]))
-        print(f'p[3] : {p[3]}')
         left_val, left_type, left_code = p[1]
         right_val, right_type, right_code = p[3]
         op_code = p[2]
@@ -52,8 +52,36 @@ def p_DeclaracaoCondicao(p):
             p[0] = f"PUSHI {1 if result else 0}"
         else:
             # Emit PUSH for constants if no code
-            left_push = left_code if left_code else f"PUSHI {left_val}" if left_type == "integer" else f"PUSHF {left_val}"
-            right_push = right_code if right_code else f"PUSHI {right_val}" if right_type == "integer" else f"PUSHF {right_val}"
+            if left_code:
+                left_push = left_code
+            else:
+                if left_type == "integer":
+                    left_push = f"PUSHI {left_val}"
+                elif left_type == "real":
+                    left_push = f"PUSHF {left_val}"
+                elif left_type == "string":
+                    limpo = left_val.strip("'")
+                    left_push = f'PUSHS "{limpo}"\nCHRCODE'
+                else:
+                    print(f"Erro: tipo desconhecido '{left_type}' no lado esquerdo")
+                    p[0] = "; erro de tipo"
+                    return
+
+            if right_code:
+                right_push = right_code
+            else:
+                if right_type == "integer":
+                    right_push = f"PUSHI {right_val}"
+                elif right_type == "real":
+                    right_push = f"PUSHF {right_val}"
+                elif right_type == "string":
+                    limpo = right_val.strip("'")
+                    right_push = f'PUSHS "{limpo}"\nCHRCODE'
+                else:
+                    print(f"Erro: tipo desconhecido '{right_type}' no lado direito")
+                    p[0] = "; erro de tipo"
+                    return
+
             p[0] = f"{left_push}\n{right_push}\n{op_code}"
 
     else:

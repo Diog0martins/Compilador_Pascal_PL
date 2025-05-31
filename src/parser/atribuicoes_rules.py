@@ -117,38 +117,50 @@ def p_acesso_array(p):
     '''
     array_name = p[1]
     index_val, index_type, index_code = p[3]
-
+    print("=======================")
+    print(generalSTable.get_type(array_name))
     if not generalSTable.has_variable(array_name):
-        print(f"Erro: variável array '{array_name}' não declarada.")
+        print(f"Erro: variável '{array_name}' não declarada.")
         p[0] = (None, "error", "")
         return
 
-    if not generalSTable.is_array(array_name):
+    if generalSTable.is_array(array_name):
+    
+        access_code = ""
+
+        if index_code == "":
+                if index_type == "integer":
+                    access_code = f"PUSHI {index_val}"
+                else:
+                    print(f"Tipo desconhecido '{index_type}'")
+                    p[0] = ""
+                    return
+        else:
+            access_code = index_code
+
+
+        base_type = generalSTable.get_array_base_type(array_name)
+        lower_bound = generalSTable.get_array_lower_bound(array_name)
+        base_pos = generalSTable.get_position(array_name)
+
+        # Código para calcular o índice real na stack: (índice - lower_bound) + base_pos
+        access_code =  f"PUSHGP\nPUSHI {base_pos}\nPADD\n" + access_code + f"\nPUSHI {lower_bound}\nSUB"
+        # Isto representa a instrução para LOAD/STORE
+        p[0] = ("array", base_type, array_name, access_code)
+
+    elif generalSTable.get_type(array_name) == "string":
+        stack_pos = generalSTable.get_position(array_name)
+
+        # Código para calcular o índice real na stack: (índice - lower_bound) + base_pos
+        access_code =  f"PUSHG {stack_pos}" + index_code + "\nPUSHI 1\nSUB" + f"\nCHARAT"
+        # Isto representa a instrução para LOAD/STORE
+        p[0] = (array_name, generalSTable.get_type(array_name), access_code)
+
+    else:
         print(f"Erro: '{array_name}' não é um array.")
         p[0] = (None, "error", "")
         return
     
-    access_code = ""
-
-    if index_code == "":
-            if index_type == "integer":
-                access_code = f"PUSHI {index_val}"
-            else:
-                print(f"Tipo desconhecido '{index_type}'")
-                p[0] = ""
-                return
-    else:
-        access_code = index_code
-
-
-    base_type = generalSTable.get_array_base_type(array_name)
-    lower_bound = generalSTable.get_array_lower_bound(array_name)
-    base_pos = generalSTable.get_position(array_name)
-
-    # Código para calcular o índice real na stack: (índice - lower_bound) + base_pos
-    access_code =  f"PUSHGP\nPUSHI {base_pos}\nPADD\n" + access_code + f"\nPUSHI {lower_bound}\nSUB"
-    # Isto representa a instrução para LOAD/STORE
-    p[0] = ("array", base_type, array_name, access_code)
 
 
 def p_variavel_array(p):
@@ -195,6 +207,7 @@ def p_Expressao(p):
     '''
     p[0] = p[1]
 
+    
 
 
 def p_termo_complex(p):
@@ -250,7 +263,7 @@ def p_fator_id(p):
         var_type = generalSTable.get_type(name)
         pos = generalSTable.get_position(name)
 
-        p[0] = (p[1], var_type, f"PUSHG {pos}")
+        p[0] = (p[1], var_type, f"\nPUSHG {pos}")
         
 
 
@@ -302,11 +315,12 @@ def p_fator_array(p):
     Fator : Acesso_array
     '''
     destino = p[1]
-
     if isinstance(destino, tuple) and destino[0] == "array":
         _, base_type, array_name, index_code = destino
         code = f"{index_code}\nLOADN"
         p[0] = (array_name, base_type, code)
+    else: 
+        p[0] = p[1]
 
 
 
