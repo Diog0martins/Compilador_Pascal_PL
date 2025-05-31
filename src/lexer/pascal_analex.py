@@ -1,43 +1,57 @@
 from ply import lex
 import re
 
+
+literals = (
+    '%',
+    '>',
+    '<',
+    '+',
+    '-',
+    '*',
+    '/',
+    '=',
+
+    '[',
+    ']',
+    '.',
+    ',',
+    ':',
+    ';',
+    '(',
+    ')',
+    '^',
+    '@',
+    '{',
+    '}',
+    '$',
+    '#',
+    '\'',
+    '"',
+    '=',
+
+)
+
 tokens = (
     'ID',
     'INTEGER',
     'REAL',
-    'PLUS',#+
-    'MINUS',#-
-    'STAR',#*
-    'FORWARDDASH',#/
-    'EQUAL',#=
-    'LESSOREQUAL',#<=
-    'LESSTHAN',#<
-    'GREATEROREQUAL',#>=
-    'GREATERTHAN',#>
-    'OPENBRACKET',#[ 
-    'CLOSEBRACKET',#]
-    'DOT',#.
-    'COMMA',#,
-    'COLON',#:
-    'SEMICOLON',#;
-    'OPENPARENTHESIS',#(
-    'CLOSEPARENTHESIS',#)
-    'POWERTO',#^
-    'AT',#@
-    'OPENCURLBRACKET',#{
-    'CLOSECURLBRACKET',#}
-    'DOLLAR',#$
-    'CARDINAL',##
-    'SINGLEQUOTATION',#'
-    'DOUBLEQUOTATION',#"
+    #'LESSOREQUAL',#<=
+    #'GREATEROREQUAL',#>=
     'DIFFERENT',
     'STRING',
     'ONELINECOMMENTS',
     'MULTILINECOMMENTS',
-    'ASSIGN',
+    #'ASSIGN',
     'KEYWORD',
-    'BOOLEAN',
-    'DATATYPE',
+    'BOOLEAN_TYPE',
+    # 'DATATYPE',
+    'INTEGER_TYPE',
+    'REAL_TYPE',
+    'CHAR_TYPE',
+    'STRING_TYPE',
+    'TRUE',
+    'FALSE',
     'AND',
     'ARRAY',
     'BEGIN',
@@ -70,8 +84,8 @@ tokens = (
     'TO',
     'TYPE',
     'UNTIL',
-    'USES',
     'VAR',
+    'USES',
     'WHILE',
     'WITH',
 )
@@ -84,13 +98,44 @@ def t_STRING(t):
     r'(?P<quote>[\'\"])[^\'\"]*?(?P=quote)'
     return t
 
-def t_DATATYPE(t):
-    r'\b(integer|real|boolean|char|string)\b'
+# def t_DATATYPE(t):
+#     r'\b(integer|real|boolean|char|string)\b'
+#     return t
+
+def t_INTEGER_TYPE(t):
+    r'\binteger\b'
     return t
 
-def t_BOOLEAN(t):
-    r'\b(true|false)\b'
+def t_REAL_TYPE(t):
+    r'\breal\b'
     return t
+
+def t_BOOLEAN_TYPE(t):
+    r'\bboolean\b'
+    return t
+
+def t_CHAR_TYPE(t):
+    r'\bchar\b'
+    return t
+
+def t_STRING_TYPE(t):
+    r'\bstring\b'
+    return t
+
+# def t_BOOLEAN(t):
+#     r'\b(true|false)\b'
+#     return t
+
+def t_TRUE(t):
+    r'\btrue\b'
+    return t
+
+def t_FALSE(t):
+    r'\bfalse\b'
+    return t
+
+
+
 
 # def t_KEYWORD(t):
 #     r'\b(and|array|begin|case|const|div|do|downto|else|end|file|for|function|goto|if|in|label|mod|nil|not|of|or|packed|procedure|program|record|repeat|set|then|to|type|until|var|while|with)\b'
@@ -226,13 +271,15 @@ def t_UNTIL(t):
     r'\buntil\b'
     return t
 
+def t_VAR(t):
+    r'\bvar\b'
+    return t
+
+
 def t_USES(t):
     r'\buses\b'
     return t
 
-def t_VAR(t):
-    r'\bvar\b'
-    return t
 
 def t_WHILE(t):
     r'\bwhile\b'
@@ -241,59 +288,50 @@ def t_WHILE(t):
 
 def t_ONELINECOMMENTS(t):   
     r'(\{[^\}]+?\})|\/\/.*'
-    return t
+    pass
     
 def t_MULTILINECOMMENTS(t):
     r'\(\*[^(\*\))]*?\*\)'
-    return t
+    pass
 
 def t_ID(t):
     r'\b[A-Za-z](?:\w+?)?\b'
     return t
 
-def t_LESSOREQUAL(t):
+""" def t_LESSOREQUAL(t):
     r'\<\='
     return t
-
-def t_LESSTHAN(t):
-    r'\<'
-    return t
-
-def t_GREATEROREQUAL(t):
+ """
+""" def t_GREATEROREQUAL(t):
     r'\>\='
     return t
+ """
 
-def t_GREATERTHAN(t):
-    r'\>'
-    return t
-
-
-t_ASSIGN = r'\:\='
+#t_ASSIGN = r'\:\='
 t_INTEGER =r'\b\d+\b'
 t_REAL =r'\b\d+\.\d+([eE][+-]?\d+)?\b'
-t_PLUS =r'\+'
-t_MINUS =r'\-'
-t_STAR =r'\*'
-t_FORWARDDASH =r'\/'
-t_EQUAL =r'\='
+# t_PLUS =r'\+'
+# t_MINUS =r'\-'
+# t_STAR =r'\*'
+# t_FORWARDDASH =r'\/'
+# t_EQUAL =r'\='
 
-t_OPENBRACKET =r'\['
-t_CLOSEBRACKET =r'\]'
-t_DOT =r'\.'
-t_COMMA =r'\,'
-t_COLON =r'\:'
-t_SEMICOLON =r'\;'
-t_OPENPARENTHESIS =r'\('
-t_CLOSEPARENTHESIS =r'\)'
-t_POWERTO =r'\^'
-t_AT =r'\@'
-t_OPENCURLBRACKET =r'\{'
-t_CLOSECURLBRACKET =r'\}'
-t_DOLLAR =r'\$'
-t_CARDINAL =r'\#'
-t_SINGLEQUOTATION =r'\''
-t_DOUBLEQUOTATION =r'\"'
-
+# t_OPENBRACKET =r'\['
+# t_CLOSEBRACKET =r'\]'
+# t_DOT =r'\.'
+# t_COMMA =r'\,'
+# t_COLON =r'\:'
+# t_SEMICOLON =r'\;'
+# t_OPENPARENTHESIS =r'\('
+# t_CLOSEPARENTHESIS =r'\)'
+# t_POWERTO =r'\^'
+# t_AT =r'\@'
+# t_OPENCURLBRACKET =r'\{'
+# t_CLOSECURLBRACKET =r'\}'
+# t_DOLLAR =r'\$'
+# t_CARDINAL =r'\#'
+# t_SINGLEQUOTATION =r'\''
+# t_DOUBLEQUOTATION =r'\"'
 
 
 t_ignore = '\t\n '
@@ -304,3 +342,27 @@ def t_error(t):
     return "error found"
 
 lexer = lex.lex(reflags=re.IGNORECASE)
+
+
+# if __name__ == '__main__':
+#     data = """
+#     program homem;
+
+#     var
+#         num: integer;
+
+#     begin
+#         num := 5; 
+#         while num < 5 do 
+#         begin
+#             num := num + 1;
+#             writeln('slb'); 
+#         end; 
+#     end.
+#     """
+#     lexer.input(data)
+#     while True:
+#         tok = lexer.token()
+#         if not tok:
+#             break
+#         print(tok)

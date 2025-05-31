@@ -1,5 +1,5 @@
 import ply.yacc as yacc
-from lexer.pascal_analex2 import tokens 
+from lexer.pascal_analex import tokens 
 
 
 # ====== Gramática ======
