@@ -1,56 +1,76 @@
-from symbol_table import SymbolTable,generalSTable
+from symbol_table import generalSTable
+from symbol_table import SymbolTable
 
 # ====== Produções de Função e Procedimento ======
 
 def p_funcao(p):
     '''
     Dfuncao : FUNCTION ID ArgumentosSetter ':' Tipo ';' GlobalInsts BEGIN LocalInstsList ID ':' '=' Expressao ';' END ';'
+            | FUNCTION ID ArgumentosSetter ':' Tipo ';' GlobalInsts BEGIN ID ':' '=' Expressao ';' END ';'
+
     '''
-    #function BinToInt(bin: string): integer;
+    global generalSTable
+    func_name_last = ""
+    return_exp = ""
 
-
-    print("Estouaqui!?\n\n")
-
-    if generalSTable.has_variable(p[2]): 
-        print("AW HELL NAW!")
-        return
+    if len(p) == 17:
+        return_exp = p[13]
+        func_name_last = p[10]
     
-    if p[2] != p[10]:
+    else:
+        return_exp = p[12]
+        func_name_last = p[9]
+    
+
+
+    if p[2] != func_name_last:
         print("AW HELL NAH")
         return
     
-
     print("\n\n\n\nHELP\n\n\n\n")
 
+    l = []
+    amount = 0
+    argumentos = []
 
+    # [(str,[a,b,c]),(int,[d,e,f])]
+    for x in p[3]:
+        for i in x[1]:
+            l.append(x[0])
+            argumentos.append(i)
+            amount += 1
 
+    generalSTable.add_function(p[2], p[5], l)
     local_table = SymbolTable()
     local_table.current_stack_position = generalSTable.current_stack_position
 
-    for x in generalSTable.symbol_table:
+    for name, x in generalSTable.symbol_table.items():
         if x["type"] == "Func":
-            local_table.add_function(x["name"], x["return_type"], x["argument_types"])
+            local_table.add_function(name, x["return"], x["arguments"])
+            print()
+            print()
+            print("CHEGUEI AQUI")
+            print()
 
-    func_name = p[1]
-    argumentos = p[3]
-    amount = len(p[3]) * (-1)
+    func_name = p[2]
     code = f"{func_name}:"
-
+    amount *= -1
 
     print(argumentos)
 
 
-
-    for x in argumentos:
-        code = code + f"\nPUSHFP\nLOAD {amount}"
-        print(amount)
-        amount = amount + 1
-        if generalSTable.has_variable(x[1]):
-            print("AW HELL NAW!")
-            return
-        
-        generalSTable.add_variable(x[1],x[2])
-        code = code + f'\nPUSHG {local_table.get_position(x[1])}',
+    # [(str,[a,b,c]),(int,[d,e,f])]
+    for x in p[3]:
+        for y in x[1]:
+            code = code + f"\nPUSHFP\nLOAD {amount}"
+            print(amount)
+            amount = amount + 1
+            if generalSTable.has_variable(y):
+                print("AW HELL NAW!")
+                return
+            
+            generalSTable.add_variable(y,x[0])
+            code = code + f'\nPUSHG {local_table.get_position(y)}',
     
     prev_table = generalSTable
     generalSTable = local_table
@@ -61,28 +81,33 @@ def p_funcao(p):
 
 
     print(p[5])
-    print(p[5])
-    print(p[5])
-    print(p[5])
 
     match(p[5]):
         case "string":
-            code = code + f"\n PUSHS {p[13]}"
+            code = code + f"\n PUSHS {return_exp}"
         case "boolean":
-            if p[13] == "TRUE":
+            if return_exp == "TRUE":
                 code = code + f"\n PUSHI {1}"
             else:
                 code = code + f"\n PUSHI {0}"
         case "integer":
-            code = code + f"\n PUSHI {p[13]}"
+            code = code + f"\n PUSHI {return_exp}"
         case "real":
-            code = code + f"\n PUSHR {p[13]}"
+            code = code + f"\n PUSHR {return_exp}"
 
     code = code + "\nRETURN\n"
 
     generalSTable = prev_table
 
     p[0] = code
+
+    print("AHHHHHHHHHHHHHHHHHHHHHHHHH!")
+    print("AHHHHHHHHHHHHHHHHHHHHHHHHH!")
+    print("AHHHHHHHHHHHHHHHHHHHHHHHHH!")
+    print("AHHHHHHHHHHHHHHHHHHHHHHHHH!")
+    print(p[0])
+
+    p[0] = ""
     
     #print(f"Função reconhecida: {p[2]} com tipo de retorno {p[5]}")
 
@@ -154,19 +179,12 @@ def p_argumentos_setter_buffer(p):
                            | 
     '''
     if len(p) == 4:
-        print("Mais um argumento declarado")
-        args = p[1]  # já é uma lista
-        l = tuple(p[3][0],p[3][1],len(p[1]))
-        args.append(l)
-        p[0] = args
+        t = (p[3][0],p[3][1:])
+        p[0] = p[1] + [t]
 
 
     elif len(p) == 2:
-        p[0] = [p[1]]
-        print("\n\n")
-        #print(p[1])
-        print("Argumento declarado x")
-        p[0] = [(p[1][0],p[1][1],0)]
+        p[0] = [(p[1][0],p[1][1:])]
 
     else:
         print("Nenhum argumento declarado")
@@ -174,7 +192,7 @@ def p_argumentos_setter_buffer(p):
 
 def p_argumento(p):
     '''
-    Argumento : ModificadorArgumento ID ':' Tipo
+    Argumento : OutrosArgumentos ID ':' Tipo
     '''
     
     if generalSTable.has_variable(p[2]): 
@@ -182,18 +200,25 @@ def p_argumento(p):
         return
     
     #print(f"Argumento: {p[2]} com tipo {p[4]} e modificador '{p[1]}'")
-    p[0] = [p[2]]
-    p[0].append(p[4])
+    l = p[1] + [p[2]]
 
-    generalSTable.add_variable(p[2],p[4])
+    for x in l:
+        generalSTable.add_variable(x,p[4])    
 
+    p[0] = p[4]
+
+
+    # [TIPO, ID1, ID2, ID3]
+    p[0] = [p[0]] + l
     
 
-def p_modificador_argumento(p):
+def p_outros_argumentos(p):
     '''
-    ModificadorArgumento : VAR
-                         | CONST
-                         | 
+    OutrosArgumentos : OutrosArgumentos ID ','
+                     | 
     '''
-    if len(p) == 2:
-        p[0] = p[1]
+    if len(p) == 4:
+        p[0] = p[1] + [p[2]]
+
+    else:
+        p[0] = []

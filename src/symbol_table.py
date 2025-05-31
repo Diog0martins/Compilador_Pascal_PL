@@ -56,6 +56,8 @@ class SymbolTable:
         }
         self.func_pointer = self.func_pointer + 1
 
+        print(self.symbol_table[name])
+
         return self.symbol_table[name]
 
     def get_variable(self, name):
@@ -63,7 +65,14 @@ class SymbolTable:
         return self.symbol_table.get(name)
     
     def get_func_args(self,func):
-        return self.symbol_table[func]["arguments"].split(',')
+        print()
+        print(func)
+        print()
+        print()
+        print(self.dump())
+        print()
+        print()
+        return self.symbol_table[func]["arguments"]
     
     def get_func_return(self,func):
         return self.symbol_table[func]["return"]

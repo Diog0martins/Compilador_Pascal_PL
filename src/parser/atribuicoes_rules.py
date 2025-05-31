@@ -327,11 +327,11 @@ def p_ChamadaFuncao(p):
     # print(f"Chamada de função reconhecida: {p[1]}{p[2]}")
 
 
-    func_name = p[1].lower()
+    func_name = p[1]
     arguments = p[2]
 
 
-    if func_name == "writeln" or func_name == "write":
+    if func_name.lower() == "writeln" or func_name.lower() == "write":
         #generalSTable.add_function("write", "None", "string")
         #generalSTable.add_function("writeln", "None", "string")
 
@@ -372,7 +372,7 @@ def p_ChamadaFuncao(p):
                             p[0] = p[0] + (f"\nWRITEI")
                 p[0] = p[0] + "\nWRITELN"
 
-    elif func_name == "readln" or func_name == "read":
+    elif func_name.lower() == "readln" or func_name.lower() == "read":
         p[0] = ""
         for arg in arguments:
             var_name = arg[0]
@@ -404,7 +404,7 @@ def p_ChamadaFuncao(p):
                 p[0] += f"\nSTOREG {var_pos}"
 
 
-    elif func_name == "length":
+    elif func_name.lower() == "length":
         # generalSTable.add_function("length", "integer", "string")
 
         code = '\n' + p[2][0][2] + "\nSTRLEN"
