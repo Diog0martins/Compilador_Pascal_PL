@@ -1,26 +1,27 @@
 # Compilador Pascal - Projeto PL
 
 ## Introdução
+
 Este projeto foi proposto com o intuito de desenvolver um **compilador** com uma arquitetura de **pipeline de compilação modular**, capaz de processar **código em Pascal (standard)**. Após todas as fases de análise que este efetuará, este deverá **gerar um output** com toda a informação processada, **numa linguagem semelhante a Assembly** (que posteriormente, terá de conseguir ser executado na máquina virtual disponibilizada pelos docentes)
 
-Como ferramentas, utilizamos maioritariamente a API da biblioteca **Python PLY** (Python Lex-Yacc) e **regex** para implementar o **Analisador léxico** e **sintático**. 
+Como ferramentas, utilizamos maioritariamente a API da biblioteca **Python PLY** (Python Lex-Yacc) e **regex** para implementar o **Analisador léxico** e **sintático**.
 
- - **Analisador léxico**
+- **Analisador léxico**
  Efetua a análisa e reconhecimento de tokens com auxílio de expressões regulares.
- 
- - **Analisador sintático**
+
+- **Analisador sintático**
  Após ser definida uma gramática, permite a implementação desta e a definição das regras de linguagem, que permitam o melhor funcionamento do processamento do input. Para isto, foi empregado o módulo **YACC**
 
 Para além disto, decidimos criar uma "**tabela de símbolos**" que permite a **análise semântica** de qualquer operação esperada em Pascal (standard). Esta tabela contém informação sobre *variáveis* e *funções* definidas no código recebido, tais como:
- - O **ID** (nome atribuído) de funções e variáveis;
- - O **scope** que cada variável tem (se se trata de uma **variável global** ou **local** a uma dada função);
- - O **tipo** de uma variável;
- - A **posição** à qual uma variável se encontra na **stack** (ou relativa ao **frame pointer**, caso se trate de um **argumento de uma função**);
- - O **tipo do valor a ser devolvido** por uma função: 
-   - e.g. (<u>funtion Add2Numbers(a, b: Integer): **Integer**</u>);
- - O **tipo de cada argumento** de uma função;
- - E uma **expressão** associada ao valor a ser retornado por uma dada função.
 
+- O **ID** (nome atribuído) de funções e variáveis;
+- O **scope** que cada variável tem (se se trata de uma **variável global** ou **local** a uma dada função);
+- O **tipo** de uma variável;
+- A **posição** à qual uma variável se encontra na **stack** (ou relativa ao **frame pointer**, caso se trate de um **argumento de uma função**);
+- O **tipo do valor a ser devolvido** por uma função: 
+  - e.g. (<u>funtion Add2Numbers(a, b: Integer): **Integer**</u>);
+- O **tipo de cada argumento** de uma função;
+- E uma **expressão** associada ao valor a ser retornado por uma dada função.
 
 Assim, através das análises **léxica**, **sintática** e **semântica**, o compilador irá efetuar uma **tradução determinística baseada em gramáticas e semântica formal**,  processando o código de input em Pascal (standard) e gerando código numa linguagem de baixo nível (anteriormente mencionada), que será utilizada na  máquina virtual disponibilizada.
 
@@ -104,6 +105,192 @@ Em relação a análise semântica, esta é realizada parcialmente através de u
 
 ## Geração de código
 
+A componente de geração de código tem por base a utilização das produções, e
+recorre à linguagem utilizada na [VM](https://ewvm.epl.di.uminho.pt/).
+
+Seguindo uma filosofia de programação em stack e, utilizando pointers para posições das stacks, foi nos permitido os seguintes tipos de geração de código.
+
+### Atribuições
+
+A geração de código para atribuições envolve colocar um valor na stack, para que ele possa ser posteriormente armazenado ou utilizado conforme necessário.
+
+```code
+PUSHS "Ola, Mundo!"
+WRITES
+PUSHI 3
+STOREG 0
+```
+
+No exemplo, é feito um PUSH de uma string para a stack, para posteriormente ser
+escrita no output da máquina, escrita essa cuja instrução varia de acordo com o
+tipo do elemento que pretendemos utilizar.
+
+Retirando as partes das nossas produções, o código é gerado com base na estrutura
+definida em generalSTable, que em conformidade com os tipos de variáveis guardadas.
+
+### Condicionais
+
+As instruções que traduzem código referente à execução de código segundo uma
+condição necessitam de usufruir de labels para a execução de saltos do PC para
+a execução dessas mesmas instruções
+
+```code
+PUSHG 0
+START
+PUSHI 15
+STOREG 0
+
+PUSHI 10
+PUSHG 0
+SUP
+JZ ENDIF1
+
+PUSHI 99
+STOREG 0
+
+ENDIF1:
+STOP
+
+```
+
+Neste exemplo, é criada uma variável global, que designamos x.
+
+É colocado o valor 15 na posição referente a x, ou seja, x = 15.
+De seguida, é comparado x com 10, sendo que caso seja superior, x passa a ter o
+valor 99.
+
+As partes do código utilizadas são geradas por produções mais atómicas, o que
+leva a que a construção desta estrutura condicional seja construída quase de imediato.
+
+### Variáveis globais
+
+As instruções para declarar as variáveis assentam na prática de introduzir valores
+para a stack, andes do programa começar.
+
+Isto permite que o global pointer tenha acesso direto às variáveis de forma
+direta.
+
+```code
+PUSHG 0
+START
+```
+
+---
+
+### While
+
+As estruturas de repetição **while** baseiam-se na verificação de uma condição antes da execução de um bloco de código. São utilizadas instruções de salto (labels) para criar o loop e garantir que a verificação da condição ocorre a cada iteração.
+
+```code
+START
+PUSHI 0
+STOREG 0        ; i = 0
+
+WHILE_START:
+PUSHI 5
+PUSHG 0
+INF             ; i < 5
+JZ WHILE_END
+
+PUSHG 0
+WRITEI
+WRITELN
+
+PUSHG 0
+PUSHI 1
+ADD
+STOREG 0
+
+JUMP WHILE_START
+WHILE_END:
+STOP
+```
+
+Neste exemplo, enquanto `i < 5`, imprime-se o valor de `i`, seguido de uma nova linha. A cada iteração, `i` é incrementado.
+
+---
+
+### For
+
+Estruturas `for` podem ser vistas como uma construção compacta de um `while`, envolvendo inicialização, condição e incremento num único bloco.
+
+```code
+START
+PUSHI 0
+STOREG 0        ; i = 0
+
+FOR_START:
+PUSHI 5
+PUSHG 0
+INF             ; i < 5
+JZ FOR_END
+
+PUSHG 0
+WRITEI
+WRITELN
+
+PUSHG 0
+PUSHI 1
+ADD
+STOREG 0
+
+JUMP FOR_START
+FOR_END:
+STOP
+```
+
+Apesar de ser semanticamente um `for`, a estrutura de código gerado é idêntica ao `while`, mudando apenas a forma de organização.
+
+---
+
+### Funções
+
+A definição e chamada de funções envolvem operações com `CALL` e `RETURN`. A função pode ser invocada a partir de qualquer ponto do código, e o controlo é devolvido após o `RETURN`.
+
+```code
+START
+PUSHA func
+CALL
+STOP
+
+func:
+PUSHI 42
+WRITEI
+WRITELN
+RETURN
+```
+
+Neste exemplo, a função `func` imprime o número `42`. O endereço da função é empilhado com `PUSHA`, seguido de um `CALL`. A função é concluída com `RETURN`.
+
+---
+
+### Arrays
+
+Arrays são alocados dinamicamente com a instrução `ALLOC` ou `ALLOCN`, sendo o seu acesso feito através de índices, com as instruções `LOAD` e `STORE`.
+
+```code
+START
+PUSHI 5
+ALLOC          ; aloca um array com 5 inteiros
+STOREG 0       ; guarda o endereço do array em gp[0]
+
+PUSHI 10
+PUSHI 2
+PUSHG 0
+STORE          ; armazena o valor 10 na posição 2 do array
+
+PUSHI 2
+PUSHG 0
+LOAD
+STOREG 1       ; armazena o valor lido em gp[1]
+
+STOP
+```
+
+Neste exemplo, um array de 5 posições é criado e armazenado na variável global `gp[0]`. A posição 2 do array é modificada e posteriormente lida.
+
+---
+
 ## Teste
 
 ## Melhorias
@@ -127,6 +314,5 @@ Processamento de Linguagens de uma forma prática e interessante. O projeto
 transmitiu-nos a ideia do processo efetuado por um compilador como gcc, ao
 compilar código para uma representação intermédia em assembly.
 
-Gostaríamos de ter implementado mais funcionalidades, como a possibilidade de definir sub-programas na linguagem de programação, apesar de procedures não terem sido implementadas. Porém, fizemos tudo o que foi pedido no enunciado, por isso estamos bastante satisfeitos com o nosso projeto final.
-
-Temos ainda no Anexo A alguns exemplos de execução do nosso projeto para alguns programas-fonte escritos na nossa linguagem de programação.
+Com a  possibilidade de utilização de funcionalidades básicas, ficamos
+satisfeitos com a aprendizagem.
