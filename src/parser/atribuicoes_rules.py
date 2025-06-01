@@ -470,35 +470,33 @@ def p_ChamadaFuncao(p):
         print(arguments)
         if generalSTable.get_func_return(func_name) != "None": code = f"\nPUSHI 0"
         
-        i = 0
+        buffer = ""
         for x in arguments:
             val, type, code = x
             #if tipo != expected_argument_types[i]:
                 # print(f"A função {func_name} esperava tipo [{expected_argument_types[i]}], recebeu [{tipo}]")
             if code == "":
                 if type == "integer":
-                    code += f"PUSHI {val}"
+                    buffer += f"PUSHI {val}\n"
                 elif type == "real":
-                    code += f"PUSHF {val}"
+                    buffer += f"PUSHF {val}\n"
                 elif type == "string":
-                    code += f'PUSHS "{val}"'
+                    buffer += f'PUSHS {val}\n'
                 elif type == "boolean":
-                    code += f"PUSHI {1 if val else 0}"
+                    buffer += f"PUSHI {1 if val else 0}\n"
                 else:
                     print(f"Tipo desconhecido '{type}'")
                     p[0] = ""
                     return
             else:
-                code += f"\n{code}"
-
-        code
+                buffer += f"\n{code}\n"
          
-        code = code + '\n'.join([
-            f"\nPUSHA {func_name}",
+        buffer = buffer + '\n'.join([
+            f"PUSHA {func_name}",
             "CALL",
         ])
 
-        p[0] = (func_name, generalSTable.get_func_return(func_name), code)
+        p[0] = (func_name, generalSTable.get_func_return(func_name), buffer)
 
         
 
@@ -524,7 +522,6 @@ def p_ListaArgumentos(p):
         p[0] = [p[1]]
 
     else:
-        p[1].append(p[3])
-        p[0] = p[1]
+        p[0] = p[1] + [p[3]]
 
     # Implementar conforme necessário

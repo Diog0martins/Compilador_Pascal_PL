@@ -148,8 +148,7 @@ def p_argumentos_getter_init(p):
     '''
     if len(p) == 3:
         print("Mais um argumento passado na chamada")
-        p[1].append(p[2])
-        p[0] = p[1]
+        p[0] = p[1] + [p[2]]
     elif len(p) == 1:
         p[0] = []
     else:

@@ -9,5 +9,6 @@ var
   resultado, num: Integer;
 
 begin
-  resultado := SomaDois(2,3,5);
+  num := 5;
+  resultado := SomaDois(2,3,num);
 end.
