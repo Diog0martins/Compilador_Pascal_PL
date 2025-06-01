@@ -1,8 +1,0 @@
-if_then_else -> IF condition then if_then_else_start the_else_part
-
-if_then_else_start -> BEGIN list_instrucoes_locais END SEMICOLON
-                    | list_instrucoes_locais
-
-the_else_part -> ELSE BEGIN list_instrucoes_locais END SEMICOLON
-               | ELSE list_instrucoes_locais
-               |

@@ -1,5 +1,0 @@
-S -> PROGRAM id SEMICOLON Uses_Temporary Declaracoes_Globais BEGIN Lista_de_Instrucoes END SEMICOLON
-
-Uses_Temporary ->  USES PPP ID SEMICOLON
-PPP -> PPP COMMA ID 
-     |

@@ -22,18 +22,8 @@ class SymbolTable:
         self._ensure_state_exists(state)
 
 
-        # f(a, b, c: int)
-        # load -3
-        # load -2
-        # load -1
-
 
     def add_variable(self, name, var_type,getter=None):
-        print("PILAAAAAAAAAAAAAAAAA")
-        print(name)
-        print(var_type)
-        print(getter)
-        print("PILAAAAAAAAAAAAAAAAA")
 
         state = self.current_state
         if name in self.symbol_table[state]:
@@ -80,10 +70,6 @@ class SymbolTable:
         global_scope = "global"
         if name in self.symbol_table[global_scope]:
             raise ValueError(f"Function '{name}' already declared.")
-        
-        print("########################")
-        print(argument_types)
-        print("########################")
 
         self.symbol_table[global_scope][name] = {
             "type": "Func",
@@ -153,7 +139,6 @@ class SymbolTable:
     
 
     def has_variable(self, name):
-        self.dump()
         for state in self.symbol_table:
             if name in self.symbol_table[state] or name in self.symbol_table["global"]:
                 return True
@@ -169,7 +154,7 @@ class SymbolTable:
         self._ensure_state_exists("global")
 
     def dump(self):
-        print(f"=== Symbol Table (Current State: {self.current_state}) ===")
+        print(f"=== Symbol Table ===")
         for state, entries in self.symbol_table.items():
             print(f"[State: {state}]")
             for name, info in entries.items():

@@ -42,7 +42,6 @@ def p_globalinst_var(p):
     GlobalInst : Dvariaveis
     '''
 
-    print(p[1])
     p[0] = [("vars",p[1])]
     print("Acabei de ler uma instrução global")
 

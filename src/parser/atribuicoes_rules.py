@@ -8,10 +8,6 @@ def p_atribuicao(p):
     Atribuicao : Atribuido ':' '=' Expressao
     '''
     destino = p[1]
-    print("==================A==================")
-    print(p[1])
-    print(p[4])
-    print("==================A==================")
 
     # ===============================
     # CASO: EXPRESSÃO DO TIPO strlen
@@ -298,8 +294,7 @@ def p_fator_id(p):
     'Fator : ID'
     name = p[1]
     if not generalSTable.has_variable(name):
-        # print(f"Erro: variável '{name}' não declarada.")
-        print("PILONA")
+
         p[0] = (p[1], "error", "")
     else:
         var_type = generalSTable.get_type(name)
@@ -481,20 +476,12 @@ def p_ChamadaFuncao(p):
 
         code = '\n' + p[2][0][2] + "\nSTRLEN"
 
-        generalSTable.dump()
-
         x = "length(" + p[2][0][0] + ")"
 
         p[0] = (x,'integer',code)
 
     else:
 
-        # if not generalSTable.has_variable(func_name):
-                # print(f"A função [{func_name}] não existe")
-
-        #expected_argument_types = generalSTable.get_func_args(func_name)
-        print(func_name)
-        print(arguments)
         if generalSTable.get_func_return(func_name) != "None": code = f"\nPUSHI 0"
         
         buffer = ""

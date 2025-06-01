@@ -21,8 +21,7 @@ def p_While(p):
 
     condition_code = p[2] 
     body_code = p[4]
-    print("SENAITA\n\n\n" + body_code + "\n\n\n")
-    
+
     p[0] = "\n".join([
         f"{start_label}:",
         condition_code,

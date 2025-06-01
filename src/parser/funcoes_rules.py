@@ -9,9 +9,7 @@ def p_funcao(p):
     '''
     Dfuncao : FuncDec BufferVar BEGIN LocalInstsList END ';'
     '''
-    print("==============FUNÇÃO==============")
-    print(p[2])
-    print("==============FUNÇÃO==============")
+
     global generalSTable
     func_name = p[1]
 
@@ -19,14 +17,13 @@ def p_funcao(p):
     global_insts = p[2]
 
     
-    code = f"\n\n{func_name}:"
+    code = f"\n{func_name}:"
     code += global_insts + "\n"
     code += local_insts
     
     ret_val = generalSTable.get_func_return_code(func_name)
 
     if ret_val == "":
-        print("NO RETURN DUMBASS")
         return
 
     code += ret_val
@@ -36,18 +33,7 @@ def p_funcao(p):
     generalSTable.set_state("global")
     
     p[0] = code
-
-
-
-    print("Cheguei longe")
-    print("Cheguei longe")
-    print("Cheguei longe")
-    print("Cheguei longe")
-    print("Cheguei longe")
-    generalSTable.dump()
-
     
-    #print(f"Função reconhecida: {p[2]} com tipo de retorno {p[5]}")
 
 def p_funky_town(p):
     '''
@@ -57,14 +43,6 @@ def p_funky_town(p):
 
     if len(p) == 3:
 
-        print()
-        print()
-        print(p[1])
-        print(p[2])
-        print()
-        print()
-        print()
-        print()
         p[0] = p[1] + p[2]
     else:
         p[0] = "\n"
@@ -170,9 +148,6 @@ def p_argumentos_setter(p):
     '''
     ArgumentosSetter : '(' ArgumentosSetterBuffer ')'
     '''
-    print("Reconhecida definição de argumentos")
-    print("PIROCA")
-    print(p[2])
 
     generalSTable.set_state(cool_funcy_name)
 
@@ -229,14 +204,8 @@ def p_argumento(p):
     Argumento : OutrosArgumentos ID ':' Tipo
     '''
 
-
-
-    generalSTable.dump()
-
     nomes = p[1] + [p[2]]
     tipo = p[4].lower()
-    
-
 
     p[0] = [tipo] + nomes
     

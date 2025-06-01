@@ -5,12 +5,11 @@ from symbol_table import generalSTable
 import traceback
 
 
-#filename = "../programas_teste/teste7.pas"
-result_folder = "../programas_máquina"
+result_folder = "programas_máquina"
 
 
 def main():
-
+    global result_folder
     generalSTable.reset()
     print("Symbol table initialized.")
 
@@ -25,10 +24,23 @@ def main():
 
         result = rec_Parser(content)
 
-        
+        lines = result.splitlines()
+        clean_lines = [line.strip() for line in lines if line.strip()]
+        result= '\n'.join(clean_lines)
+        print()
+        print("-----Tabela de Símbolos final:")
         generalSTable.dump()
+        print("---------------")
 
+
+        print()
+        print("==================COMPILAÇÃO TERMINADA==================")
+        print()
+        print("-----Resultado:")
+        print(result)
+        print("---------------")
         
+
         input_filename = os.path.basename(input_path)
         output_filename = os.path.splitext(input_filename)[0] + ".out"
         os.makedirs(result_folder, exist_ok=True)
@@ -56,6 +68,7 @@ def main():
             func_name = frame.f_code.co_name
             print(f"Error in file: {filename}, function: {func_name}, line: {lineno}")
             tb = tb.tb_next
+
 
 if __name__ == "__main__":
     main()

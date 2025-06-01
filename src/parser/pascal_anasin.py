@@ -28,6 +28,7 @@ def p_error(p):
 parser = yacc.yacc(debug=True)
 
 def rec_Parser(input_string):
+    print("==================COMPILAÇÃO INICIADA==================")
     result = parser.parse(input_string)
-    print(result)
+
     return result
