@@ -5,9 +5,9 @@ var
 begin
     valor := 0;
     potencia := 1;
-    for i := length(bin) to 10 do
+    for i := length(bin) downto 10 do
     begin
-        if bin[i] = '1' then
+        if '1' = '1' then
         valor := valor + potencia;
         potencia := potencia * 2;
     end;
