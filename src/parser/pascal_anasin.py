@@ -6,15 +6,17 @@ from lexer.pascal_analex import tokens
 
 start = 'Programa'
 
-from .atribuicoes_rules import *
-from .main_rules import * 
-from .declarations import *
-from .funcoes_rules import *
-from .declaracao_uses_rules import *
-from .body import *
-from .loops import *
-from .if_condicional import *
-from .condicoes_rules import *
+from .programa_producoes import * 
+from .atribuicoes_producoes import *
+from .expressoes_producoes import *
+from .declaracao_producoes import *
+from .arrays_producoes import *
+from .funcoes_producoes import *
+from .uses__producoes import *
+from .corpo_producoes import *
+from .ciclos_producoes import *
+from .ifelse_producoes import *
+from .condicoes__producoes import *
 
 def p_error(p):
     if p:
