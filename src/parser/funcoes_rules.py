@@ -12,7 +12,7 @@ def p_funcao(p):
 
     '''
     print("==============FUNÇÃO==============")
-    print(p[2])
+    print(p[8])
     print("==============FUNÇÃO==============")
     global generalSTable
     func_name = p[1]
@@ -131,7 +131,6 @@ def p_argumentos_setter(p):
     ArgumentosSetter : '(' ArgumentosSetterBuffer ')'
     '''
     print("Reconhecida definição de argumentos")
-    print("PIROCA")
     print(p[2])
 
     generalSTable.set_state(cool_funcy_name)
@@ -188,10 +187,6 @@ def p_argumento(p):
     '''
     Argumento : OutrosArgumentos ID ':' Tipo
     '''
-
-
-
-    generalSTable.dump()
 
     nomes = p[1] + [p[2]]
     tipo = p[4].lower()

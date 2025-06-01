@@ -29,11 +29,6 @@ class SymbolTable:
 
 
     def add_variable(self, name, var_type,getter=None):
-        print("PILAAAAAAAAAAAAAAAAA")
-        print(name)
-        print(var_type)
-        print(getter)
-        print("PILAAAAAAAAAAAAAAAAA")
 
         state = self.current_state
         if name in self.symbol_table[state]:
@@ -141,7 +136,6 @@ class SymbolTable:
     
 
     def has_variable(self, name):
-        self.dump()
         for state in self.symbol_table:
             if name in self.symbol_table[state]:
                 return True
