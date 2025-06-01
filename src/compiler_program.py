@@ -4,7 +4,6 @@ from parser.pascal_anasin import rec_Parser
 from symbol_table import generalSTable
 import traceback
 
-from semantic.pascal_anasem import SemanticError
 
 result_folder = "programas_máquina"
 
@@ -51,8 +50,7 @@ def main():
             outfile.write(result)
 
         print(f"Output written to: {output_path}")
-    except SemanticError as erro:
-        print(erro.mensagem)
+
     except FileNotFoundError:
         print(f"Error: File '{input_path}' not found.")
     except Exception as e:

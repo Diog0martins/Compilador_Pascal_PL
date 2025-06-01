@@ -167,3 +167,12 @@ inicial, como esse mesmo valor, eliminando 2 instruções posteriores
 desnecessárias (push do valor e store do valor).
 
 ## Conclusão
+
+Este projeto permitiu-nos aprofundar os conhecimentos adquiridos nas aulas de
+Processamento de Linguagens de uma forma prática e interessante. O projeto
+transmitiu-nos a ideia do processo efetuado por um compilador como gcc, ao
+compilar código para uma representação intermédia em assembly.
+
+Gostaríamos de ter implementado mais funcionalidades, como a possibilidade de definir sub-programas na linguagem de programação, apesar de procedures não terem sido implementadas. Porém, fizemos tudo o que foi pedido no enunciado, por isso estamos bastante satisfeitos com o nosso projeto final.
+
+Temos ainda no Anexo A alguns exemplos de execução do nosso projeto para alguns programas-fonte escritos na nossa linguagem de programação.
