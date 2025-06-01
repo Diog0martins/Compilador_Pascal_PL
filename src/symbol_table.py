@@ -1,14 +1,14 @@
 class SymbolTable:
 
-    def __init__(self,object):
-        self.symbol_table = dict(object.symbol_table)
-        self.current_stack_position = object.current_stack_position
-        self.func_pointer = -100
-
-    def __init__(self):
-        self.symbol_table = {}
-        self.current_stack_position = 0
-        self.func_pointer = 0
+    def __init__(self, other=None):
+        if other is not None:
+            self.symbol_table = dict(other.symbol_table)
+            self.current_stack_position = other.current_stack_position
+            self.func_pointer = -100  # ou talvez: other.func_pointer?
+        else:
+            self.symbol_table = {}
+            self.current_stack_position = 0
+            self.func_pointer = 0
 
     def add_variable(self, name, var_type):
         """Adds a variable with type, position, and optional default value."""
@@ -50,13 +50,11 @@ class SymbolTable:
             "type": "Func",
             #array de strings separadas por virgulas
             "position": self.func_pointer,
-            "arguments": argument_types,
-            "return": return_type,
+            "arguments": list(map(str.lower, argument_types)),
+            "return": return_type.lower(),
 
         }
         self.func_pointer = self.func_pointer + 1
-
-        print(self.symbol_table[name])
 
         return self.symbol_table[name]
 
@@ -65,13 +63,6 @@ class SymbolTable:
         return self.symbol_table.get(name)
     
     def get_func_args(self,func):
-        print()
-        print(func)
-        print()
-        print()
-        print(self.dump())
-        print()
-        print()
         return self.symbol_table[func]["arguments"]
     
     def get_func_return(self,func):

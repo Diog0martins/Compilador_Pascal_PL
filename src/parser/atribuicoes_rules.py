@@ -8,6 +8,10 @@ def p_atribuicao(p):
     Atribuicao : Atribuido ':' '=' Expressao
     '''
     destino = p[1]
+    print("==================A==================")
+    print(p[1])
+    print(p[4])
+    print("==================A==================")
 
     # ===============================
     # CASO: EXPRESSÃO DO TIPO strlen
@@ -415,34 +419,47 @@ def p_ChamadaFuncao(p):
 
         p[0] = (x,'integer',code)
 
-        # print(p[0])
-
-        #if p[2][0][2] == "":
-        #    p[0] = f"PUSHI 1"
-
     else:
 
         # if not generalSTable.has_variable(func_name):
                 # print(f"A função [{func_name}] não existe")
 
         expected_argument_types = generalSTable.get_func_args(func_name)
-
+        print(func_name)
+        print(arguments)
         if generalSTable.get_func_return(func_name) != "None": code = f"\nPUSHI 0"
         
         i = 0
         for x in arguments:
-            tipo, code = x[1], x[2]
-            # if tipo != expected_argument_types[i]:
+            val, type, code = x
+            #if tipo != expected_argument_types[i]:
                 # print(f"A função {func_name} esperava tipo [{expected_argument_types[i]}], recebeu [{tipo}]")
+            if code == "":
+                if type == "integer":
+                    code += f"PUSHI {val}"
+                elif type == "real":
+                    code += f"PUSHF {val}"
+                elif type == "string":
+                    code += f'PUSHS "{val}"'
+                elif type == "boolean":
+                    code += f"PUSHI {1 if val else 0}"
+                else:
+                    print(f"Tipo desconhecido '{type}'")
+                    p[0] = ""
+                    return
+            else:
+                code += f"\n{code}"
 
-            code += f"\n{code}"
-            
-        p[0] = p[0] + '\n'.join([
-            f"PUSHA {func_name}",
+        code
+         
+        code = code + '\n'.join([
+            f"\nPUSHA {func_name}",
             "CALL",
         ])
 
-        p[0] = code
+        p[0] = (func_name, generalSTable.get_func_return(func_name), code)
+
+        
 
 
 def p_ArgumentosGetter(p):

@@ -13,12 +13,8 @@ def p_globalinsts(p):
                 | 
     '''
     if len(p) == 3:
-        print("YOYOYOY")
         print((p[1]))
-        print("YOYOYOY")
         print((p[2]))
-        print("YOYOYOY")
-
 
         p[0] = p[1] + p[2]
     else:
@@ -30,7 +26,9 @@ def p_globalinst(p):
                | Dfuncao
                | Dprocedimento
     '''
-    p[0] = ""
+    print(p[1])
+    p[0] = p[1]
+    print("Acabei de ler uma instrução global")
 
 def p_blocofinal(p):
     '''
