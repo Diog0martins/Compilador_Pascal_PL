@@ -21,7 +21,14 @@ def p_atribuicao(p):
             expr_code = p[4]
             if isinstance(destino, str):  # variável simples
                 pos = generalSTable.get_position(destino)
-                p[0] = expr_code + f"\nSTOREG {pos}"
+
+                if pos != -1:
+                    p[0] = expr_code + f"\nSTOREG {pos}"
+                
+                else:
+                    x = generalSTable.get_getter(destino)
+                    p[0] = expr_code + f"\nSTOREL {x}"
+                
                 return
             elif isinstance(destino, tuple) and destino[0] == "array":
                 _, _, _, index_code = destino
@@ -67,7 +74,13 @@ def p_atribuicao(p):
                 return
 
         pos = generalSTable.get_position(var_name)
-        p[0] = expr_code + f"\nSTOREG {pos}"
+
+        if pos != -1:
+            p[0] = expr_code + f"\nSTOREG {pos}"
+
+        else:
+            x = generalSTable.get_getter(destino)
+            p[0] = expr_code + f"\nSTOREL {x}"
         return
 
     # --------------------------------
@@ -254,7 +267,12 @@ def p_fator_id(p):
         var_type = generalSTable.get_type(name)
         pos = generalSTable.get_position(name)
 
-        p[0] = (p[1], var_type, f"PUSHG {pos}")
+        if pos == -1:
+            x = generalSTable.get_getter(p[1])
+            p[0] = (p[1], var_type, f"PUSHFP\nLOAD {x}")
+
+        else:
+            p[0] = (p[1], var_type, f"PUSHG {pos}")
         
 
 
@@ -404,8 +422,13 @@ def p_ChamadaFuncao(p):
                 # Gera o código final sem o LOADN
                 p[0] = cleaned_index_code + "\n" + p[0] + "\nSTOREN"
             else:
+                if var_pos != -1:
+                    p[0] += f"\nSTOREG {var_pos}"
+                    
+                else:
+                    x = generalSTable.get_getter(var_name)
+                    p[0] += f"\nSTOREL {x}"
                 # Variável simples
-                p[0] += f"\nSTOREG {var_pos}"
 
 
     elif func_name.lower() == "length":
