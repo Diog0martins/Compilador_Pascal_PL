@@ -90,9 +90,11 @@ Com uma gramática concreta e bem definida, o **Analisador sintático**, atravé
 
 Antes de efetuar alguma tradução (de código Pascal para o código da linguagem de baixo nível), com apoio da **Tabela de símbolos**, será feita uma **análise semântica** do input processado pelo **Analisador sintático**. Caso esta tabela verifique que não existe qualquer erro ou conflito **semântico**, o programa irá acumular o código resultante pelas produções e este será "levado" até que todas as produções sejam interpretadas.
 
-Utilizando o parser presente na **API** do **ply.yacc**, criamos uma gramática que deverá ser lida segundo a metodologia **LALR(1)**. Tendo isto em conta, apesar de existirem alguns conflitos *shift/reduce*, estes acabam por ser insignificantes, pelo **lookahead de 1**. Isto não tira a importância de conflitos *reduce/reduce*, sendo que estes podem levar a maiores problemas no futuro.
+Utilizando o parser presente na **API** do **ply.yacc**, criámos uma gramática que deverá ser lida segundo a metodologia **LALR(1)**. Tendo isto em conta, apesar de existirem alguns conflitos *shift/reduce*, estes acabam por ser insignificantes, pelo **lookahead de 1**. Isto não tira a importância de conflitos *reduce/reduce*, sendo que estes podem levar a maiores problemas no futuro.
 
 Como apoio visual, temos aqui a representação gráfica do autónomo criado pela nossa [gramática](Anexos/automaton.png).
+
+![gramática](Anexos/automaton.png)
 
 Iremos muito sucintamente explicar o processo de tradução de **Expressões** e de **Instruções Globais**
 
@@ -123,6 +125,8 @@ Declarando estas de "**Instruções Locais**":
               | Expressao
 ```
 
+(É importante salientar também que decidimos que combinações **Begin** <u>Instrução</u> **End** podiam fazer parte destas dentro de certas condições, visto que é possível encapsular um bloco de **x** **Instruções** sem qualquer problema, sintáticamente, em Pascal).
+
 No que vem a declaração de **Funções**, **Procedures** e **Variáveis**, estas só podiam ser feitas num **scope** global. No caso da declaração de **Variáveis**, dentro de outras **Instruções** deste tipo, mas fora de combinações **Begin** <u>Instrução</u> **End**.
 
 Sendo assim, chegou a criação de "**Instruções Globais**":
@@ -144,11 +148,22 @@ E as produções de **Declaração de Variáveis** adicionam a esta mesma lista,
 
 No fim da **analisade sintática** e **semântica**, o compilador irá organizar o código de maneira a priviligiar a **declaração de variáveis globais**, seguido do código dentro do último bloco **Begin** <u>Instrução</u> **End**, e finalmente, após estes, serão escritas todas as definições de funções lidas.
 
-
-
 ## Analisador semântico
+De maneira a prevenir que houvesse um acesso a alguma variável local a uma função, dentro do bloco **Begin** <u>Instrução</u> **End** relativo à "main" do programa, ou de maneira a que uma variável global, possa ter o mesmo "nome" que uma variável local a uma função anteriormente definida, criámos uma "**Tabela de símbolos**"[¹](./Anexos/STable.png)
 
-Com o apoio da **Tabela de símbolos**
+![Tabela de símbolos](./Anexos/STable.png)
+
+Esta serve como um "ficheiro de logs" para o programa, capaz de reter informação específica sobre os **tipos** de uma variável (para caso seja tentada uma **Atribuição** cuja **Expressão** tenha um resultado que difira do **tipo** da variável a que o valor à de ser atribuído).
+
+Esta é também caraterizada pelo facto de poder apresentar resultados diferentes, dependendo do estado em que se encontra.
+Verificar se uma variável de "nome" "x" já foi declarada ou não, pode ser feita de 2 maneiras:
+
+- Pode ser verificada num **scope** global, ignorando qualquer **variável** local declarada dentro de qualquer **função**;
+- Pode ser verificada num **scope** local, ignorando qualquer **variável** local declarada dentro de outras funções **função**, mas tendo em conta **variáveis** globais já declaradas.
+
+Para além disto, esta tabela também verifica o tipo dos argumentos que uma dada **função** recebe e devolve, se já foi declarada alguma função com esse mesmo nome e se o valor a ser retornado por uma função é consistente com o valor passado.
+
+Muitas features não foram mencionadas, mas através desta ferramenta, foi-nos possível garantir uma **análise semântica** robusta e consistente. 
 
 ## Geração de código
 
@@ -156,23 +171,16 @@ Com o apoio da **Tabela de símbolos**
 
 ## Melhorias
 
-Seria uma melhoria a inclusão de procedures, por ser uma funcionalidade proposta como opção pelo enunciado.
+Apesar de não termos implementado a tradução de **Procedures**, estes acabam por se basear muito na definição de **Funções**, onde a única diferença aparente é que um **Procedure** pode alterar o valor original do argumento que lhe foi passado (tal como em C, quando passamos um pointer como argumento a uma função).
+Podia ter havido alguma otimização na tradução de código, no que vem a alguma redundância gerada. 
+(e.g.  Ao declarar uma variável, em vez de passar logo a instrução "**PUSHG 0**", podiamos esperar a que lhe fosse atribuído um valor e <u>SÓ AÍ</u> seria realmente passada para a stack).
 
-Seria também uma melhoria o foco na otimização de redundância do código gerado. Isto
-aplica-se, por exemplo, quando se "declara" uma váriavel através da instrução
-**PUSHG 0**, e, em execução, se atribui um valor para essa variável,
-levando à execução de mais duas instruções. Seria uma melhoria se a atribuição
-do primeiro valor da variável durante o programa fosse feito recorrendo ao PUSHG
-inicial, como esse mesmo valor, eliminando 2 instruções posteriores
-desnecessárias (push do valor e store do valor).
 
 ## Conclusão
 
 Este projeto permitiu-nos aprofundar os conhecimentos adquiridos nas aulas de
-Processamento de Linguagens de uma forma prática e interessante. O projeto
-transmitiu-nos a ideia do processo efetuado por um compilador como gcc, ao
-compilar código para uma representação intermédia em assembly.
+Processamento de Linguagens de uma forma prática e interessante. Fez-nos perceber como é efetuado o trabalho de um compilador e deu um novo significado a "memory management". 
 
-Gostaríamos de ter implementado mais funcionalidades, como a possibilidade de definir sub-programas na linguagem de programação, apesar de procedures não terem sido implementadas. Porém, fizemos tudo o que foi pedido no enunciado, por isso estamos bastante satisfeitos com o nosso projeto final.
+Gostaríamos de ter implementado mais funcionalidades, porém, fizemos tudo o que nos foi possível com o tempo e recursos dados.
 
 Temos ainda no Anexo A alguns exemplos de execução do nosso projeto para alguns programas-fonte escritos na nossa linguagem de programação.
