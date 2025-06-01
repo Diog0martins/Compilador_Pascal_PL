@@ -6,8 +6,6 @@ VERIFICAR SE É POSSÍVEL TROCAR POR BLOCO DO MAIN
 """
 
 
-
-
 def p_While(p):
     '''
     While : WHILE Condicao DO Instrucao
@@ -136,7 +134,6 @@ def p_ciclo_for(p):
 
     ])
     
-
 
 
 def p_direcao_for(p):
