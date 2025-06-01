@@ -58,7 +58,7 @@ Para o seguinte programa, é feito parse dos tokens da presente em
 
 | Linha de código          | Tokens do Lexer                                                                                                                                   |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `program Tokenizer;` | LexToken(**PROGRAM**,'program',1,5)<br>LexToken(ID,'Tokenizer',1,13)                                                                            |
+| `program Tokenizer;` | LexToken(**PROGRAM**,'program',1,5)<br>LexToken(**ID**,'Tokenizer',1,13)                                                                            |
 | `var num: integer;`  | LexToken(**VAR**,'var',1,29)<br>LexToken(**ID**,'num',1,41)<br>LexToken(**:**,':',1,44)<br>LexToken(**INTEGER**\_TYPE,'integer',1,46)                      |
 | `begin`              | LexToken(**BEGIN**,'begin',1,60)                                                                                                                |
 | `num := 5;`          | LexToken(**ID**,'num',1,74)<br>LexToken(**ASSIGN**,':=',1,78)<br>LexToken(**INTEGER**,'5',1,81)                                                         |
@@ -86,21 +86,69 @@ def t_ID(t):
 
 ## Analisador sintático
 
-Com uma gramática concreta e bem definida, o **Analisador sintático**, através do **ply.yacc**, efetua comportamentos que tenham sido definidos para cada produção criada. e permite 
+Com uma gramática concreta e bem definida, o **Analisador sintático**, através do **ply.yacc**, efetua comportamentos que tenham sido definidos para cada produção criada. Estas funcionam com auxílio dos tokens devolvidos pelo **Analisador léxico**.
 
-A componente sintática define as produções para a gramática, assim como o comportamento que os símbolos traduzem. Neste contexto, traduzem as linhas de código pascal para o código máquina.
+Antes de efetuar alguma tradução (de código Pascal para o código da linguagem de baixo nível), com apoio da **Tabela de símbolos**, será feita uma **análise semântica** do input processado pelo **Analisador sintático**. Caso esta tabela verifique que não existe qualquer erro ou conflito **semântico**, o programa irá acumular o código resultante pelas produções e este será "levado" até que todas as produções sejam interpretadas.
 
-É utilizado o parser oferecido pelo módulo, ficando a nosso cargo a criação das produções, através de docstring, e através da construção de funções para tratar as produções.
+Utilizando o parser presente na **API** do **ply.yacc**, criamos uma gramática que deverá ser lida segundo a metodologia **LALR(1)**. Tendo isto em conta, apesar de existirem alguns conflitos *shift/reduce*, estes acabam por ser insignificantes, pelo **lookahead de 1**. Isto não tira a importância de conflitos *reduce/reduce*, sendo que estes podem levar a maiores problemas no futuro.
 
-Sendo este componente caracterizado pela sua complexidade, foi necessário a separação por vários módulos, cada um com produções referentes a um tópico.
+Como apoio visual, temos aqui a representação gráfica do autónomo criado pela nossa [gramática](Anexos/automaton.png).
 
-### pascal_anasin.py
+Iremos muito sucintamente explicar o processo de tradução de **Expressões** e de **Instruções Globais**
 
-Este módulo aglomera os módulos com produções, define o tratamento de erros sintáticos, cria o parser e é definido a função de reconhecimento
+#### Expressão
+
+Neste projeto, criamos as produções de **Expressões** com base no que foi sugerido durante o periodo letivo. 
+Todas as **Expressões**, retornam um triplo. Caso seja uma constante, retornará:
+ - O seu **valor**
+ - O seu **tipo**
+ - Uma **string vazia**
+
+Caso se trate de uma **variável** ou uma **expressão composta** (<u>3 * 3</u>, <u>(3 - 4) * (3 / 2)</u>)
+ - O seu **nome da variável** (ou vazio caso se trate de uma expressão composta)
+ - O seu **tipo** da variável (ou do resultado da expressão)
+ - O **código** que irá colocar na **stack** os valores a ter em causa (fará *PUSH* do valor da varíavel ou irá gerar código da linguagem resultante, de maneira a devolver o valor do resultado da **expressão composta** no topo da stack) 
+
+#### Instruções Globais
+Na construção da gramática, tornou-se clara a necessidade de separar os diferentes tipos de **Instruções** que poderiam ser feitos em cada programa, dependendo do **scope** atual de cada **Instrução**.
+
+Isto é, apesar de se poderem declarar (for-/while-)**Loops**, **Instruções Condicionais**, **Atribuições** e **Expressões** (e até combinações de **Begin** <u>Instrução</u> **End**) dentro de funções e dentro do "Begin" e "End" relativos ao "pseudo-Main" de Pascal, isto não é possível fora destes **scopes**.
+Declarando estas de "**Instruções Locais**":
+
+```py
+    Instrucao : While
+              | CicloFor
+              | InstrucaoCondicional
+              | Atribuicao 
+              | Expressao
+```
+
+No que vem a declaração de **Funções**, **Procedures** e **Variáveis**, estas só podiam ser feitas num **scope** global. No caso da declaração de **Variáveis**, dentro de outras **Instruções** deste tipo, mas fora de combinações **Begin** <u>Instrução</u> **End**.
+
+Sendo assim, chegou a criação de "**Instruções Globais**":
+
+```py
+    GlobalInst : Dfuncao
+               | Dprocedimento
+               | Dvariaveis 
+```
+
+Aqui há um pequeno problema. 
+Em Pascal, as **Funções** têm de ser definidas antes do bloco "**Begin** <u>Instrução</u> **End**" final, mas, no código final esperado, as **Funções** são esperadas no <u>FIM</u> do código. Para isto, as produções de **Funções** devolvem uma lista de tuplos, em que cada tuplo tem o seguinte formato:
+- Uma string com o valor `"Func"`
+- O código final esperado da **função**
+
+E as produções de **Declaração de Variáveis** adicionam a esta mesma lista, tuplos com o seguinte formato:
+- Uma string com o valor `"Var"`
+- O código final esperado de **declaração de variáveis**
+
+No fim da **analisade sintática** e **semântica**, o compilador irá organizar o código de maneira a priviligiar a **declaração de variáveis globais**, seguido do código dentro do último bloco **Begin** <u>Instrução</u> **End**, e finalmente, após estes, serão escritas todas as definições de funções lidas.
+
+
 
 ## Analisador semântico
 
-Em relação a análise semântica, esta é realizada parcialmente através de um
+Com o apoio da **Tabela de símbolos**
 
 ## Geração de código
 
@@ -108,9 +156,7 @@ Em relação a análise semântica, esta é realizada parcialmente através de u
 
 ## Melhorias
 
-Reconhecê-mos que existem features que não foram implementadas por opções
-tomadas relativas a gestão temporal para o projeto. Com isso, seria uma melhoria
-a inclusão de procedures, por ser uma funcionalidade proposta como opção pelo enunciado.
+Seria uma melhoria a inclusão de procedures, por ser uma funcionalidade proposta como opção pelo enunciado.
 
 Seria também uma melhoria o foco na otimização de redundância do código gerado. Isto
 aplica-se, por exemplo, quando se "declara" uma váriavel através da instrução
