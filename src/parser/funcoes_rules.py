@@ -20,8 +20,7 @@ def p_funcao(p):
 
     
     code = f"\n\n{func_name}:"
-
-    code += global_insts
+    code += global_insts + "\n"
     code += local_insts
     
     ret_val = generalSTable.get_func_return_code(func_name)

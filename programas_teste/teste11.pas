@@ -2,6 +2,7 @@ program ProgramaSoma;
 
 function SomaDois(a,b,c: Integer): Integer;
 begin
+  a := 1000;
   SomaDois := a * b * c;
 end;
 

@@ -78,13 +78,13 @@ def p_atribuicao(p):
             elif expr_code == "":
                 # Constant folding
                 if expr_type == "integer":
-                    expr_code = f"PUSHI {expr_val}"
+                    expr_code = f"\nPUSHI {expr_val}"
                 elif expr_type == "real":
-                    expr_code = f"PUSHF {expr_val}"
+                    expr_code = f"\nPUSHF {expr_val}"
                 elif expr_type == "string":
-                    expr_code = f'PUSHS "{expr_val}"'
+                    expr_code = f'\nPUSHS "{expr_val}"'
                 elif expr_type == "boolean":
-                    expr_code = f"PUSHI {1 if expr_val else 0}"
+                    expr_code = f"\nPUSHI {1 if expr_val else 0}"
                 else:
                     print(f"Tipo desconhecido '{expr_type}'")
                     p[0] = ""
@@ -114,13 +114,13 @@ def p_atribuicao(p):
 
         if expr_code == "":
             if expr_type == "integer":
-                expr_code = f"PUSHI {expr_val}"
+                expr_code = f"\nPUSHI {expr_val}"
             elif expr_type == "real":
-                expr_code = f"PUSHF {expr_val}"
+                expr_code = f"\nPUSHF {expr_val}"
             elif expr_type == "string":
-                expr_code = f'PUSHS "{expr_val}"'
+                expr_code = f'\nPUSHS "{expr_val}"'
             elif expr_type == "boolean":
-                expr_code = f"PUSHI {1 if expr_val else 0}"
+                expr_code = f"\nPUSHI {1 if expr_val else 0}"
             else:
                 print(f"Tipo desconhecido '{expr_type}'")
                 p[0] = ""
@@ -157,32 +157,52 @@ def p_acesso_array(p):
         p[0] = (None, "error", "")
         return
 
-    if not generalSTable.is_array(array_name):
-        print(f"Erro: '{array_name}' não é um array.")
+    if not generalSTable.has_variable(array_name):
+        print(f"Erro: variável '{array_name}' não declarada.")
         p[0] = (None, "error", "")
         return
     
-    access_code = ""
 
-    if index_code == "":
-            if index_type == "integer":
-                access_code = f"PUSHI {index_val}"
-            else:
-                print(f"Tipo desconhecido '{index_type}'")
-                p[0] = ""
-                return
-    else:
-        access_code = index_code
+    if generalSTable.is_array(array_name):
+        access_code = ""
+
+        if index_code == "":
+                if index_type == "integer":
+                    access_code = f"PUSHI {index_val}"
+                else:
+                    print(f"Tipo desconhecido '{index_type}'")
+                    p[0] = ""
+                    return
+        else:
+            access_code = index_code
 
 
-    base_type = generalSTable.get_array_base_type(array_name)
-    lower_bound = generalSTable.get_array_lower_bound(array_name)
-    base_pos = generalSTable.get_position(array_name)
+        base_type = generalSTable.get_array_base_type(array_name)
+        lower_bound = generalSTable.get_array_lower_bound(array_name)
+        base_pos = generalSTable.get_position(array_name)
 
     # Código para calcular o índice real na stack: (índice - lower_bound) + base_pos
-    access_code =  f"PUSHGP\nPUSHI {base_pos}\nPADD\n" + access_code + f"\nPUSHI {lower_bound}\nSUB"
+        access_code =  f"PUSHGP\nPUSHI {base_pos}\nPADD\n" + access_code + f"\nPUSHI {lower_bound}\nSUB"
     # Isto representa a instrução para LOAD/STORE
-    p[0] = ("array", base_type, array_name, access_code)
+        p[0] = ("array", base_type, array_name, access_code)
+
+    elif generalSTable.get_type(array_name) == "string":
+        stack_pos = generalSTable.get_position(array_name)
+        if generalSTable.current_state != "global":
+            if stack_pos == -1:
+                getter = generalSTable.get_getter(array_name)
+                access_code = f"PUSHL {getter}" + index_code + "\nPUSHI 1\nSUB" + f"\nCHARAT"
+            else:
+                access_code = f"PUSHL {stack_pos}" + index_code + "\nPUSHI 1\nSUB" + f"\nCHARAT"
+        else:
+            access_code =  f"PUSHG {stack_pos}" + index_code + "\nPUSHI 1\nSUB" + f"\nCHARAT"
+        p[0] = (array_name, generalSTable.get_type(array_name), access_code)
+
+    else:
+        print(f"Erro: '{array_name}' não é um array.")
+        p[0] = (None, "error", "")
+        return
+
 
 
 def p_variavel_array(p):
@@ -347,6 +367,8 @@ def p_fator_array(p):
         _, base_type, array_name, index_code = destino
         code = f"{index_code}\nLOADN"
         p[0] = (array_name, base_type, code)
+    else: 
+        p[0] = p[1]
 
 
 
@@ -395,8 +417,8 @@ def p_ChamadaFuncao(p):
             else:
                 match(x[1]):
                     case "string":
-                        p[0] = p[0] + (f"PUSHS \"{x[0][1:-1]}\"")
-                        p[0] = p[0] + (f"\nWRITES")
+                        p[0] = p[0] + (f"\nPUSHS \"{x[0][1:-1]}\"")
+                        p[0] = p[0] + (f"\nWRITES\n")
                     case "integer":
                         p[0] = p[0] + (f"PUSHI {x[0]}")
                         p[0] = p[0] + (f"\nWRITEI")
@@ -410,7 +432,9 @@ def p_ChamadaFuncao(p):
                         else:
                             p[0] = p[0] + (f"PUSHI 0")
                             p[0] = p[0] + (f"\nWRITEI")
-                p[0] = p[0] + "\nWRITELN"
+
+        if func_name.lower() == "writeln":
+            p[0] = p[0] + "\nWRITELN"
 
     elif func_name.lower() == "readln" or func_name.lower() == "read":
         p[0] = ""
@@ -448,6 +472,9 @@ def p_ChamadaFuncao(p):
                     p[0] += f"\nSTOREL {x}"
                 # Variável simples
 
+        if func_name.lower() == "readln":
+            p[0] = p[0] + "\nWRITELN"
+
 
     elif func_name.lower() == "length":
         # generalSTable.add_function("length", "integer", "string")
@@ -477,13 +504,13 @@ def p_ChamadaFuncao(p):
                 # print(f"A função {func_name} esperava tipo [{expected_argument_types[i]}], recebeu [{tipo}]")
             if code == "":
                 if type == "integer":
-                    buffer += f"PUSHI {val}\n"
+                    buffer += f"\nPUSHI {val}\n"
                 elif type == "real":
-                    buffer += f"PUSHF {val}\n"
+                    buffer += f"\nPUSHF {val}\n"
                 elif type == "string":
-                    buffer += f'PUSHS {val}\n'
+                    buffer += f'\nPUSHS {val}\n'
                 elif type == "boolean":
-                    buffer += f"PUSHI {1 if val else 0}\n"
+                    buffer += f"\nPUSHI {1 if val else 0}\n"
                 else:
                     print(f"Tipo desconhecido '{type}'")
                     p[0] = ""
