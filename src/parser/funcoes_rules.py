@@ -127,27 +127,37 @@ def p_argumentos_procedimento_opc(p):
 
 def p_argumentos_getter(p):
     '''
-    ArgumentosGetter : '(' ArgumentosGetterBuffer ')'
+    ArgumentosGetter : '(' ArgumentosGetterInit ')'
     '''
     #print("Reconhecida chamada de função com argumentos")
 
     p[0] = p[2]
 
+def p_argumentos_getter_init(p):
+    '''
+    ArgumentosGetterInit : ArgumentosGetterBuffer Expressao
+                           | 
+    '''
+    if len(p) == 3:
+        print("Mais um argumento passado na chamada")
+        p[1].append(p[2])
+        p[0] = p[1]
+    elif len(p) == 1:
+        p[0] = []
+    else:
+        print("Nenhum argumento passado")
+
 def p_argumentos_getter_buffer(p):
     '''
-    ArgumentosGetterBuffer : ArgumentosGetterBuffer ',' Expressao
-                           | Expressao
+    ArgumentosGetterBuffer : ArgumentosGetterBuffer Expressao ','
                            | 
     '''
     if len(p) == 4:
         print("Mais um argumento passado na chamada")
-        p[1].append(p[3])
-        p[0] = p[1]
-    elif len(p) == 2:
-        print("Argumento passado na chamada")
-        p[0] = [p[1]]
+        p[0] = p[1] + [p[2]]
     else:
         print("Nenhum argumento passado")
+        p[0] = []
 
 
 def p_argumentos_setter(p):

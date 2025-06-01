@@ -29,10 +29,9 @@ def p_Condicao(p):
 def p_DeclaracaoCondicao(p):
     '''
     DeclaracaoCondicao : Expressao SimboloCondicional Expressao
-                       | Fator
+                       | Expressao
     '''
     if len(p) == 4:
-        print(type(p[1]))
         print(f'p[1] : {p[1]}')
 
         print(type(p[3]))
@@ -57,6 +56,14 @@ def p_DeclaracaoCondicao(p):
             p[0] = f"{left_push}\n{right_push}\n{op_code}"
 
     else:
+        # ID
+        # (id_name,boolean,codigo)
+
+        # TRUE
+        # (1,boolean,"")
+
+        # FALSE
+        # (0,boolean,"")
         val, val_type, val_code = p[1]
         if val_type != "boolean":
             print("Erro: condição esperava valor booleano")
