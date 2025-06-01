@@ -16,6 +16,8 @@ def p_atribuicao(p):
     # ===============================
     # CASO: EXPRESSÃO DO TIPO strlen
     # ===============================
+
+
     if isinstance(p[4], str):
         if re.search('strlen', p[4].lower()):
             expr_code = p[4]
@@ -41,6 +43,7 @@ def p_atribuicao(p):
     # ===============================
     expr_val, expr_type, expr_code = p[4]
 
+
     # --------------------------------
     # CASO 1: VARIÁVEL SIMPLES
     # --------------------------------
@@ -51,40 +54,51 @@ def p_atribuicao(p):
             print(f"Erro: variável '{var_name}' não declarada.")
             p[0] = ""
             return
-
+        
         expected_type = generalSTable.get_type(var_name)
 
-        if expr_type != expected_type and expected_type not in ("integer", "real"):
-            print(f"Erro: tipos incompatíveis: variável '{var_name}' é '{expected_type}', expressão é '{expr_type}'")
-            p[0] = ""
-            return
         
-        
+        if expected_type == "Func":
+            func_return = generalSTable.get_func_return(var_name)
+            if func_return == expr_type:
+                if generalSTable.current_state == var_name:
+                    if len(generalSTable.get_func_return_code(var_name)) == 0:
+                            # Constant folding
 
-        if expr_code == "":
-            # Constant folding
-            if expr_type == "integer":
-                expr_code = f"PUSHI {expr_val}"
-            elif expr_type == "real":
-                expr_code = f"PUSHF {expr_val}"
-            elif expr_type == "string":
-                expr_code = f'PUSHS "{expr_val}"'
-            elif expr_type == "boolean":
-                expr_code = f"PUSHI {1 if expr_val else 0}"
-            else:
-                print(f"Tipo desconhecido '{expr_type}'")
+                        generalSTable.set_func_return_code(var_name,expr_code)
+                        p[0] = "\n"
+                        
+        else:    
+
+            if expr_type != expected_type and expected_type not in ("integer", "real"):
+                print(f"Erro: tipos incompatíveis: variável '{var_name}' é '{expected_type}', expressão é '{expr_type}'")
                 p[0] = ""
                 return
+        
+            elif expr_code == "":
+                # Constant folding
+                if expr_type == "integer":
+                    expr_code = f"PUSHI {expr_val}"
+                elif expr_type == "real":
+                    expr_code = f"PUSHF {expr_val}"
+                elif expr_type == "string":
+                    expr_code = f'PUSHS "{expr_val}"'
+                elif expr_type == "boolean":
+                    expr_code = f"PUSHI {1 if expr_val else 0}"
+                else:
+                    print(f"Tipo desconhecido '{expr_type}'")
+                    p[0] = ""
+                    return
+            
+            pos = generalSTable.get_position(var_name)
 
-        pos = generalSTable.get_position(var_name)
+            if pos != -1:
+                p[0] = expr_code + f"\nSTOREG {pos}"
 
-        if pos != -1:
-            p[0] = expr_code + f"\nSTOREG {pos}"
-
-        else:
-            x = generalSTable.get_getter(destino)
-            p[0] = expr_code + f"\nSTOREL {x}"
-        return
+            else:
+                x = generalSTable.get_getter(destino)
+                p[0] = expr_code + f"\nSTOREL {x}"
+            return
 
     # --------------------------------
     # CASO 2: ARRAY
@@ -451,7 +465,7 @@ def p_ChamadaFuncao(p):
         # if not generalSTable.has_variable(func_name):
                 # print(f"A função [{func_name}] não existe")
 
-        expected_argument_types = generalSTable.get_func_args(func_name)
+        #expected_argument_types = generalSTable.get_func_args(func_name)
         print(func_name)
         print(arguments)
         if generalSTable.get_func_return(func_name) != "None": code = f"\nPUSHI 0"

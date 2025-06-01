@@ -4,14 +4,7 @@ def p_localinstslist_multiple(p):
     '''
     LocalInstsList : LocalInstsList ';' Instrucao
     '''
-    print("HELLO")
-    print()
-    print()
-    print()
-    print()
-    
     p[0] = p[1] + "\n" + p[3]
-
 
 def p_localinstslist_terminada(p):
     '''
@@ -21,7 +14,7 @@ def p_localinstslist_terminada(p):
 
 def p_localinstslist_single(p):
     '''
-    LocalInstsList : Instrucao
+    LocalInstsList : Instrucao 
     '''
     p[0] = p[1]
 

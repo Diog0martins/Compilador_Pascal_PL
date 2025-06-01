@@ -90,11 +90,20 @@ class SymbolTable:
             "position": self.func_pointer,
             "arguments": list(map(str.lower, argument_types)),
             "return": return_type.lower(),
+            "code_of_return": ""
         }
 
         self.func_pointer += 1
         self._ensure_state_exists(name)  # create scope for function body
         return self.symbol_table[global_scope][name]
+    
+    def set_func_return_code(self,func,code):
+        if func not in self.symbol_table["global"]:
+            raise KeyError(f"Função '{func}' não encontrada para atribuir código de retorno.")
+
+        # Atualiza somente a chave "code_of_return", sem apagar as demais
+        self.symbol_table["global"][func]["code_of_return"] = code
+        return self.symbol_table["global"][func]["code_of_return"]    
     
     def get_variable(self, name):
         """Looks up variable first in current scope, then in global scope."""
@@ -108,6 +117,9 @@ class SymbolTable:
 
     def get_func_args(self,func):
         return self.symbol_table["global"][func]["arguments"]
+    
+    def get_func_return_code(self,func):
+        return self.symbol_table["global"][func]["code_of_return"]
     
     def get_func_return(self,func):
         return self.symbol_table["global"][func]["return"]
@@ -143,7 +155,7 @@ class SymbolTable:
     def has_variable(self, name):
         self.dump()
         for state in self.symbol_table:
-            if name in self.symbol_table[state]:
+            if name in self.symbol_table[state] or name in self.symbol_table["global"]:
                 return True
         return False
 

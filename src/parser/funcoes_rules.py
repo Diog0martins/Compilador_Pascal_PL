@@ -7,56 +7,98 @@ cool_funcy_name = ""
 
 def p_funcao(p):
     '''
-    Dfuncao : Cabeca ArgumentosSetter ':' Tipo ';' GlobalInsts BEGIN LocalInstsList ID ':' '=' Expressao ';' END ';'
-            | Cabeca ArgumentosSetter ':' Tipo ';' GlobalInsts BEGIN ID ':' '=' Expressao ';' END ';'
-
+    Dfuncao : FuncDec BufferVar BEGIN LocalInstsList END ';'
     '''
     print("==============FUNÇÃO==============")
     print(p[2])
     print("==============FUNÇÃO==============")
     global generalSTable
     func_name = p[1]
-    global cool_funcy_name
-    cool_funcy_name = func_name
-    func_return_type = p[4]
-    arg_types = p[2]
 
-    if len(p) == 17:
-        return_exp = p[12]
-        final_name = p[9]
-        local_insts = p[8]
-        global_insts = p[6]
-        
-    else:
-        return_exp = p[11]
-        final_name = p[8]
-        local_insts = ""
-        global_insts = p[6]
+    local_insts = p[4]
+    global_insts = p[2]
+
     
-    print(return_exp)
-
-    if func_name != final_name:
-        return
-    print("1")
-
-    generalSTable.add_function(func_name, func_return_type, arg_types)
-
-    code = f"{func_name}:"
-
-
-
+    code = f"\n\n{func_name}:"
 
     code += global_insts
     code += local_insts
-    code += return_exp[2]
+    
+    ret_val = generalSTable.get_func_return_code(func_name)
+
+    if ret_val == "":
+        print("NO RETURN DUMBASS")
+        return
+
+    code += ret_val
+
     code += "\nRETURN\n"
     
     generalSTable.set_state("global")
     
     p[0] = code
 
+
+
+    print("Cheguei longe")
+    print("Cheguei longe")
+    print("Cheguei longe")
+    print("Cheguei longe")
+    print("Cheguei longe")
+    generalSTable.dump()
+
     
     #print(f"Função reconhecida: {p[2]} com tipo de retorno {p[5]}")
+
+def p_funky_town(p):
+    '''
+    BufferVar : BufferVar Dvariaveis
+              |
+    '''
+
+    if len(p) == 3:
+
+        print()
+        print()
+        print(p[1])
+        print(p[2])
+        print()
+        print()
+        print()
+        print()
+        p[0] = p[1] + p[2]
+    else:
+        p[0] = "\n"
+
+def p_func_return(p):
+    '''
+    FuncReturn : ID ':' '=' Expressao ';'
+    '''
+    func_name = generalSTable.current_state
+    if p[1] != func_name:
+        raise SyntaxError(f"O nome '{p[1]}' não corresponde ao nome da função '{func_name}'")
+    p[0] = (p[1], p[4])  # devolve a expressão e o código gerado
+
+def p_func_dec(p):
+    '''
+    FuncDec : Cabeca ArgumentosSetter ':' Tipo ';'
+    '''
+
+    func_name = p[1]
+    func_return_type = p[4]
+    arg_types = p[2]
+    
+    generalSTable.set_state("global")
+    generalSTable.add_function(func_name, func_return_type, arg_types)
+    generalSTable.set_state(func_name)
+
+
+    
+    p[0] = p[1]
+
+
+
+
 
 def p_cabeca(p):
     '''
