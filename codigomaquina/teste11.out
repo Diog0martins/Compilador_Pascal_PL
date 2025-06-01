@@ -1,6 +1,4 @@
 SomaDois:
-PUSHFP
-LOAD -1
 RETURN
 PUSHI 0
 PUSHI 0

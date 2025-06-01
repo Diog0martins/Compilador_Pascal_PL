@@ -262,6 +262,7 @@ def p_fator_id(p):
     name = p[1]
     if not generalSTable.has_variable(name):
         # print(f"Erro: variável '{name}' não declarada.")
+        print("PILONA")
         p[0] = (p[1], "error", "")
     else:
         var_type = generalSTable.get_type(name)

@@ -29,6 +29,12 @@ class SymbolTable:
 
 
     def add_variable(self, name, var_type,getter=None):
+        print("PILAAAAAAAAAAAAAAAAA")
+        print(name)
+        print(var_type)
+        print(getter)
+        print("PILAAAAAAAAAAAAAAAAA")
+
         state = self.current_state
         if name in self.symbol_table[state]:
             raise ValueError(f"Variable '{name}' already declared in state '{state}'.")
@@ -131,8 +137,12 @@ class SymbolTable:
     
 
     def has_variable(self, name):
-        return name in self.symbol_table.get(self.current_state, {}) or \
-               name in self.symbol_table.get("global", {})
+        self.dump()
+        for state in self.symbol_table:
+            if name in self.symbol_table[state]:
+                return True
+        return False
+
     
     def reset(self):
         """Clears the symbol table and resets the stack position."""
@@ -143,7 +153,7 @@ class SymbolTable:
         self._ensure_state_exists("global")
 
     def dump(self):
-        print("=== Symbol Table ===")
+        print(f"=== Symbol Table (Current State: {self.current_state}) ===")
         for state, entries in self.symbol_table.items():
             print(f"[State: {state}]")
             for name, info in entries.items():

@@ -12,28 +12,32 @@ def p_funcao(p):
 
     '''
     print("==============FUNÇÃO==============")
+    print(p[2])
+    print("==============FUNÇÃO==============")
     global generalSTable
-
     func_name = p[1]
     global cool_funcy_name
     cool_funcy_name = func_name
-    func_return_type = p[5]
-    argumentos = p[3]
+    func_return_type = p[4]
+    argumentos = p[2]
 
     if len(p) == 17:
-        return_exp = p[13]
-        final_name = p[10]
-        local_insts = p[9]
-        global_insts = p[7]
-    else:
         return_exp = p[12]
         final_name = p[9]
+        local_insts = p[8]
+        global_insts = p[6]
+        
+    else:
+        return_exp = p[11]
+        final_name = p[8]
         local_insts = ""
-        global_insts = p[7]
+        global_insts = p[6]
     
+    print(return_exp)
+
     if func_name != final_name:
         return
-
+    print("1")
     arg_types = []
     amount = 0
     for tipo, nomes in argumentos:
@@ -106,6 +110,7 @@ def p_argumentos_getter(p):
 
     p[0] = p[2]
 
+
 def p_argumentos_getter_init(p):
     '''
     ArgumentosGetterInit : ArgumentosGetterBuffer Expressao
@@ -139,7 +144,8 @@ def p_argumentos_setter(p):
     '''
     print("Reconhecida definição de argumentos")
     p[0] = p[2]
-
+    print("PIROCA")
+    print(p[2])
     #print(p[0])
 
 
@@ -179,7 +185,7 @@ def p_argumento(p):
     for nome in nomes:
         if generalSTable.has_variable(nome):  # já verifica no estado atual
             raise ValueError(f"Variável '{nome}' já declarada no contexto atual.")
-        generalSTable.add_variable(nome, tipo)
+
 
     p[0] = [tipo] + nomes
     
