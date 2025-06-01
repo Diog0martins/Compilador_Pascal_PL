@@ -80,6 +80,10 @@ class SymbolTable:
         global_scope = "global"
         if name in self.symbol_table[global_scope]:
             raise ValueError(f"Function '{name}' already declared.")
+        
+        print("########################")
+        print(argument_types)
+        print("########################")
 
         self.symbol_table[global_scope][name] = {
             "type": "Func",

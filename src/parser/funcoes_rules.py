@@ -19,7 +19,7 @@ def p_funcao(p):
     global cool_funcy_name
     cool_funcy_name = func_name
     func_return_type = p[4]
-    argumentos = p[2]
+    arg_types = p[2]
 
     if len(p) == 17:
         return_exp = p[12]
@@ -38,24 +38,12 @@ def p_funcao(p):
     if func_name != final_name:
         return
     print("1")
-    arg_types = []
-    amount = 0
-    for tipo, nomes in argumentos:
-        arg_types.extend([tipo] * len(nomes))
-        amount+=1
-
-    amount *= -1
 
     generalSTable.add_function(func_name, func_return_type, arg_types)
 
-    generalSTable.current_state = func_name
-
     code = f"{func_name}:"
 
-    for tipo, nomes in argumentos:
-        for nome in nomes:
-            generalSTable.add_variable(nome, tipo, amount)
-            amount +=1
+
 
 
     code += global_insts
@@ -143,9 +131,36 @@ def p_argumentos_setter(p):
     ArgumentosSetter : '(' ArgumentosSetterBuffer ')'
     '''
     print("Reconhecida definição de argumentos")
-    p[0] = p[2]
     print("PIROCA")
     print(p[2])
+
+    generalSTable.set_state(cool_funcy_name)
+
+
+    argumentos = p[2]
+
+    arg_types = []
+    amount = 0
+    for tipo, nomes in argumentos:
+        for nome in nomes:
+            if generalSTable.has_variable(nome):
+                raise ValueError(f"Variável '{nome}' já declarada no contexto atual.")
+            amount+=1
+
+        arg_types.extend([tipo] * len(nomes))
+
+    amount *= -1
+
+    for tipo, nomes in argumentos:
+        for nome in nomes:
+            generalSTable.add_variable(nome, tipo, amount)
+            amount +=1
+
+    p[0] = arg_types
+
+
+
+
     #print(p[0])
 
 
@@ -175,16 +190,12 @@ def p_argumento(p):
     '''
 
 
-    generalSTable.set_state(cool_funcy_name)
 
     generalSTable.dump()
 
     nomes = p[1] + [p[2]]
     tipo = p[4].lower()
     
-    for nome in nomes:
-        if generalSTable.has_variable(nome):  # já verifica no estado atual
-            raise ValueError(f"Variável '{nome}' já declarada no contexto atual.")
 
 
     p[0] = [tipo] + nomes

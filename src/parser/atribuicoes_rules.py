@@ -27,6 +27,7 @@ def p_atribuicao(p):
                 
                 else:
                     x = generalSTable.get_getter(destino)
+
                     p[0] = expr_code + f"\nSTOREL {x}"
                 
                 return
@@ -57,6 +58,8 @@ def p_atribuicao(p):
             print(f"Erro: tipos incompatíveis: variável '{var_name}' é '{expected_type}', expressão é '{expr_type}'")
             p[0] = ""
             return
+        
+        
 
         if expr_code == "":
             # Constant folding
@@ -270,10 +273,10 @@ def p_fator_id(p):
 
         if pos == -1:
             x = generalSTable.get_getter(p[1])
-            p[0] = (p[1], var_type, f"PUSHFP\nLOAD {x}")
+            p[0] = (p[1], var_type, f"\nPUSHFP\nLOAD {x}")
 
         else:
-            p[0] = (p[1], var_type, f"PUSHG {pos}")
+            p[0] = (p[1], var_type, f"\nPUSHG {pos}")
         
 
 
