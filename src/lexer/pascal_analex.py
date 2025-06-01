@@ -307,31 +307,8 @@ def t_ID(t):
     return t
  """
 
-#t_ASSIGN = r'\:\='
 t_INTEGER =r'\b\d+\b'
 t_REAL =r'\b\d+\.\d+([eE][+-]?\d+)?\b'
-# t_PLUS =r'\+'
-# t_MINUS =r'\-'
-# t_STAR =r'\*'
-# t_FORWARDDASH =r'\/'
-# t_EQUAL =r'\='
-
-# t_OPENBRACKET =r'\['
-# t_CLOSEBRACKET =r'\]'
-# t_DOT =r'\.'
-# t_COMMA =r'\,'
-# t_COLON =r'\:'
-# t_SEMICOLON =r'\;'
-# t_OPENPARENTHESIS =r'\('
-# t_CLOSEPARENTHESIS =r'\)'
-# t_POWERTO =r'\^'
-# t_AT =r'\@'
-# t_OPENCURLBRACKET =r'\{'
-# t_CLOSECURLBRACKET =r'\}'
-# t_DOLLAR =r'\$'
-# t_CARDINAL =r'\#'
-# t_SINGLEQUOTATION =r'\''
-# t_DOUBLEQUOTATION =r'\"'
 
 
 t_ignore = '\t\n '
@@ -344,25 +321,25 @@ def t_error(t):
 lexer = lex.lex(reflags=re.IGNORECASE)
 
 
-# if __name__ == '__main__':
-#     data = """
-#     program homem;
+if __name__ == '__main__':
+    data = """
+    program Tokenizer;
 
-#     var
-#         num: integer;
+    var
+        num: integer;
 
-#     begin
-#         num := 5; 
-#         while num < 5 do 
-#         begin
-#             num := num + 1;
-#             writeln('slb'); 
-#         end; 
-#     end.
-#     """
-#     lexer.input(data)
-#     while True:
-#         tok = lexer.token()
-#         if not tok:
-#             break
-#         print(tok)
+    begin
+        num := 5; 
+        while num < 5 do 
+        begin
+            num := num + 1;
+            writeln('teste'); 
+        end; 
+    end.
+    """
+    lexer.input(data)
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+        print(tok)
