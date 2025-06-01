@@ -5,7 +5,19 @@ def p_programa(p):
     '''
     Programa : PROGRAM ID ';' Duses GlobalInsts BlocoPrincipal '.'
     '''
-    p[0] = p[5] + "\nSTART\n" + p[6] + "\nSTOP"
+
+    lvars = ""
+    lfuncs = ""
+
+    for type,code in p[5]:
+        if type == "vars":
+            lvars += code
+        else:
+            lfuncs += code
+
+
+    p[0] = lvars +  "\nSTART\n" + p[6] + "\nSTOP" + lfuncs
+
 
 def p_globalinsts(p):
     '''
@@ -13,22 +25,30 @@ def p_globalinsts(p):
                 | 
     '''
     if len(p) == 3:
+
         p[0] = p[1] + p[2]
     else:
-        p[0] = "" 
+        p[0] = []
 
-    print(p[0] + "\n\n")
-
-def p_globalinst(p):
+def p_globalinst_func(p):
     '''
-    GlobalInst : Dvariaveis
-               | Dfuncao
+    GlobalInst : Dfuncao
                | Dprocedimento
     '''
-    p[0] = p[1]  
+    p[0] = [("func",p[1])]
+
+def p_globalinst_var(p):
+    '''
+    GlobalInst : Dvariaveis
+    '''
+
+    p[0] = [("vars",p[1])]
+    print("Acabei de ler uma instrução global")
+
 
 def p_blocofinal(p):
     '''
     BlocoPrincipal : BEGIN LocalInstsList END
     '''
+
     p[0] = p[2]

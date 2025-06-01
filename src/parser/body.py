@@ -14,7 +14,7 @@ def p_localinstslist_terminada(p):
 
 def p_localinstslist_single(p):
     '''
-    LocalInstsList : Instrucao
+    LocalInstsList : Instrucao 
     '''
     p[0] = p[1]
 
@@ -36,7 +36,6 @@ def p_instrucao_bloco(p):
      Instrucao : Bloco
      '''
      p[0] = p[1]
-     print(p[1])
 
 
 def p_bloco(p):

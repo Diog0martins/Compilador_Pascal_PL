@@ -1,90 +1,89 @@
-from symbol_table import SymbolTable,generalSTable
+from symbol_table import generalSTable
+from symbol_table import SymbolTable
 
 # ====== Produções de Função e Procedimento ======
 
+cool_funcy_name = ""
+
 def p_funcao(p):
     '''
-    Dfuncao : FUNCTION ID ArgumentosSetter ':' Tipo ';' GlobalInsts BEGIN LocalInstsList ID ':' '=' Expressao ';' END ';'
+    Dfuncao : FuncDec BufferVar BEGIN LocalInstsList END ';'
     '''
-    #function BinToInt(bin: string): integer;
 
-
-    print("Estouaqui!?\n\n")
-
-    if generalSTable.has_variable(p[2]): 
-        print("AW HELL NAW!")
-        return
-    
-    if p[2] != p[10]:
-        print("AW HELL NAH")
-        return
-    
-
-    print("\n\n\n\nHELP\n\n\n\n")
-
-
-
-    local_table = SymbolTable()
-    local_table.current_stack_position = generalSTable.current_stack_position
-
-    for x in generalSTable.symbol_table:
-        if x["type"] == "Func":
-            local_table.add_function(x["name"], x["return_type"], x["argument_types"])
-
+    global generalSTable
     func_name = p[1]
-    argumentos = p[3]
-    amount = len(p[3]) * (-1)
-    code = f"{func_name}:"
 
+    local_insts = p[4]
+    global_insts = p[2]
 
-    print(argumentos)
-
-
-
-    for x in argumentos:
-        code = code + f"\nPUSHFP\nLOAD {amount}"
-        print(amount)
-        amount = amount + 1
-        if generalSTable.has_variable(x[1]):
-            print("AW HELL NAW!")
-            return
-        
-        generalSTable.add_variable(x[1],x[2])
-        code = code + f'\nPUSHG {local_table.get_position(x[1])}',
     
-    prev_table = generalSTable
-    generalSTable = local_table
+    code = f"\n{func_name}:"
+    code += global_insts + "\n"
+    code += local_insts
+    
+    ret_val = generalSTable.get_func_return_code(func_name)
 
-    code = code + p[7]
-    code = code + p[9]
+    if ret_val == "":
+        return
 
+    code += ret_val
 
-
-    print(p[5])
-    print(p[5])
-    print(p[5])
-    print(p[5])
-
-    match(p[5]):
-        case "string":
-            code = code + f"\n PUSHS {p[13]}"
-        case "boolean":
-            if p[13] == "TRUE":
-                code = code + f"\n PUSHI {1}"
-            else:
-                code = code + f"\n PUSHI {0}"
-        case "integer":
-            code = code + f"\n PUSHI {p[13]}"
-        case "real":
-            code = code + f"\n PUSHR {p[13]}"
-
-    code = code + "\nRETURN\n"
-
-    generalSTable = prev_table
-
+    code += "\nRETURN\n"
+    
+    generalSTable.set_state("global")
+    
     p[0] = code
     
-    #print(f"Função reconhecida: {p[2]} com tipo de retorno {p[5]}")
+
+def p_funky_town(p):
+    '''
+    BufferVar : BufferVar Dvariaveis
+              |
+    '''
+
+    if len(p) == 3:
+
+        p[0] = p[1] + p[2]
+    else:
+        p[0] = "\n"
+
+def p_func_return(p):
+    '''
+    FuncReturn : ID ':' '=' Expressao ';'
+    '''
+    func_name = generalSTable.current_state
+    if p[1] != func_name:
+        raise SyntaxError(f"O nome '{p[1]}' não corresponde ao nome da função '{func_name}'")
+    p[0] = (p[1], p[4])  # devolve a expressão e o código gerado
+
+def p_func_dec(p):
+    '''
+    FuncDec : Cabeca ArgumentosSetter ':' Tipo ';'
+    '''
+
+    func_name = p[1]
+    func_return_type = p[4]
+    arg_types = p[2]
+    
+    generalSTable.set_state("global")
+    generalSTable.add_function(func_name, func_return_type, arg_types)
+    generalSTable.set_state(func_name)
+
+
+    
+    p[0] = p[1]
+
+
+
+
+
+def p_cabeca(p):
+    '''
+    Cabeca : FUNCTION ID
+    '''
+    global cool_funcy_name
+    cool_funcy_name = p[2]
+    p[0] = p[2]
 
 def p_procedimento(p):
     '''
@@ -112,39 +111,67 @@ def p_argumentos_procedimento_opc(p):
 
 def p_argumentos_getter(p):
     '''
-    ArgumentosGetter : '(' ArgumentosGetterBuffer ')'
+    ArgumentosGetter : '(' ArgumentosGetterInit ')'
     '''
     #print("Reconhecida chamada de função com argumentos")
 
     p[0] = p[2]
 
+
+def p_argumentos_getter_init(p):
+    '''
+    ArgumentosGetterInit : ArgumentosGetterBuffer Expressao
+                           | 
+    '''
+    if len(p) == 3:
+        print("Mais um argumento passado na chamada")
+        p[0] = p[1] + [p[2]]
+    elif len(p) == 1:
+        p[0] = []
+    else:
+        print("Nenhum argumento passado")
+
 def p_argumentos_getter_buffer(p):
     '''
-    ArgumentosGetterBuffer : ArgumentosGetterBuffer ',' Expressao
-                           | Expressao
+    ArgumentosGetterBuffer : ArgumentosGetterBuffer Expressao ','
                            | 
     '''
     if len(p) == 4:
         print("Mais um argumento passado na chamada")
-        p[1].append(p[3])
-        p[0] = p[1]
-    elif len(p) == 2:
-        print("Argumento passado na chamada")
-        p[0] = [p[1]]
+        p[0] = p[1] + [p[2]]
     else:
         print("Nenhum argumento passado")
+        p[0] = []
+
 
 def p_argumentos_setter(p):
     '''
     ArgumentosSetter : '(' ArgumentosSetterBuffer ')'
     '''
-    print("Reconhecida definição de argumentos")
-    print("\n\nHER242")
-    p[0] = p[2]
 
-    #print(p[0])
+    generalSTable.set_state(cool_funcy_name)
 
 
+    argumentos = p[2]
+
+    arg_types = []
+    amount = 0
+    for tipo, nomes in argumentos:
+        for nome in nomes:
+            if generalSTable.has_variable(nome):
+                raise ValueError(f"Variável '{nome}' já declarada no contexto atual.")
+            amount+=1
+
+        arg_types.extend([tipo] * len(nomes))
+
+    amount *= -1
+
+    for tipo, nomes in argumentos:
+        for nome in nomes:
+            generalSTable.add_variable(nome, tipo, amount)
+            amount +=1
+
+    p[0] = arg_types
 
 
 def p_argumentos_setter_buffer(p):
@@ -154,19 +181,12 @@ def p_argumentos_setter_buffer(p):
                            | 
     '''
     if len(p) == 4:
-        print("Mais um argumento declarado")
-        args = p[1]  # já é uma lista
-        l = tuple(p[3][0],p[3][1],len(p[1]))
-        args.append(l)
-        p[0] = args
+        t = (p[3][0],p[3][1:])
+        p[0] = p[1] + [t]
 
 
     elif len(p) == 2:
-        p[0] = [p[1]]
-        print("\n\n")
-        #print(p[1])
-        print("Argumento declarado x")
-        p[0] = [(p[1][0],p[1][1],0)]
+        p[0] = [(p[1][0],p[1][1:])]
 
     else:
         print("Nenhum argumento declarado")
@@ -174,26 +194,22 @@ def p_argumentos_setter_buffer(p):
 
 def p_argumento(p):
     '''
-    Argumento : ModificadorArgumento ID ':' Tipo
+    Argumento : OutrosArgumentos ID ':' Tipo
     '''
-    
-    if generalSTable.has_variable(p[2]): 
-        print("AW HELL NAWH!")
-        return
-    
-    #print(f"Argumento: {p[2]} com tipo {p[4]} e modificador '{p[1]}'")
-    p[0] = [p[2]]
-    p[0].append(p[4])
 
-    generalSTable.add_variable(p[2],p[4])
+    nomes = p[1] + [p[2]]
+    tipo = p[4].lower()
 
+    p[0] = [tipo] + nomes
     
 
-def p_modificador_argumento(p):
+def p_outros_argumentos(p):
     '''
-    ModificadorArgumento : VAR
-                         | CONST
-                         | 
+    OutrosArgumentos : OutrosArgumentos ID ','
+                     | 
     '''
-    if len(p) == 2:
-        p[0] = p[1]
+    if len(p) == 4:
+        p[0] = p[1] + [p[2]]
+
+    else:
+        p[0] = []

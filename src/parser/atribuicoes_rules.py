@@ -5,19 +5,29 @@ import re
 
 def p_atribuicao(p):
     '''
-    Atribuicao : Atribuido ':' '=' Expressao
+    Atribuicao : Atribuido ASSIGN Expressao
     '''
     destino = p[1]
 
     # ===============================
     # CASO: EXPRESSÃO DO TIPO strlen
     # ===============================
-    if isinstance(p[4], str):
-        if re.search('strlen', p[4].lower()):
-            expr_code = p[4]
+
+
+    if isinstance(p[3], str):
+        if re.search('strlen', p[3].lower()):
+            expr_code = p[3]
             if isinstance(destino, str):  # variável simples
                 pos = generalSTable.get_position(destino)
-                p[0] = expr_code + f"\nSTOREG {pos}"
+
+                if pos != -1:
+                    p[0] = expr_code + f"\nSTOREG {pos}"
+                
+                else:
+                    x = generalSTable.get_getter(destino)
+
+                    p[0] = expr_code + f"\nSTOREL {x}"
+                
                 return
             elif isinstance(destino, tuple) and destino[0] == "array":
                 _, _, _, index_code = destino
@@ -27,7 +37,8 @@ def p_atribuicao(p):
     # ===============================
     # EXPRESSÃO NORMAL
     # ===============================
-    expr_val, expr_type, expr_code = p[4]
+    expr_val, expr_type, expr_code = p[3]
+
 
     # --------------------------------
     # CASO 1: VARIÁVEL SIMPLES
@@ -39,32 +50,51 @@ def p_atribuicao(p):
             print(f"Erro: variável '{var_name}' não declarada.")
             p[0] = ""
             return
-
+        
         expected_type = generalSTable.get_type(var_name)
 
-        if expr_type != expected_type and expected_type not in ("integer", "real"):
-            print(f"Erro: tipos incompatíveis: variável '{var_name}' é '{expected_type}', expressão é '{expr_type}'")
-            p[0] = ""
-            return
+        
+        if expected_type == "Func":
+            func_return = generalSTable.get_func_return(var_name)
+            if func_return == expr_type:
+                if generalSTable.current_state == var_name:
+                    if len(generalSTable.get_func_return_code(var_name)) == 0:
+                            # Constant folding
 
-        if expr_code == "":
-            # Constant folding
-            if expr_type == "integer":
-                expr_code = f"PUSHI {expr_val}"
-            elif expr_type == "real":
-                expr_code = f"PUSHF {expr_val}"
-            elif expr_type == "string":
-                expr_code = f'PUSHS "{expr_val}"'
-            elif expr_type == "boolean":
-                expr_code = f"PUSHI {1 if expr_val else 0}"
-            else:
-                print(f"Tipo desconhecido '{expr_type}'")
+                        generalSTable.set_func_return_code(var_name,expr_code)
+                        p[0] = "\n"
+                        
+        else:    
+
+            if expr_type != expected_type and expected_type not in ("integer", "real"):
+                print(f"Erro: tipos incompatíveis: variável '{var_name}' é '{expected_type}', expressão é '{expr_type}'")
                 p[0] = ""
                 return
+        
+            elif expr_code == "":
+                # Constant folding
+                if expr_type == "integer":
+                    expr_code = f"\nPUSHI {expr_val}"
+                elif expr_type == "real":
+                    expr_code = f"\nPUSHF {expr_val}"
+                elif expr_type == "string":
+                    expr_code = f'\nPUSHS "{expr_val}"'
+                elif expr_type == "boolean":
+                    expr_code = f"\nPUSHI {1 if expr_val else 0}"
+                else:
+                    print(f"Tipo desconhecido '{expr_type}'")
+                    p[0] = ""
+                    return
+            
+            pos = generalSTable.get_position(var_name)
 
-        pos = generalSTable.get_position(var_name)
-        p[0] = expr_code + f"\nSTOREG {pos}"
-        return
+            if pos != -1:
+                p[0] = expr_code + f"\nSTOREG {pos}"
+
+            else:
+                x = generalSTable.get_getter(destino)
+                p[0] = expr_code + f"\nSTOREL {x}"
+            return
 
     # --------------------------------
     # CASO 2: ARRAY
@@ -80,13 +110,13 @@ def p_atribuicao(p):
 
         if expr_code == "":
             if expr_type == "integer":
-                expr_code = f"PUSHI {expr_val}"
+                expr_code = f"\nPUSHI {expr_val}"
             elif expr_type == "real":
-                expr_code = f"PUSHF {expr_val}"
+                expr_code = f"\nPUSHF {expr_val}"
             elif expr_type == "string":
-                expr_code = f'PUSHS "{expr_val}"'
+                expr_code = f'\nPUSHS "{expr_val}"'
             elif expr_type == "boolean":
-                expr_code = f"PUSHI {1 if expr_val else 0}"
+                expr_code = f"\nPUSHI {1 if expr_val else 0}"
             else:
                 print(f"Tipo desconhecido '{expr_type}'")
                 p[0] = ""
@@ -117,15 +147,19 @@ def p_acesso_array(p):
     '''
     array_name = p[1]
     index_val, index_type, index_code = p[3]
-    print("=======================")
-    print(generalSTable.get_type(array_name))
+
     if not generalSTable.has_variable(array_name):
         print(f"Erro: variável '{array_name}' não declarada.")
         p[0] = (None, "error", "")
         return
 
-    if generalSTable.is_array(array_name):
+    if not generalSTable.has_variable(array_name):
+        print(f"Erro: variável '{array_name}' não declarada.")
+        p[0] = (None, "error", "")
+        return
     
+
+    if generalSTable.is_array(array_name):
         access_code = ""
 
         if index_code == "":
@@ -143,24 +177,28 @@ def p_acesso_array(p):
         lower_bound = generalSTable.get_array_lower_bound(array_name)
         base_pos = generalSTable.get_position(array_name)
 
-        # Código para calcular o índice real na stack: (índice - lower_bound) + base_pos
+    # Código para calcular o índice real na stack: (índice - lower_bound) + base_pos
         access_code =  f"PUSHGP\nPUSHI {base_pos}\nPADD\n" + access_code + f"\nPUSHI {lower_bound}\nSUB"
-        # Isto representa a instrução para LOAD/STORE
+    # Isto representa a instrução para LOAD/STORE
         p[0] = ("array", base_type, array_name, access_code)
 
     elif generalSTable.get_type(array_name) == "string":
         stack_pos = generalSTable.get_position(array_name)
-
-        # Código para calcular o índice real na stack: (índice - lower_bound) + base_pos
-        access_code =  f"PUSHG {stack_pos}" + index_code + "\nPUSHI 1\nSUB" + f"\nCHARAT"
-        # Isto representa a instrução para LOAD/STORE
+        if generalSTable.current_state != "global":
+            if stack_pos == -1:
+                getter = generalSTable.get_getter(array_name)
+                access_code = f"PUSHL {getter}" + index_code + "\nPUSHI 1\nSUB" + f"\nCHARAT"
+            else:
+                access_code = f"PUSHL {stack_pos}" + index_code + "\nPUSHI 1\nSUB" + f"\nCHARAT"
+        else:
+            access_code =  f"PUSHG {stack_pos}" + index_code + "\nPUSHI 1\nSUB" + f"\nCHARAT"
         p[0] = (array_name, generalSTable.get_type(array_name), access_code)
 
     else:
         print(f"Erro: '{array_name}' não é um array.")
         p[0] = (None, "error", "")
         return
-    
+
 
 
 def p_variavel_array(p):
@@ -257,13 +295,18 @@ def p_fator_id(p):
     'Fator : ID'
     name = p[1]
     if not generalSTable.has_variable(name):
-        # print(f"Erro: variável '{name}' não declarada.")
+
         p[0] = (p[1], "error", "")
     else:
         var_type = generalSTable.get_type(name)
         pos = generalSTable.get_position(name)
 
-        p[0] = (p[1], var_type, f"\nPUSHG {pos}")
+        if pos == -1:
+            x = generalSTable.get_getter(p[1])
+            p[0] = (p[1], var_type, f"\nPUSHFP\nLOAD {x}")
+
+        else:
+            p[0] = (p[1], var_type, f"\nPUSHG {pos}")
         
 
 
@@ -341,11 +384,11 @@ def p_ChamadaFuncao(p):
     # print(f"Chamada de função reconhecida: {p[1]}{p[2]}")
 
 
-    func_name = p[1].lower()
+    func_name = p[1]
     arguments = p[2]
 
 
-    if func_name == "writeln" or func_name == "write":
+    if func_name.lower() == "writeln" or func_name.lower() == "write":
         #generalSTable.add_function("write", "None", "string")
         #generalSTable.add_function("writeln", "None", "string")
 
@@ -369,8 +412,8 @@ def p_ChamadaFuncao(p):
             else:
                 match(x[1]):
                     case "string":
-                        p[0] = p[0] + (f"PUSHS \"{x[0][1:-1]}\"")
-                        p[0] = p[0] + (f"\nWRITES")
+                        p[0] = p[0] + (f"\nPUSHS \"{x[0][1:-1]}\"")
+                        p[0] = p[0] + (f"\nWRITES\n")
                     case "integer":
                         p[0] = p[0] + (f"PUSHI {x[0]}")
                         p[0] = p[0] + (f"\nWRITEI")
@@ -384,9 +427,11 @@ def p_ChamadaFuncao(p):
                         else:
                             p[0] = p[0] + (f"PUSHI 0")
                             p[0] = p[0] + (f"\nWRITEI")
-                p[0] = p[0] + "\nWRITELN"
 
-    elif func_name == "readln" or func_name == "read":
+        if func_name.lower() == "writeln":
+            p[0] = p[0] + "\nWRITELN"
+
+    elif func_name.lower() == "readln" or func_name.lower() == "read":
         p[0] = ""
         for arg in arguments:
             var_name = arg[0]
@@ -414,49 +459,60 @@ def p_ChamadaFuncao(p):
                 # Gera o código final sem o LOADN
                 p[0] = cleaned_index_code + "\n" + p[0] + "\nSTOREN"
             else:
+                if var_pos != -1:
+                    p[0] += f"\nSTOREG {var_pos}"
+                    
+                else:
+                    x = generalSTable.get_getter(var_name)
+                    p[0] += f"\nSTOREL {x}"
                 # Variável simples
-                p[0] += f"\nSTOREG {var_pos}"
+
+        if func_name.lower() == "readln":
+            p[0] = p[0] + "\nWRITELN"
 
 
-    elif func_name == "length":
+    elif func_name.lower() == "length":
         # generalSTable.add_function("length", "integer", "string")
 
         code = '\n' + p[2][0][2] + "\nSTRLEN"
-
-        generalSTable.dump()
 
         x = "length(" + p[2][0][0] + ")"
 
         p[0] = (x,'integer',code)
 
-        # print(p[0])
-
-        #if p[2][0][2] == "":
-        #    p[0] = f"PUSHI 1"
-
     else:
-
-        # if not generalSTable.has_variable(func_name):
-                # print(f"A função [{func_name}] não existe")
-
-        expected_argument_types = generalSTable.get_func_args(func_name)
 
         if generalSTable.get_func_return(func_name) != "None": code = f"\nPUSHI 0"
         
-        i = 0
+        buffer = ""
         for x in arguments:
-            tipo, code = x[1], x[2]
-            # if tipo != expected_argument_types[i]:
+            val, type, code = x
+            #if tipo != expected_argument_types[i]:
                 # print(f"A função {func_name} esperava tipo [{expected_argument_types[i]}], recebeu [{tipo}]")
-
-            code += f"\n{code}"
-            
-        p[0] = p[0] + '\n'.join([
+            if code == "":
+                if type == "integer":
+                    buffer += f"\nPUSHI {val}\n"
+                elif type == "real":
+                    buffer += f"\nPUSHF {val}\n"
+                elif type == "string":
+                    buffer += f'\nPUSHS {val}\n'
+                elif type == "boolean":
+                    buffer += f"\nPUSHI {1 if val else 0}\n"
+                else:
+                    print(f"Tipo desconhecido '{type}'")
+                    p[0] = ""
+                    return
+            else:
+                buffer += f"\n{code}\n"
+         
+        buffer = buffer + '\n'.join([
             f"PUSHA {func_name}",
             "CALL",
         ])
 
-        p[0] = code
+        p[0] = (func_name, generalSTable.get_func_return(func_name), buffer)
+
+        
 
 
 def p_ArgumentosGetter(p):
@@ -480,7 +536,6 @@ def p_ListaArgumentos(p):
         p[0] = [p[1]]
 
     else:
-        p[1].append(p[3])
-        p[0] = p[1]
+        p[0] = p[1] + [p[3]]
 
     # Implementar conforme necessário

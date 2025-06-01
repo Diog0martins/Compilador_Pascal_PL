@@ -1,6 +1,0 @@
-function -> FUNCTION ID arguments_setter COLON type SEMICOLON list_instrucoes_globais BEGIN list_instrucoes_locais END SEMICOLON
-
-procedure -> PROCEDURE ID procedure_args SEMICOLON list_instrucoes_globais begin list_instrucoes_locais END SEMICOLON
-
-procedure_args -> arguments_setter
-                | 

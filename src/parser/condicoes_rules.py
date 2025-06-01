@@ -23,17 +23,11 @@ def p_Condicao(p):
         p[0] = f"{inner}\nNOT"
     else:
         p[0] = p[1]
-    print("======================")
-    print(p[1])
-    print(p[0])
-    print("======================")
-
-
 
 def p_DeclaracaoCondicao(p):
     '''
     DeclaracaoCondicao : Expressao SimboloCondicional Expressao
-                       | Fator
+                       | Expressao
     '''
     if len(p) == 4:
 
@@ -51,7 +45,6 @@ def p_DeclaracaoCondicao(p):
             result = eval_condition(op_code, left_val, right_val)
             p[0] = f"PUSHI {1 if result else 0}"
         else:
-            # Emit PUSH for constants if no code
             if left_code:
                 left_push = left_code
             else:
@@ -82,6 +75,7 @@ def p_DeclaracaoCondicao(p):
                     p[0] = "; erro de tipo"
                     return
 
+            
             p[0] = f"{left_push}\n{right_push}\n{op_code}"
 
     else:
@@ -92,6 +86,8 @@ def p_DeclaracaoCondicao(p):
             p[0] = val_code
         else:
             p[0] = f"PUSHI {1 if val else 0}"
+
+
 
 
 def eval_condition(op, left, right):
@@ -114,10 +110,10 @@ def eval_condition(op, left, right):
 def p_SimboloCondicional(p):
     '''
     SimboloCondicional : '='
-                       | '<' '>'
-                       | '<' '='
+                       | DIFFERENT
+                       | LESSOREQUAL
                        | '<'
-                       | '>' '='
+                       | GREATEROREQUAL
                        | '>'
     '''
     symbols = {
