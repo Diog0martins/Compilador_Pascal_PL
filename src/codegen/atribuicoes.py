@@ -82,6 +82,7 @@ def _const_folding(tipo, valor):
     elif tipo == "real":
         return f"\nPUSHF {valor}"
     elif tipo == "string":
+        valor = valor.strip("'")
         return f'\nPUSHS "{valor}"'
     elif tipo == "boolean":
         return f"\nPUSHI {1 if valor else 0}"

@@ -1,18 +1,20 @@
 PUSHS ""
 PUSHI 0
 START
-PUSHS "Introduza uma string binária:"
+PUSHS 'Introduza uma string binária:'
 WRITES
 WRITELN
 READ
 STOREG 3
 WRITELN
+PUSHI 0
 PUSHG 3
 PUSHA BinToInt
 CALL
 STOREG 4
-PUSHS "O valor inteiro correspondente é: "
+PUSHS 'O valor inteiro correspondente é: '
 WRITES
+PUSHG 4
 PUSHG 4
 WRITEI
 WRITELN
@@ -43,7 +45,7 @@ PUSHG 0
 PUSHI 1
 SUB
 CHARAT
-PUSHS "'1'"
+PUSHS "1"
 EQUAL
 JZ ELSE1
 PUSHG 1
