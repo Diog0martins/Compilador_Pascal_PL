@@ -47,14 +47,6 @@ def p_funky_town(p):
     else:
         p[0] = "\n"
 
-def p_func_return(p):
-    '''
-    FuncReturn : ID ':' '=' Expressao ';'
-    '''
-    func_name = generalSTable.current_state
-    if p[1] != func_name:
-        raise SyntaxError(f"O nome '{p[1]}' não corresponde ao nome da função '{func_name}'")
-    p[0] = (p[1], p[4])  # devolve a expressão e o código gerado
 
 def p_func_dec(p):
     '''
