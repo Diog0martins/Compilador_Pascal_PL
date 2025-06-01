@@ -302,4 +302,3 @@ def t_error(t):
     return "error found"
 
 lexer = lex.lex(reflags=re.IGNORECASE)
-
